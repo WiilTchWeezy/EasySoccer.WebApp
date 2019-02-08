@@ -1,23 +1,68 @@
-<header class="app-header navbar  navbar-light">
-  <!-- Header content here -->
-  <button class="navbar-toggler aside-menu-toggler" type="button" data-toggle="aside-menu-show">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+<header class="app-header navbar">
+
+      <a class="navbar-brand" href="#">
+        <img class="navbar-brand-full" src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Logo-Free.jpg" alt="CoreUI Logo" width="40" height="30">
+      </a>
+
+      <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    <!-- Header content here -->
+
+
 </header>
 <div class="app-body">
-    <!-- Sidebar content here -->
-    <div class="app aside-menu-toggler" style="background-color:#e4e5e6">
-      <div class="app-body">
-        <aside class="aside-menu">
-          <h1>11</h1>
-        </aside>
-      </div>
+  <div class="sidebar">
+    <nav class="sidebar-nav">
+      <ul class="nav">
+        <li class="nav-title">Easy Fut</li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="nav-icon cui-speedometer"></i> Meus Horários
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="nav-icon cui-speedometer"></i> Quadras
+            <span class="badge badge-primary">NEW</span>
+          </a>
+        </li>
+        <li class="nav-item nav-dropdown">
+          <a class="nav-link nav-dropdown-toggle" href="#">
+            <i class="nav-icon cui-puzzle"></i> Nav dropdown
+          </a>
+          <ul class="nav-dropdown-items">
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="nav-icon cui-puzzle"></i> Nav dropdown item
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="nav-icon cui-puzzle"></i> Nav dropdown item
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item mt-auto">
+          <a class="nav-link nav-link-success" href="https://coreui.io">
+            <i class="nav-icon cui-cloud-download"></i> Download CoreUI</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link nav-link-danger" href="https://coreui.io/pro/">
+            <i class="nav-icon cui-layers"></i> Sair
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <button class="sidebar-minimizer brand-minimizer" type="button"></button>
   </div>
   <main class="main">
     <!-- Main content here -->
-  <p>main</p>
+    <p>main</p>
   </main>
 </div>
+
 <footer class="app-footer">
   footer
 </footer>
