@@ -23,8 +23,13 @@
       <ul class="nav">
         <li class="nav-title">Easy Soccer</li>
         <li class="nav-item">
+          <a class="nav-link" href="#"  routerLink="/dashboard">
+            <i class="nav-icon cui-chart"></i> Dashboard
+          </a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="#"  routerLink="/counter">
-            <i class="nav-icon cui-speedometer"></i> Meus Horários
+            <i class="nav-icon cui-calendar"></i> Meus Horários
           </a>
         </li>
         <li class="nav-item">
@@ -34,12 +39,12 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">
-            <i class="nav-icon cui-speedometer"></i> Planos
+            <i class="nav-icon cui-chart"></i> Planos
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link nav-link-danger" href="https://coreui.io/pro/">
-            <i class="nav-icon cui-layers"></i> Sair
+            <i class="nav-icon cui-account-logout"></i> Sair
           </a>
         </li>
       </ul>
@@ -47,7 +52,6 @@
     <button class="sidebar-minimizer brand-minimizer" type="button"></button>
   </div>
   <main class="main">
-    <!-- Main content here -->
     <router-outlet></router-outlet>
   </main>
 </div>
