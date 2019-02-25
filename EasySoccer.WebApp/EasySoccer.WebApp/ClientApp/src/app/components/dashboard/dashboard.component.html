@@ -1,3 +1,41 @@
-<p>
-  dashboard works!
-</p>
+<div class="container">
+<div class="animated fadeIn">
+    <div class="card-columns cols-2">
+      <div class="card">
+        <div class="card-header">
+          Evolução de agendamentos
+          <div class="card-header-actions">
+            6 meses
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="chart-wrapper">
+            <canvas baseChart class="chart"
+            [datasets]="lineChartData"
+            [labels]="lineChartLabels"
+            [options]="lineChartOptions"
+            [colors]="lineChartColours"
+            [legend]="lineChartLegend"
+            [chartType]="lineChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+          <div class="card-header">
+            Meus Agendamentos
+            <div class="card-header-actions">
+            </div>
+          </div>
+          <div class="card-body">
+            <p>Agendamentos realizados</p>
+            <div *ngFor="let user of users">
+              <app-user-list [currentUser]="user"></app-user-list>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+  
