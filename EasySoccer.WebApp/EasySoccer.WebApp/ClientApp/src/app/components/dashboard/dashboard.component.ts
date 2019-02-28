@@ -13,6 +13,9 @@ export class DashboardComponent implements OnInit {
 		this.users = new Array<User>();
 		this.users.push(new User('22', 'Pedro Henrique', '991255409', 'tarcisiosouzabr@gmail.com'));
 		this.users.push(new User('22', 'Joao Paulo', '991255409', 'tarcisiosouzabr@gmail.com'));
+		this.users.push(new User('22', 'Joao Rafael', '991255409', 'tarcisiosouzabr@gmail.com'));
+		this.users.push(new User('22', 'Edimar Oliveira', '991255409', 'tarcisiosouzabr@gmail.com'));
+		this.users.push(new User('22', 'Marcelo ', '991255409', 'tarcisiosouzabr@gmail.com'));
 	}
 	users: Array<User>;
 	// lineChart

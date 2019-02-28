@@ -30,9 +30,7 @@
           </div>
           <div class="card-body">
             <p>Agendamentos realizados</p>
-            <div *ngFor="let user of users">
-              <app-user-list [currentUser]="user"></app-user-list>
-            </div>
+              <app-user-list [users]="users"></app-user-list>
           </div>
         </div>
     </div>

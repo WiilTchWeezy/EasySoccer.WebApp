@@ -1,11 +1,37 @@
-<div class="row">
-  <div class="col-sm-2">
-    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20%289%29.jpg" height="35" width="40" class="img-circle"/>
-  </div>
-  <div class="col-sm-3">
-    <a>{{currentUser.name}}</a>
-  </div>
-  <div class="col-sm-6">
-    <p>{{currentUser.phoneNumber}}</p>
-  </div>
+<div>
+    <table>
+      <tbody *ngFor="let currentUser of users">
+        <th>
+          <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20%289%29.jpg" height="35" width="40" class="img-circle center-vertical"/>
+        </th>
+        <th>
+            <p class="center-vertical">
+              <a>{{currentUser.name}}</a>
+            </p>
+        </th>
+        <th>
+          <p class="center-vertical">{{currentUser.phoneNumber}}</p>
+        </th>
+        <th>
+          <div style="background-color:purple; padding-left: 3px; padding-right: 3px;" class="center-vertical">
+            <p style="color:white;">Pacaembu</p>
+          </div>
+        </th>
+        <th>
+            <div style="background-color:#ff591f; padding-left: 3px; padding-right: 3px;" class="center-vertical">
+              <p style="color:white;">19:00 - 20:00</p>
+            </div>
+          </th>
+          <th>
+              <div style="background-color:green; padding-left: 3px; padding-right: 3px;" class="center-vertical">
+                <p style="color:white;">Confirmado</p>
+              </div>
+            </th>
+      </tbody>
+    </table>
 </div>
+
+
+
+
+
