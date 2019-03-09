@@ -21,3 +21,11 @@ body {
 	background: #ff591f !important;
 	color: #fff;
 }
+
+.appointmenttabs {
+	width: 50%;
+}
+
+.appointmenttabstext {
+	text-align: center;
+}

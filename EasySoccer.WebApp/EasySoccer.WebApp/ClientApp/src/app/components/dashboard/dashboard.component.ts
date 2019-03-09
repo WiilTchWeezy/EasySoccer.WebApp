@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../model/user';
+import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours } from 'date-fns';
+import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView } from 'angular-calendar';
 
 @Component({
 	selector: 'app-dashboard',
@@ -7,6 +9,9 @@ import { User } from '../../model/user';
 	styleUrls: [ './dashboard.component.css' ]
 })
 export class DashboardComponent implements OnInit {
+	view: CalendarView = CalendarView.Month;
+	CalendarView = CalendarView;
+	viewDate: Date = new Date();
 	constructor() {}
 
 	ngOnInit() {
@@ -16,8 +21,16 @@ export class DashboardComponent implements OnInit {
 		this.users.push(new User('22', 'Joao Rafael', '991255409', 'tarcisiosouzabr@gmail.com'));
 		this.users.push(new User('22', 'Edimar Oliveira', '991255409', 'tarcisiosouzabr@gmail.com'));
 		this.users.push(new User('22', 'Marcelo ', '991255409', 'tarcisiosouzabr@gmail.com'));
+
+		this.pendingUsers = new Array<User>();
+		this.pendingUsers.push(new User('22', 'Pedro Ronaldo', '991255409', 'tarcisiosouzabr@gmail.com'));
+		this.pendingUsers.push(new User('22', 'Felipe A.', '991255409', 'tarcisiosouzabr@gmail.com'));
+		this.pendingUsers.push(new User('22', 'Marcelo O.', '991255409', 'tarcisiosouzabr@gmail.com'));
+		this.pendingUsers.push(new User('22', 'Eduardo', '991255409', 'tarcisiosouzabr@gmail.com'));
+		this.pendingUsers.push(new User('22', 'Mauricio F. ', '991255409', 'tarcisiosouzabr@gmail.com'));
 	}
 	users: Array<User>;
+	pendingUsers: Array<User>;
 	// lineChart
 	public lineChartData: Array<any> = [ { data: [ 40, 59, 65, 69, 73, 78, 85 ], label: '' } ];
 	public lineChartLabels: Array<any> = [ 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho' ];
