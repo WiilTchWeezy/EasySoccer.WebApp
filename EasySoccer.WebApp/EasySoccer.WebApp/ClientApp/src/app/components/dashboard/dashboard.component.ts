@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../../model/user';
 import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours } from 'date-fns';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView } from 'angular-calendar';
-
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 @Component({
 	selector: 'app-dashboard',
 	templateUrl: './dashboard.component.html',
@@ -12,7 +12,8 @@ export class DashboardComponent implements OnInit {
 	view: CalendarView = CalendarView.Month;
 	CalendarView = CalendarView;
 	viewDate: Date = new Date();
-	constructor() {}
+	closeResult: string;
+	constructor(private modalService: NgbModal) {}
 
 	ngOnInit() {
 		this.users = new Array<User>();
@@ -23,11 +24,11 @@ export class DashboardComponent implements OnInit {
 		this.users.push(new User('22', 'Marcelo ', '991255409', 'tarcisiosouzabr@gmail.com'));
 
 		this.pendingUsers = new Array<User>();
-		this.pendingUsers.push(new User('22', 'Pedro Ronaldo', '991255409', 'tarcisiosouzabr@gmail.com'));
-		this.pendingUsers.push(new User('22', 'Felipe A.', '991255409', 'tarcisiosouzabr@gmail.com'));
-		this.pendingUsers.push(new User('22', 'Marcelo O.', '991255409', 'tarcisiosouzabr@gmail.com'));
+		this.pendingUsers.push(new User('22', 'Pedro R.', '991255409', 'tarcisiosouzabr@gmail.com'));
+		this.pendingUsers.push(new User('22', 'Pedro R.', '991255409', 'tarcisiosouzabr@gmail.com'));
+		this.pendingUsers.push(new User('22', 'Pedro R.', '991255409', 'tarcisiosouzabr@gmail.com'));
 		this.pendingUsers.push(new User('22', 'Eduardo', '991255409', 'tarcisiosouzabr@gmail.com'));
-		this.pendingUsers.push(new User('22', 'Mauricio F. ', '991255409', 'tarcisiosouzabr@gmail.com'));
+		this.pendingUsers.push(new User('22', 'Pedro R.', '991255409', 'tarcisiosouzabr@gmail.com'));
 	}
 	users: Array<User>;
 	pendingUsers: Array<User>;
@@ -58,5 +59,29 @@ export class DashboardComponent implements OnInit {
 
 	public chartHovered(e: any): void {
 		console.log(e);
+	}
+
+	open(content: any) {
+		console.log('called open');
+		console.log(this.modalService);
+		console.log(content);
+		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+			(result) => {
+				this.closeResult = `Closed with: ${result}`;
+			},
+			(reason) => {
+				this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+			}
+		);
+	}
+
+	private getDismissReason(reason: any): string {
+		if (reason === ModalDismissReasons.ESC) {
+			return 'by pressing ESC';
+		} else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+			return 'by clicking on a backdrop';
+		} else {
+			return `with: ${reason}`;
+		}
 	}
 }

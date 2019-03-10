@@ -29,3 +29,7 @@ body {
 .appointmenttabstext {
 	text-align: center;
 }
+
+.modal-backdrop.show {
+	opacity: .5 !important;
+}
