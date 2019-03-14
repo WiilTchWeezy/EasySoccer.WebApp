@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { User } from '../../model/user';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
 	selector: 'app-user-list',
@@ -8,7 +9,15 @@ import { User } from '../../model/user';
 })
 export class UserListComponent implements OnInit {
 	@Input() users: User[];
-	constructor() {}
+	selectedUser: User;
+	constructor(private modalService: NgbModal) {}
 
 	ngOnInit() {}
+
+	openModal(content: any, currentUser: User) {
+		this.selectedUser = currentUser;
+		this.modalService
+			.open(content, { ariaLabelledBy: 'modal-basic-title' })
+			.result.then((result) => {}, (reason) => {});
+	}
 }
