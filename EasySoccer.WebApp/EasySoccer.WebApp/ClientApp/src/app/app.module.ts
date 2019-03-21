@@ -13,9 +13,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MyscheduleComponent } from './components/myschedule/myschedule.component';
 
 @NgModule({
-	declarations: [ AppComponent, DashboardComponent, UserListComponent ],
+	declarations: [ AppComponent, DashboardComponent, UserListComponent, MyscheduleComponent ],
 	imports: [
 		BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
 		HttpClientModule,
@@ -25,7 +26,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 		BrowserAnimationsModule,
 		RouterModule.forRoot([
 			{ path: '', component: DashboardComponent, pathMatch: 'full' },
-			{ path: 'dashboard', component: DashboardComponent }
+			{ path: 'dashboard', component: DashboardComponent },
+			{ path: 'myschedule', component: MyscheduleComponent }
 		]),
 		CalendarModule.forRoot({
 			provide: DateAdapter,

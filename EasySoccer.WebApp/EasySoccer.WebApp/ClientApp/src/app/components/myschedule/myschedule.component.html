@@ -1,0 +1,37 @@
+
+<div class="container">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Responsável</th>
+      <th scope="col">Quadra</th>
+      <th scope="col">Horário</th>
+      <th scope="col">Status</th>
+      <th scope="col">#</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let country of countries; index as i">
+      <th scope="row">{{ i + 1 }}</th>
+      <td>
+        <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="mr-2" style="width: 20px">
+        {{ country.name }}
+      </td>
+      <td>{{ country.area | number }}</td>
+      <td>{{ country.population | number }}</td>
+      <td><a title="Editar" href="#"><i class="nav-icon cui-pencil"></i></a></td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="d-flex justify-content-between p-2">
+      <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+      </ngb-pagination>
+    
+      <select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
+        <option [ngValue]="2">2 items per page</option>
+        <option [ngValue]="4">4 items per page</option>
+        <option [ngValue]="6">6 items per page</option>
+      </select>
+    </div>
+</div>
