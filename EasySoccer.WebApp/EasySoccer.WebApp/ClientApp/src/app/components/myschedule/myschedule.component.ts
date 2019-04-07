@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ScheduleService } from '../../service/schedule.service';
 interface Country {
 	name: string;
 	flag: string;
@@ -42,9 +43,18 @@ export class MyscheduleComponent implements OnInit {
 	page = 1;
 	pageSize = 4;
 	collectionSize = COUNTRIES.length;
-	constructor() {}
+	constructor(public scheduleService: ScheduleService) {}
 
-	ngOnInit() {}
+	ngOnInit() {
+		this.scheduleService.getSchedules().subscribe(
+			(res) => {
+				console.log(res);
+			},
+			(error) => {
+				console.log(error);
+			}
+		);
+	}
 
 	get countries(): Country[] {
 		return COUNTRIES.map((country, i) => ({ id: i + 1, ...country })).slice(
