@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ScheduleService } from '../../service/schedule.service';
+import { SoccerPitchReservation } from '../../model/soccer-pitch-reservation';
 interface Country {
 	name: string;
 	flag: string;
@@ -43,12 +44,15 @@ export class MyscheduleComponent implements OnInit {
 	page = 1;
 	pageSize = 4;
 	collectionSize = COUNTRIES.length;
+	soccerPitchReservations: SoccerPitchReservation[];
+
 	constructor(public scheduleService: ScheduleService) {}
 
 	ngOnInit() {
 		this.scheduleService.getSchedules().subscribe(
 			(res) => {
 				console.log(res);
+				this.soccerPitchReservations = res;
 			},
 			(error) => {
 				console.log(error);

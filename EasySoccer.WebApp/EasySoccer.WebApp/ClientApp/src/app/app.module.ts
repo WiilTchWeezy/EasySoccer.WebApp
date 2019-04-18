@@ -14,9 +14,11 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MyscheduleComponent } from './components/myschedule/myschedule.component';
+import { SoccerpitchComponent } from './components/soccerpitch/soccerpitch.component';
+import { SoccerpitchplanComponent } from './components/soccerpitchplan/soccerpitchplan.component';
 
 @NgModule({
-	declarations: [ AppComponent, DashboardComponent, UserListComponent, MyscheduleComponent ],
+	declarations: [ AppComponent, DashboardComponent, UserListComponent, MyscheduleComponent, SoccerpitchComponent, SoccerpitchplanComponent ],
 	imports: [
 		BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
 		HttpClientModule,
@@ -27,7 +29,8 @@ import { MyscheduleComponent } from './components/myschedule/myschedule.componen
 		RouterModule.forRoot([
 			{ path: '', component: DashboardComponent, pathMatch: 'full' },
 			{ path: 'dashboard', component: DashboardComponent },
-			{ path: 'myschedule', component: MyscheduleComponent }
+			{ path: 'myschedule', component: MyscheduleComponent },
+			{ path: 'soccerpitch', component: SoccerpitchComponent }
 		]),
 		CalendarModule.forRoot({
 			provide: DateAdapter,

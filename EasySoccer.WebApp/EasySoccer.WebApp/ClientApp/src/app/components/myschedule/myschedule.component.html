@@ -11,14 +11,13 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let country of countries; index as i">
-      <th scope="row">{{ i + 1 }}</th>
+    <tr *ngFor="let soccerPitchReservation of soccerPitchReservations; index as i">
       <td>
-        <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="mr-2" style="width: 20px">
-        {{ country.name }}
+        {{ soccerPitchReservation.userName }}
       </td>
-      <td>{{ country.area | number }}</td>
-      <td>{{ country.population | number }}</td>
+      <td>{{ soccerPitchReservation.soccerPitchName }}</td>
+      <td>{{ soccerPitchReservation.selectedHourStart }} - {{ soccerPitchReservation.selectedHourEnd }}</td>
+      <td>{{ soccerPitchReservation.selectedHourStart }}</td>
       <td><a title="Editar" href="#"><i class="nav-icon cui-pencil"></i></a></td>
     </tr>
     </tbody>

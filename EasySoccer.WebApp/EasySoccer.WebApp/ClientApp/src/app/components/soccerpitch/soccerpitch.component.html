@@ -1,0 +1,24 @@
+<div class="container">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Nome</th>
+      <th scope="col">Descrição</th>
+      <th scope="col">Numero de Jogadores</th>
+      <th scope="col">Possui cobertura</th>
+      <th scope="col">#</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let soccerPitch of soccerPitchs; index as i">
+      <td>
+        {{ soccerPitch.name }}
+      </td>
+      <td>{{ soccerPitch.description }}</td>
+      <td>{{ soccerPitch.numberOfPlayers }}</td>
+      <td>{{ soccerPitch.hasRoof }}</td>
+      <td><a title="Editar" href="#"><i class="nav-icon cui-pencil"></i></a></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
