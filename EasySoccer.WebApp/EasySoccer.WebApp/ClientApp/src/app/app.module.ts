@@ -18,7 +18,14 @@ import { SoccerpitchComponent } from './components/soccerpitch/soccerpitch.compo
 import { SoccerpitchplanComponent } from './components/soccerpitchplan/soccerpitchplan.component';
 
 @NgModule({
-	declarations: [ AppComponent, DashboardComponent, UserListComponent, MyscheduleComponent, SoccerpitchComponent, SoccerpitchplanComponent ],
+	declarations: [
+		AppComponent,
+		DashboardComponent,
+		UserListComponent,
+		MyscheduleComponent,
+		SoccerpitchComponent,
+		SoccerpitchplanComponent
+	],
 	imports: [
 		BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
 		HttpClientModule,
@@ -30,7 +37,8 @@ import { SoccerpitchplanComponent } from './components/soccerpitchplan/soccerpit
 			{ path: '', component: DashboardComponent, pathMatch: 'full' },
 			{ path: 'dashboard', component: DashboardComponent },
 			{ path: 'myschedule', component: MyscheduleComponent },
-			{ path: 'soccerpitch', component: SoccerpitchComponent }
+			{ path: 'soccerpitch', component: SoccerpitchComponent },
+			{ path: 'soccerpitchplan', component: SoccerpitchplanComponent }
 		]),
 		CalendarModule.forRoot({
 			provide: DateAdapter,
