@@ -26,29 +26,11 @@ export class SoccerpitchplanService {
 		return this.http.get(environment.urlApi + 'soccerpitchplan/get').pipe(map(this.extractData));
 	}
 
-	public postSoccerPitchPlan(plan: Soccerpitchplan): Soccerpitchplan {
-		var responseData: Soccerpitchplan;
-		this.http.post<Soccerpitchplan>(environment.urlApi + 'soccerpitchplan/get', plan).subscribe(
-			(data) => {
-				responseData = data;
-			},
-			(error) => {
-				responseData = error;
-			}
-		);
-		return responseData;
+	public postSoccerPitchPlan(plan: Soccerpitchplan): any {
+		return this.http.post<Soccerpitchplan>(environment.urlApi + 'soccerpitchplan/post', plan);
 	}
 
-	public patchSoccerPitchPlan(plan: Soccerpitchplan): Soccerpitchplan {
-		var responseData: Soccerpitchplan;
-		this.http.patch<Soccerpitchplan>(environment.urlApi + 'soccerpitchplan/get', plan).subscribe(
-			(data) => {
-				responseData = data;
-			},
-			(error) => {
-				responseData = error;
-			}
-		);
-		return responseData;
+	public patchSoccerPitchPlan(plan: Soccerpitchplan): any {
+		return this.http.patch<Soccerpitchplan>(environment.urlApi + 'soccerpitchplan/patch', plan);
 	}
 }
