@@ -1,8 +1,9 @@
 export class Soccerpitch {
-	id: string;
+	id: Number;
 	active: Boolean;
 	description: string;
-	hasRoof: string;
+	hasRoof: Boolean;
 	name: string;
 	numberOfPlayers: Number;
+	soccerPitchPlanId: Number;
 }

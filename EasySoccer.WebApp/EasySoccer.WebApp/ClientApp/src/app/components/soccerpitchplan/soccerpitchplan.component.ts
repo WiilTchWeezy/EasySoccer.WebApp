@@ -32,27 +32,33 @@ export class SoccerpitchplanComponent implements OnInit {
 		);
 	}
 
-	openModal(content: any, planId: number) {
-		this.planId = planId;
+	openModal(content: any, selectedPlan: Soccerpitchplan) {
+		this.planId = selectedPlan.id;
 		if (this.planId > 0) {
 			this.modalTitle = 'Editar plano';
+			this.modalSelectedPlan = selectedPlan;
 		} else {
 			this.modalTitle = 'Adicionar novo plano';
+			this.modalSelectedPlan = new Soccerpitchplan();
 		}
 		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
 			(result) => {
 				if (this.planId > 0) {
 					this.modalSelectedPlan.id = this.planId;
+					console.log(this.modalSelectedPlan);
 					this.soccerPitchPlanService.patchSoccerPitchPlan(this.modalSelectedPlan).subscribe(
 						(data) => {
 							this.getPlans();
+							this.modalSelectedPlan = new Soccerpitchplan();
 						},
 						(error) => {}
 					);
 				} else {
+					console.log(this.modalSelectedPlan);
 					this.soccerPitchPlanService.postSoccerPitchPlan(this.modalSelectedPlan).subscribe(
 						(data) => {
 							this.getPlans();
+							this.modalSelectedPlan = new Soccerpitchplan();
 						},
 						(error) => {}
 					);
