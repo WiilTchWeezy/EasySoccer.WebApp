@@ -21,7 +21,9 @@ export class ScheduleService {
 		return body || {};
 	}
 
-	public getSchedules(): Observable<any> {
-		return this.http.get(environment.urlApi + 'soccerpitchreservation/get').pipe(map(this.extractData));
+	public getSchedules(page: number, pageSize: number): Observable<any> {
+		return this.http
+			.get(environment.urlApi + 'soccerpitchreservation/get?page=' + page + '&pageSize=' + pageSize)
+			.pipe(map(this.extractData));
 	}
 }
