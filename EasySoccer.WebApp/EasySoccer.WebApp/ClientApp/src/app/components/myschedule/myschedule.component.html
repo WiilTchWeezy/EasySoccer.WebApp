@@ -1,0 +1,97 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Informações Agendamento</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <h5>Usuário </h5>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-sm-6">
+              <label for="name">Nome</label>
+              <div class="input-group">
+                <input id="name" class="form-control" placeholder="Nome" name="selectedUsername" [(ngModel)]="selectedUser.name" disabled>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <label for="phone">Telefone</label>
+              <div class="input-group">
+                <input id="phone" class="form-control" placeholder="Telefone" name="phone" [(ngModel)]="selectedUser.phoneNumber" disabled>
+              </div>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-sm-12">
+                <label for="email">Email</label>
+                <div class="input-group">
+                  <input id="email" class="form-control" placeholder="Email" name="selectedEmail" [(ngModel)]="selectedUser.email" disabled>
+                </div>
+              </div>
+         </div>
+        <h5>Agendamento </h5>
+          <div class="row">
+            <div class="col-sm-6">
+              <label for="soccerPicht">Quadra</label>
+              <div class="input-group">
+                <input id="soccerPicht" class="form-control" placeholder="Quadra" name="soccerPicht" value="Pacaembu" disabled>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <label for="phone">Horário</label>
+              <div class="input-group">
+                <input id="schedule" class="form-control" placeholder="Telefone" name="schedule" value="20:00 - 21:00" disabled>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+              <div class="col-sm-12">
+                  <label for="status">Status</label>
+                  <div class="input-group">
+                    <input id="status" class="form-control" placeholder="Status" name="status" value="Confirmado" disabled>
+                  </div>
+                </div>
+           </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    </div>
+  </ng-template>
+<div class="container">
+    <div style="padding:5px;">
+        <button type="button" class="btn btn-primary" (click)="openModal(content, 0);" value="Click Me" style="float: right; margin-bottom: 5px;"> Adicionar novo agendamento </button>
+    </div>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Responsável</th>
+      <th scope="col">Quadra</th>
+      <th scope="col">Data selecionada</th>
+      <th scope="col">Horário</th>
+      <th scope="col">Status</th>
+      <th scope="col">#</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let soccerPitchReservation of soccerPitchReservations; index as i">
+      <td>
+        {{ soccerPitchReservation.userName }}
+      </td>
+      <td>{{ soccerPitchReservation.soccerPitchName }}</td>
+      <td>{{ soccerPitchReservation.selectedDate | date:'dd/MM/yyyy' }}</td>
+      <td>{{ soccerPitchReservation.selectedHourStart }} - {{ soccerPitchReservation.selectedHourEnd }}</td>
+      <td>{{ soccerPitchReservation.status }}</td>
+      <td><a title="Editar" href="#"><i class="nav-icon cui-pencil"></i></a></td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="d-flex justify-content-between p-2">
+      <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+      </ngb-pagination>
+    </div>
+</div>

@@ -1,1 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
+@font-face {
+	font-family: Gilroy-ExtraBold;
+	src: url(assets/Gilroy-ExtraBold.otf) format("opentype");
+}
+
+@font-face {
+	font-family: Gilroy-Light;
+	src: url(assets/Gilroy-Light.otf) format("opentype");
+}
+
+body {
+	font-family: 'Gilroy-ExtraBold' !important;
+}
+
+.sidebar {
+	background-color: #161e53 !important;
+}
+
+.sidebar .nav-link:hover {
+	background: #ff591f !important;
+	color: #fff;
+}
+
+.appointmenttabs {
+	width: 50%;
+}
+
+.appointmenttabstext {
+	text-align: center;
+}
+
+.modal-backdrop.show {
+	opacity: .5 !important;
+}
