@@ -1,0 +1,11 @@
+.center-vertical {
+	vertical-align: middle;
+	margin: 5px;
+}
+.divisor {
+	height: 1px;
+	border: 1px solid;
+	border-color: silver;
+	width: 100%;
+	opacity: 0.4;
+}
