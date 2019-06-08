@@ -13,44 +13,54 @@
             <div class="col-sm-6">
               <label for="name">Nome</label>
               <div class="input-group">
-                <input id="name" class="form-control" placeholder="Nome" name="selectedUsername" [(ngModel)]="selectedUser.name" disabled>
+                <input id="name" class="form-control" placeholder="Nome" name="selectedUsername" [(ngModel)]="modalSoccerPitchReservation.name">
               </div>
             </div>
             <div class="col-sm-6">
               <label for="phone">Telefone</label>
               <div class="input-group">
-                <input id="phone" class="form-control" placeholder="Telefone" name="phone" [(ngModel)]="selectedUser.phoneNumber" disabled>
+                <input id="phone" class="form-control" placeholder="Telefone" name="phone" [(ngModel)]="modalSoccerPitchReservation.phoneNumber">
               </div>
             </div>
-         </div>
-         <div class="row">
-            <div class="col-sm-12">
-                <label for="email">Email</label>
-                <div class="input-group">
-                  <input id="email" class="form-control" placeholder="Email" name="selectedEmail" [(ngModel)]="selectedUser.email" disabled>
-                </div>
-              </div>
          </div>
         <h5>Agendamento </h5>
           <div class="row">
             <div class="col-sm-6">
               <label for="soccerPicht">Quadra</label>
               <div class="input-group">
-                <input id="soccerPicht" class="form-control" placeholder="Quadra" name="soccerPicht" value="Pacaembu" disabled>
+                <!-- [(ngModel)]="soccerPitchsplan" (ngModelChange)="selectChange($event)" -->
+                <select id="soccerPicht" class="form-control" name="soccerPicht" >                                                               
+                  <!-- <option *ngFor="let sp of soccerPitchsplans;" [ngValue]="sp">{{sp.name}}</option> -->
+                  <option >Pacaembu</option>
+                  <option >Maracana</option>
+                </select>
               </div>
             </div>
             <div class="col-sm-6">
-              <label for="phone">Horário</label>
+              <label for="soccerPichtPlanId">Plano</label>
               <div class="input-group">
-                <input id="schedule" class="form-control" placeholder="Telefone" name="schedule" value="20:00 - 21:00" disabled>
+                <!-- [(ngModel)]="soccerPitchsplan" (ngModelChange)="selectChange($event)" -->
+                <select id="soccerPichtPlanId" class="form-control" name="soccerPichtPlanId" >                                                               
+                  <!-- <option *ngFor="let sp of soccerPitchsplans;" [ngValue]="sp">{{sp.name}}</option> -->
+                  <option >Avulso</option>
+                  <option >Anual</option>
+                  <option >Mensal</option>
+                </select>
               </div>
             </div>
+
           </div>
           <div class="row">
               <div class="col-sm-12">
                   <label for="status">Status</label>
                   <div class="input-group">
                     <input id="status" class="form-control" placeholder="Status" name="status" value="Confirmado" disabled>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label for="phone">Horário</label>
+                  <div class="input-group">
+                    <input id="schedule" class="form-control" placeholder="Telefone" name="schedule" value="20:00 - 21:00" disabled>
                   </div>
                 </div>
            </div>
@@ -85,7 +95,7 @@
       <td>{{ soccerPitchReservation.selectedDate | date:'dd/MM/yyyy' }}</td>
       <td>{{ soccerPitchReservation.selectedHourStart }} - {{ soccerPitchReservation.selectedHourEnd }}</td>
       <td>{{ soccerPitchReservation.status }}</td>
-      <td><a title="Editar" href="#"><i class="nav-icon cui-pencil"></i></a></td>
+      <td><a title="Editar" (click)="openModal(content,soccerPitchReservation);" ><i class="nav-icon cui-pencil"></i></a></td>
     </tr>
     </tbody>
   </table>

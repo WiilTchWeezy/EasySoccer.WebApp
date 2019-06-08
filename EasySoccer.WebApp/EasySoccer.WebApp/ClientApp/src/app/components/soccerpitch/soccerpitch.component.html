@@ -7,7 +7,7 @@
   </div>
   <div class="modal-body">
     <form>
-      <h5>Plano </h5>
+      <h5>Quadra </h5>
       <div class="form-group">
         <div class="row">
           <div class="col-sm-12">
@@ -39,15 +39,31 @@
         </div>
       </div>
      </div> 
-     <div class="row">
-      <div class="col-sm-12">
-        <label for="planId">Plano</label>
-        <select id="planId" class="form-control" name="planId" [(ngModel)]="soccerPitchsplan" (ngModelChange)="selectChange($event)">                                                                
-          <option *ngFor="let sp of soccerPitchsplans;" [ngValue]="sp">{{sp.name}}</option>
-        </select>
+      <div *ngFor="let planControl of soccerPitchsplansControl;  let i = index">
+        <div class="row">
+            <div [ngClass]="{'col-sm-12': i == 0, 'col-sm-9': i > 0}">
+              <label for="planId">Plano</label>
+              <select id="planId" class="form-control" name="planId" [(ngModel)]="planControl.selectedPlan" (ngModelChange)="selectChange($event, planControl)">                                                                
+                <option *ngFor="let sp of soccerPitchsplans;" [ngValue]="sp">{{sp.name}}</option>
+              </select>
+            </div>
+            <div *ngIf="i > 0">
+                <div class="col-sm-3" style="margin-top:30px;" (click)="removePlan($event, planControl)">
+                    <label class="btn-danger" ngbButtonLabel>
+                      Excluir
+                    </label>
+                </div>
+            </div>
+        </div>
       </div>
-     </div>
+      <div class="row" style="margin-top:25px;">
+        <div class="col-sm-6">
+              <label class="btn-success" ngbButtonLabel (click)="addPlan($event)">
+                Adicionar planos
+              </label>
+        </div>
       </div>
+    </div>
     </form>
   </div>
   <div class="modal-footer">

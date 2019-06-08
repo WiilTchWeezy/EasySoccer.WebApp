@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { SoccerPitchReservation } from '../model/soccer-pitch-reservation';
 
 @Injectable({
 	providedIn: 'root'
@@ -25,5 +26,13 @@ export class ScheduleService {
 		return this.http
 			.get(environment.urlApi + 'soccerpitchreservation/get?page=' + page + '&pageSize=' + pageSize)
 			.pipe(map(this.extractData));
+	}
+
+	public postSoccerPitchReservation(plan: SoccerPitchReservation): any {
+		return this.http.post<SoccerPitchReservation>(environment.urlApi + 'soccerpitchreservation/post', plan);
+	}
+
+	public patchSoccerPitchReservation(plan: SoccerPitchReservation): any {
+		return this.http.patch<SoccerPitchReservation>(environment.urlApi + 'soccerpitchreservation/patch', plan);
 	}
 }
