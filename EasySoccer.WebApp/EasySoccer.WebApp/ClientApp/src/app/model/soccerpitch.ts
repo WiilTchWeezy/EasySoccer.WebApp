@@ -1,3 +1,4 @@
+import { Soccerpitchsoccerpitchplan } from '../model/soccerpitchsoccerpitchplan';
 export class Soccerpitch {
 	id: Number;
 	active: Boolean;
@@ -5,5 +6,5 @@ export class Soccerpitch {
 	hasRoof: Boolean;
 	name: string;
 	numberOfPlayers: Number;
-	soccerPitchPlanId: Number;
+	soccerPitchSoccerPitchPlans: Soccerpitchsoccerpitchplan[];
 }

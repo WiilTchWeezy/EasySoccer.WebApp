@@ -39,12 +39,12 @@
         </div>
       </div>
      </div> 
-      <div *ngFor="let planControl of soccerPitchsplansControl;  let i = index">
+      <div *ngFor="let planControl of modalSoccerPitch.soccerPitchSoccerPitchPlans;  let i = index">
         <div class="row">
             <div [ngClass]="{'col-sm-12': i == 0, 'col-sm-9': i > 0}">
               <label for="planId">Plano</label>
-              <select id="planId" class="form-control" name="planId" [(ngModel)]="planControl.selectedPlan" (ngModelChange)="selectChange($event, planControl)">                                                                
-                <option *ngFor="let sp of soccerPitchsplans;" [ngValue]="sp">{{sp.name}}</option>
+              <select id="planId" class="form-control" name="planId" [(ngModel)]="planControl.soccerPitchPlanId">                                                                
+                <option *ngFor="let sp of soccerPitchsplans;" [ngValue]="sp.id">{{sp.name}}</option>
               </select>
             </div>
             <div *ngIf="i > 0">

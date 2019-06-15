@@ -3,7 +3,7 @@ import { SoccerpitchService } from '../../service/soccerpitch.service';
 import { SoccerpitchplanService } from '../../service/soccerpitchplan.service';
 import { Soccerpitch } from '../../model/soccerpitch';
 import { Soccerpitchplan } from '../../model/soccerpitchplan';
-import { Soccerpitchplancontrol } from '../../model/soccerpitchplancontrol';
+import { Soccerpitchsoccerpitchplan } from '../../model/soccerpitchsoccerpitchplan';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -14,7 +14,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class SoccerpitchComponent implements OnInit {
 	soccerPitchs: Soccerpitch[];
 	soccerPitchsplans: Soccerpitchplan[];
-	soccerPitchsplansControl: Soccerpitchplancontrol[];
+	soccerPitchsplansControl: Soccerpitchsoccerpitchplan[];
 	soccerPitchsplan: Soccerpitchplan;
 	modalTitle: String;
 	modalSoccerPitch: Soccerpitch;
@@ -54,21 +54,20 @@ export class SoccerpitchComponent implements OnInit {
 		);
 	}
 
-	selectChange($event: any, planControl: Soccerpitchplancontrol) {
-		console.log($event);
-		planControl.planId = $event.id;
-		console.log(this.soccerPitchsplansControl);
-		console.log(this.modalSoccerPitch);
+	selectChange($event: any, planControl: Soccerpitchsoccerpitchplan) {
+		planControl.soccerPitchPlanId = $event.id;
+		console.log($event.id);
+		console.log(planControl);
 	}
 
 	addPlan($event: any) {
-		this.soccerPitchsplansControl.push(new Soccerpitchplancontrol());
+		this.modalSoccerPitch.soccerPitchSoccerPitchPlans.push(new Soccerpitchsoccerpitchplan());
 	}
 
-	removePlan($event: any, planControl: Soccerpitchplancontrol) {
-		let index = this.soccerPitchsplansControl.indexOf(planControl);
+	removePlan($event: any, planControl: Soccerpitchsoccerpitchplan) {
+		let index = this.modalSoccerPitch.soccerPitchSoccerPitchPlans.indexOf(planControl);
 		if (index !== -1) {
-			this.soccerPitchsplansControl.splice(index, 1);
+			this.modalSoccerPitch.soccerPitchSoccerPitchPlans.splice(index, 1);
 		}
 	}
 
@@ -80,15 +79,12 @@ export class SoccerpitchComponent implements OnInit {
 		} else {
 			this.modalSoccerPitch = new Soccerpitch();
 			this.modalTitle = 'Adicionar nova quadra';
-			if (this.soccerPitchsplansControl.length == 0) {
-				this.soccerPitchsplansControl.push(new Soccerpitchplancontrol());
-			}
-		}
-		if (this.soccerPitchsplans.length > 0) {
-			for (let i = 0; i < this.soccerPitchsplans.length; i++) {
-				if (this.soccerPitchsplans[i].id == selectedSoccerPitch.soccerPitchPlanId) {
-					this.soccerPitchsplan = this.soccerPitchsplans[i];
-				}
+			if (
+				this.modalSoccerPitch.soccerPitchSoccerPitchPlans == undefined ||
+				this.modalSoccerPitch.soccerPitchSoccerPitchPlans.length == 0
+			) {
+				this.modalSoccerPitch.soccerPitchSoccerPitchPlans = [];
+				this.modalSoccerPitch.soccerPitchSoccerPitchPlans.push(new Soccerpitchsoccerpitchplan());
 			}
 		}
 		console.log(this.modalSoccerPitch);
