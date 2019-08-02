@@ -34,7 +34,7 @@ export class SoccerpitchComponent implements OnInit {
 	}
 
 	getSoccerpitchs() {
-		this.soccerPitchService.getSchedules().subscribe(
+		this.soccerPitchService.getSoccerPitchs().subscribe(
 			(res) => {
 				console.log(res);
 				this.soccerPitchs = res;

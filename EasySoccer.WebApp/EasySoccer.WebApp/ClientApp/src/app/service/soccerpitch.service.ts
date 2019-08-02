@@ -22,7 +22,7 @@ export class SoccerpitchService {
 		return body || {};
 	}
 
-	public getSchedules(): Observable<any> {
+	public getSoccerPitchs(): Observable<any> {
 		return this.http.get(environment.urlApi + 'soccerpitch/get').pipe(map(this.extractData));
 	}
 

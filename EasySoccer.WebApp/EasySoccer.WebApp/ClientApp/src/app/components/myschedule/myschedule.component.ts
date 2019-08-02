@@ -1,7 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ScheduleService } from '../../service/schedule.service';
+import { SoccerpitchService } from '../../service/soccerpitch.service';
+import { UserService } from '../../service/user.service';
 import { SoccerPitchReservation } from '../../model/soccer-pitch-reservation';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Soccerpitch } from '../../model/soccerpitch';
+import { SoccerpitchplanService } from '../../service/soccerpitchplan.service';
+import { Soccerpitchplan } from '../../model/soccerpitchplan';
+import { Observable, of } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, map, tap, switchMap } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-myschedule',
@@ -12,16 +19,47 @@ export class MyscheduleComponent implements OnInit {
 	page = 1;
 	pageSize = 10;
 	soccerPitchReservations: SoccerPitchReservation[];
+	soccerPitchs: Soccerpitch[];
+	soccerPitchsPlans: Soccerpitchplan[];
 	collectionSize = 0;
+	selectedSoccerPitch: Soccerpitch;
+	searching = false;
+	searchFailed = false;
 
 	modalTitle: String;
 	modalSoccerPitchReservation: SoccerPitchReservation;
-
-	constructor(public scheduleService: ScheduleService, private modalService: NgbModal) {}
+	model: any;
+	constructor(
+		public scheduleService: ScheduleService,
+		private modalService: NgbModal,
+		public soccerpitchService: SoccerpitchService,
+		public soccerpitchplanService: SoccerpitchplanService,
+		public userService: UserService
+	) {}
 
 	ngOnInit() {
 		this.getReservations();
+		this.getSoccerPitchs();
 	}
+
+	search = (text$: Observable<string>) =>
+		text$.pipe(
+			debounceTime(300),
+			distinctUntilChanged(),
+			tap(() => (this.searching = true)),
+			switchMap((term) =>
+				this.userService.filterAsync(term).pipe(
+					tap(() => (this.searchFailed = false)),
+					catchError(() => {
+						this.searchFailed = true;
+						return of([]);
+					})
+				)
+			),
+			tap(() => (this.searching = false))
+		);
+
+	formatter = (x: { name: string }) => x.name;
 
 	getReservations() {
 		this.scheduleService.getSchedules(this.page, this.pageSize).subscribe(
@@ -36,11 +74,46 @@ export class MyscheduleComponent implements OnInit {
 		);
 	}
 
+	getSoccerPitchs() {
+		this.soccerpitchService.getSoccerPitchs().subscribe(
+			(res) => {
+				console.log(res);
+				this.soccerPitchs = res;
+			},
+			(error) => {
+				console.log(error);
+			}
+		);
+	}
+
+	getPlansBySoccerPitchId(id: any) {
+		this.soccerpitchplanService.getSoccerPitchPlanBySoccerPitchId(id).subscribe(
+			(res) => {
+				console.log(res);
+				this.soccerPitchsPlans = res;
+			},
+			(error) => {
+				console.log(error);
+			}
+		);
+	}
+
+	selectSoccerPitch($event: any) {
+		console.log($event);
+		this.getPlansBySoccerPitchId($event);
+	}
+	openUserModal(content: any) {
+		this.modalService
+			.open(content, { ariaLabelledBy: 'modal-basic-title' })
+			.result.then((result) => {}, (reason) => {});
+	}
+
 	openModal(content: any, selectedSoccerPitch: SoccerPitchReservation) {
 		console.log(selectedSoccerPitch);
 		if (selectedSoccerPitch.id != '') {
 			this.modalTitle = 'Editar quadra';
 			this.modalSoccerPitchReservation = selectedSoccerPitch;
+			this.getPlansBySoccerPitchId(selectedSoccerPitch.soccerPitchSoccerPitchPlanId);
 		} else {
 			this.modalSoccerPitchReservation = new SoccerPitchReservation();
 			this.modalTitle = 'Adicionar nova quadra';
