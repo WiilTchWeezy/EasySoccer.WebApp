@@ -12,10 +12,11 @@ import { UserListComponent } from './components/user-list/user-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { MyscheduleComponent } from './components/myschedule/myschedule.component';
 import { SoccerpitchComponent } from './components/soccerpitch/soccerpitch.component';
 import { SoccerpitchplanComponent } from './components/soccerpitchplan/soccerpitchplan.component';
+import { AddUserModalComponent } from './components/modal/add-user-modal/add-user-modal.component';
 
 @NgModule({
 	declarations: [
@@ -24,7 +25,8 @@ import { SoccerpitchplanComponent } from './components/soccerpitchplan/soccerpit
 		UserListComponent,
 		MyscheduleComponent,
 		SoccerpitchComponent,
-		SoccerpitchplanComponent
+		SoccerpitchplanComponent,
+		AddUserModalComponent
 	],
 	imports: [
 		BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -46,6 +48,7 @@ import { SoccerpitchplanComponent } from './components/soccerpitchplan/soccerpit
 		})
 	],
 	providers: [ AuthService ],
-	bootstrap: [ AppComponent ]
+	bootstrap: [ AppComponent ],
+	entryComponents: [ AddUserModalComponent ]
 })
 export class AppModule {}

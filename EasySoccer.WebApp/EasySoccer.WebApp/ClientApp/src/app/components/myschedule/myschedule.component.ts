@@ -9,6 +9,7 @@ import { SoccerpitchplanService } from '../../service/soccerpitchplan.service';
 import { Soccerpitchplan } from '../../model/soccerpitchplan';
 import { Observable, of } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map, tap, switchMap } from 'rxjs/operators';
+import { AddUserModalComponent } from '../modal/add-user-modal/add-user-modal.component';
 
 @Component({
 	selector: 'app-myschedule',
@@ -103,9 +104,7 @@ export class MyscheduleComponent implements OnInit {
 		this.getPlansBySoccerPitchId($event);
 	}
 	openUserModal(content: any) {
-		this.modalService
-			.open(content, { ariaLabelledBy: 'modal-basic-title' })
-			.result.then((result) => {}, (reason) => {});
+		this.modalService.open(AddUserModalComponent);
 	}
 
 	openModal(content: any, selectedSoccerPitch: SoccerPitchReservation) {
