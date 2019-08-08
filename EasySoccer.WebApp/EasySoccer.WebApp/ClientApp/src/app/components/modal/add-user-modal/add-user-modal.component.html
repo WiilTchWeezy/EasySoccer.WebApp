@@ -12,19 +12,19 @@
               <div class="col-sm-6">
                   <label for="user" >Nome(*)</label>
                   <div class="input-group">
-                  <input id="user" class="form-control" placeholder="Nome" name="name" type="text">
+                  <input id="user" class="form-control" placeholder="Nome" [(ngModel)]="user.name" name="name" type="text">
                   </div>
                 </div>
                 <div class="col-sm-6">
                     <label for="phone" >Telefone(*)</label>
                     <div class="input-group">
-                    <input id="phone" class="form-control" placeholder="Telefone" name="phone" type="text">
+                    <input id="phone" class="form-control" placeholder="Telefone" [(ngModel)]="user.phoneNumber" name="phone" type="text">
                     </div>
                   </div>
                   <div class="col-sm-12">
                       <label for="phone" >Email</label>
                       <div class="input-group">
-                      <input id="email" class="form-control" placeholder="Email" name="email" type="text">
+                      <input id="email" class="form-control" placeholder="Email" [(ngModel)]="user.email" name="email" type="text">
                       </div>
                   </div>
          </div>
@@ -32,5 +32,5 @@
         </form>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Save click')">Save</button>
+    <button type="button" class="btn btn-outline-dark" (click)="save();">Save</button>
   </div>
