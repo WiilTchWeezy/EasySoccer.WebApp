@@ -28,8 +28,10 @@ export class MyscheduleComponent implements OnInit {
 	searchFailed = false;
 
 	modalTitle: String;
+	userRespId: String;
 	modalSoccerPitchReservation: SoccerPitchReservation;
 	model: any;
+	selectedDate: any;
 	constructor(
 		public scheduleService: ScheduleService,
 		private modalService: NgbModal,
@@ -101,15 +103,45 @@ export class MyscheduleComponent implements OnInit {
 
 	selectSoccerPitch($event: any) {
 		console.log($event);
+		this.modalSoccerPitchReservation.soccerPitchId = $event;
 		this.getPlansBySoccerPitchId($event);
 	}
+
+	selectUser($event: any) {
+		console.log($event);
+		this.modalSoccerPitchReservation.userId = $event.id;
+	}
+
 	openUserModal(content: any) {
-		this.modalService.open(AddUserModalComponent);
+		this.modalService.open(AddUserModalComponent).result.then(
+			(result) => {
+				console.log(result);
+				this.modalSoccerPitchReservation.userId = result.id;
+			},
+			(reason) => {}
+		);
+	}
+
+	transformData() {
+		this.modalSoccerPitchReservation.hourStart =
+			this.modalSoccerPitchReservation.selectedHourStart.hour +
+			':' +
+			this.modalSoccerPitchReservation.selectedHourStart.minute;
+		this.modalSoccerPitchReservation.hourEnd =
+			this.modalSoccerPitchReservation.selectedHourEnd.hour +
+			':' +
+			this.modalSoccerPitchReservation.selectedHourEnd.minute;
+
+		this.modalSoccerPitchReservation.selectedDate = new Date(
+			this.selectedDate.year,
+			this.selectedDate.month - 1,
+			this.selectedDate.day
+		);
 	}
 
 	openModal(content: any, selectedSoccerPitch: SoccerPitchReservation) {
 		console.log(selectedSoccerPitch);
-		if (selectedSoccerPitch.id != '') {
+		if (selectedSoccerPitch != undefined && selectedSoccerPitch.id != '' && selectedSoccerPitch.id != undefined) {
 			this.modalTitle = 'Editar quadra';
 			this.modalSoccerPitchReservation = selectedSoccerPitch;
 			this.getPlansBySoccerPitchId(selectedSoccerPitch.soccerPitchSoccerPitchPlanId);
@@ -121,6 +153,7 @@ export class MyscheduleComponent implements OnInit {
 		console.log(this.modalSoccerPitchReservation);
 		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
 			(result) => {
+				this.transformData();
 				if (selectedSoccerPitch.id != null) {
 					this.scheduleService.patchSoccerPitchReservation(this.modalSoccerPitchReservation).subscribe(
 						(data) => {
