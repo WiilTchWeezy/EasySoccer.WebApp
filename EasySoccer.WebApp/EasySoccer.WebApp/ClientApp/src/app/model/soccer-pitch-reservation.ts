@@ -10,7 +10,10 @@ export class SoccerPitchReservation {
 	hourEnd: string;
 	soccerPitchName: string;
 	userName: string;
+	userPhone: string;
 	userId: string;
 	soccerPitchId: string;
 	soccerPitchSoccerPitchPlanId: number;
+	selectedUser: any;
+	userSelectDate: any;
 }

@@ -17,7 +17,7 @@
                   <label for="user" style="margin-top: 7px;">Responsável</label>
                   <button type="button" class="btn btn-primary float-right" style="margin-bottom: 5px;" (click)="openUserModal(usuarioModal);"  >Adicionar Responsável</button>
                   <div class="input-group">
-                    <input id="user" type="text" class="form-control" [class.is-invalid]="searchFailed" [ngbTypeahead]="search" placeholder="Digite nome ou telefone" name="selectedUser" [(ngModel)]="model" (ngModelChange)="selectUser($event)" [inputFormatter]="formatter" [resultTemplate]="rt">
+                    <input id="user" type="text" class="form-control" [class.is-invalid]="searchFailed" [ngbTypeahead]="search" placeholder="Digite nome ou telefone" name="selectedUser" [(ngModel)]="modalSoccerPitchReservation.selectedUser" (ngModelChange)="selectUser($event)" [inputFormatter]="formatter" [resultTemplate]="rt">
                     <span *ngIf="searching">Pesquisando...</span>
                     <div class="invalid-feedback" *ngIf="searchFailed">Não foi possível carregar sugestões.</div>
                   </div>
@@ -29,7 +29,6 @@
             <div class="col-sm-6">
               <label for="soccerPicht">Quadra</label>
               <div class="input-group">
-                <!-- [(ngModel)]="soccerPitchsplan" (ngModelChange)="selectChange($event)" -->
                 <select id="soccerPicht" class="form-control" name="soccerPicht" [(ngModel)]="modalSoccerPitchReservation.soccerPitchId" (ngModelChange)="selectSoccerPitch($event)" >                                                               
                   <option *ngFor="let sp of soccerPitchs;" [ngValue]="sp.id">{{sp.name}}</option>
                 </select>
@@ -38,7 +37,6 @@
             <div class="col-sm-6">
               <label for="soccerPichtPlanId">Plano</label>
               <div class="input-group">
-                <!-- [(ngModel)]="soccerPitchsplan" (ngModelChange)="selectChange($event)" -->
                 <select id="soccerPichtPlanId" [(ngModel)]="modalSoccerPitchReservation.soccerPitchSoccerPitchPlanId" class="form-control" name="soccerPichtPlanId" >                                                               
                   <option *ngFor="let sp of soccerPitchsPlans;" [ngValue]="sp.id">{{sp.name}}</option>
                 </select>
@@ -50,7 +48,7 @@
               <div class="col-sm-6">
                   <label for="status">Data do agendamento</label>
                   <div class="input-group">
-                    <ngb-datepicker #dp [(ngModel)]="selectedDate" name="selectedDate"></ngb-datepicker>
+                    <ngb-datepicker #dp [(ngModel)]="modalSoccerPitchReservation.userSelectDate" name="selectedDate"></ngb-datepicker>
                   </div>
               </div>
               <div class="col-sm-6">

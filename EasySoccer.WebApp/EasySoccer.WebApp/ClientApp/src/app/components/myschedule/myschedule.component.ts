@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ScheduleService } from '../../service/schedule.service';
 import { SoccerpitchService } from '../../service/soccerpitch.service';
 import { UserService } from '../../service/user.service';
@@ -30,7 +30,6 @@ export class MyscheduleComponent implements OnInit {
 	modalTitle: String;
 	userRespId: String;
 	modalSoccerPitchReservation: SoccerPitchReservation;
-	model: any;
 	selectedDate: any;
 	constructor(
 		public scheduleService: ScheduleService,
@@ -39,6 +38,8 @@ export class MyscheduleComponent implements OnInit {
 		public soccerpitchplanService: SoccerpitchplanService,
 		public userService: UserService
 	) {}
+
+	@ViewChild('dp') datePicker: ElementRef;
 
 	ngOnInit() {
 		this.getReservations();
@@ -67,7 +68,6 @@ export class MyscheduleComponent implements OnInit {
 	getReservations() {
 		this.scheduleService.getSchedules(this.page, this.pageSize).subscribe(
 			(res) => {
-				console.log(res);
 				this.soccerPitchReservations = res;
 				this.collectionSize = this.soccerPitchReservations.length;
 			},
@@ -80,7 +80,6 @@ export class MyscheduleComponent implements OnInit {
 	getSoccerPitchs() {
 		this.soccerpitchService.getSoccerPitchs().subscribe(
 			(res) => {
-				console.log(res);
 				this.soccerPitchs = res;
 			},
 			(error) => {
@@ -92,7 +91,6 @@ export class MyscheduleComponent implements OnInit {
 	getPlansBySoccerPitchId(id: any) {
 		this.soccerpitchplanService.getSoccerPitchPlanBySoccerPitchId(id).subscribe(
 			(res) => {
-				console.log(res);
 				this.soccerPitchsPlans = res;
 			},
 			(error) => {
@@ -102,21 +100,22 @@ export class MyscheduleComponent implements OnInit {
 	}
 
 	selectSoccerPitch($event: any) {
-		console.log($event);
 		this.modalSoccerPitchReservation.soccerPitchId = $event;
 		this.getPlansBySoccerPitchId($event);
 	}
 
 	selectUser($event: any) {
-		console.log($event);
 		this.modalSoccerPitchReservation.userId = $event.id;
 	}
 
 	openUserModal(content: any) {
 		this.modalService.open(AddUserModalComponent).result.then(
 			(result) => {
-				console.log(result);
 				this.modalSoccerPitchReservation.userId = result.id;
+				this.modalSoccerPitchReservation.selectedUser = {
+					name: result.name + '(' + result.phone + ')',
+					id: result.id
+				};
 			},
 			(reason) => {}
 		);
@@ -133,10 +132,22 @@ export class MyscheduleComponent implements OnInit {
 			this.modalSoccerPitchReservation.selectedHourEnd.minute;
 
 		this.modalSoccerPitchReservation.selectedDate = new Date(
-			this.selectedDate.year,
-			this.selectedDate.month - 1,
-			this.selectedDate.day
+			this.modalSoccerPitchReservation.userSelectDate.year,
+			this.modalSoccerPitchReservation.userSelectDate.month - 1,
+			this.modalSoccerPitchReservation.userSelectDate.day
 		);
+	}
+	fitDataToFront() {
+		this.modalSoccerPitchReservation.userSelectDate = {
+			year: new Date(this.modalSoccerPitchReservation.selectedDate).getFullYear(),
+			month: new Date(this.modalSoccerPitchReservation.selectedDate).getMonth() + 1,
+			day: new Date(this.modalSoccerPitchReservation.selectedDate).getDate()
+		};
+
+		this.modalSoccerPitchReservation.selectedUser = {
+			name: this.modalSoccerPitchReservation.userName + '(' + this.modalSoccerPitchReservation.userPhone + ')',
+			id: this.modalSoccerPitchReservation.userId
+		};
 	}
 
 	openModal(content: any, selectedSoccerPitch: SoccerPitchReservation) {
@@ -144,7 +155,8 @@ export class MyscheduleComponent implements OnInit {
 		if (selectedSoccerPitch != undefined && selectedSoccerPitch.id != '' && selectedSoccerPitch.id != undefined) {
 			this.modalTitle = 'Editar quadra';
 			this.modalSoccerPitchReservation = selectedSoccerPitch;
-			this.getPlansBySoccerPitchId(selectedSoccerPitch.soccerPitchSoccerPitchPlanId);
+			this.fitDataToFront();
+			this.getPlansBySoccerPitchId(selectedSoccerPitch.soccerPitchId);
 		} else {
 			this.modalSoccerPitchReservation = new SoccerPitchReservation();
 			this.modalTitle = 'Adicionar nova quadra';
