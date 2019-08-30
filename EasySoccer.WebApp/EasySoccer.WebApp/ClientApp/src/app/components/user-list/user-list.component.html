@@ -63,26 +63,26 @@
 </ng-template>
 <div>
     <table>
-      <tbody *ngFor="let currentUser of users">
+      <tbody *ngFor="let reservation of reservations">
         <th>
           <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20%289%29.jpg" height="35" width="40" class="img-circle center-vertical"/>
         </th>
         <th>
-            <p class="center-vertical">
-              <a>{{currentUser.name}}</a>
+            <p class="center-vertical breaktext">
+              <a>{{reservation.userName}}</a>
             </p>
         </th>
         <th>
-          <p class="center-vertical">{{currentUser.phoneNumber}}</p>
+          <p class="center-vertical">{{reservation.userPhone}}</p>
         </th>
         <th>
           <div style="background-color:purple; padding-left: 3px; padding-right: 3px;" class="center-vertical">
-            <p style="color:white;">Pacaembu</p>
+            <p class="breaktext" style="color:white;">{{reservation.soccerPitchName}}</p>
           </div>
         </th>
         <th>
             <div style="background-color:#ff591f; padding-left: 3px; padding-right: 3px;" class="center-vertical">
-              <p style="color:white;">19:00 - 20:00</p>
+              <p style="color:white;">{{reservation.selectedHour}}</p>
             </div>
           </th>
           <th>

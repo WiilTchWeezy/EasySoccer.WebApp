@@ -68,8 +68,9 @@ export class MyscheduleComponent implements OnInit {
 	getReservations() {
 		this.scheduleService.getSchedules(this.page, this.pageSize).subscribe(
 			(res) => {
-				this.soccerPitchReservations = res;
-				this.collectionSize = this.soccerPitchReservations.length;
+				this.soccerPitchReservations = res.data;
+				this.collectionSize = res.total;
+				console.log(res);
 			},
 			(error) => {
 				console.log(error);

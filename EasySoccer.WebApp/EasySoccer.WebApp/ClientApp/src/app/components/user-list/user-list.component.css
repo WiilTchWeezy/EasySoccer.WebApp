@@ -9,3 +9,9 @@
 	width: 100%;
 	opacity: 0.4;
 }
+.breaktext {
+	width: 85px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
