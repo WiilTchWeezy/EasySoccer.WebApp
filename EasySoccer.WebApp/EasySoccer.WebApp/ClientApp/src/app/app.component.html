@@ -1,4 +1,4 @@
-<header class="app-header navbar navbar-expand-lg navbar-light bg-light">
+<header *ngIf="showMenu" class="app-header navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">
     <img class="navbar-brand-full" src="../assets/img/vertical@4x.png" alt="Easy Soccer Logo"
       width="112" height="25">
@@ -18,7 +18,7 @@
   </ul>
 </header>
 <div class="app-body">
-  <div class="sidebar">
+  <div class="sidebar" *ngIf="showMenu">
     <nav class="sidebar-nav">
       <ul class="nav">
         <li class="nav-item">
@@ -55,6 +55,6 @@
   </main>
 </div>
 
-<footer class="app-footer">
+<footer *ngIf="showMenu" class="app-footer">
   footer
 </footer>

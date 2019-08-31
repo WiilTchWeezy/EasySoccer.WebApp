@@ -17,6 +17,8 @@ import { MyscheduleComponent } from './components/myschedule/myschedule.componen
 import { SoccerpitchComponent } from './components/soccerpitch/soccerpitch.component';
 import { SoccerpitchplanComponent } from './components/soccerpitchplan/soccerpitchplan.component';
 import { AddUserModalComponent } from './components/modal/add-user-modal/add-user-modal.component';
+import { LoginComponent } from './components/login/login.component';
+import { AuthGuardService } from './guards/auth-guard.service';
 
 @NgModule({
 	declarations: [
@@ -26,7 +28,8 @@ import { AddUserModalComponent } from './components/modal/add-user-modal/add-use
 		MyscheduleComponent,
 		SoccerpitchComponent,
 		SoccerpitchplanComponent,
-		AddUserModalComponent
+		AddUserModalComponent,
+		LoginComponent
 	],
 	imports: [
 		BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -36,18 +39,19 @@ import { AddUserModalComponent } from './components/modal/add-user-modal/add-use
 		NgbModule.forRoot(),
 		BrowserAnimationsModule,
 		RouterModule.forRoot([
-			{ path: '', component: DashboardComponent, pathMatch: 'full' },
-			{ path: 'dashboard', component: DashboardComponent },
-			{ path: 'myschedule', component: MyscheduleComponent },
-			{ path: 'soccerpitch', component: SoccerpitchComponent },
-			{ path: 'soccerpitchplan', component: SoccerpitchplanComponent }
+			{ path: '', component: DashboardComponent, pathMatch: 'full', canActivate: [ AuthGuardService ] },
+			{ path: 'dashboard', component: DashboardComponent, canActivate: [ AuthGuardService ] },
+			{ path: 'myschedule', component: MyscheduleComponent, canActivate: [ AuthGuardService ] },
+			{ path: 'soccerpitch', component: SoccerpitchComponent, canActivate: [ AuthGuardService ] },
+			{ path: 'soccerpitchplan', component: SoccerpitchplanComponent, canActivate: [ AuthGuardService ] },
+			{ path: 'login', component: LoginComponent }
 		]),
 		CalendarModule.forRoot({
 			provide: DateAdapter,
 			useFactory: adapterFactory
 		})
 	],
-	providers: [ AuthService ],
+	providers: [ AuthService, AuthGuardService ],
 	bootstrap: [ AppComponent ],
 	entryComponents: [ AddUserModalComponent ]
 })
