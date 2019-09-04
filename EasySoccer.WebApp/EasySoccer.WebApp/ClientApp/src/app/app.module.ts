@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -19,6 +19,8 @@ import { SoccerpitchplanComponent } from './components/soccerpitchplan/soccerpit
 import { AddUserModalComponent } from './components/modal/add-user-modal/add-user-modal.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuardService } from './guards/auth-guard.service';
+import { CookieService } from 'ngx-cookie-service';
+import { CustomHttpInterceptor } from './interceptor/http-interceptor';
 
 @NgModule({
 	declarations: [
@@ -51,7 +53,12 @@ import { AuthGuardService } from './guards/auth-guard.service';
 			useFactory: adapterFactory
 		})
 	],
-	providers: [ AuthService, AuthGuardService ],
+	providers: [
+		AuthService,
+		AuthGuardService,
+		CookieService,
+		{ provide: HTTP_INTERCEPTORS, useClass: CustomHttpInterceptor, multi: true }
+	],
 	bootstrap: [ AppComponent ],
 	entryComponents: [ AddUserModalComponent ]
 })
