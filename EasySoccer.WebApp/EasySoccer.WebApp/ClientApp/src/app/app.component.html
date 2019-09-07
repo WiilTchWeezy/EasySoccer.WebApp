@@ -17,7 +17,7 @@
     </li>
   </ul>
 </header>
-<div class="app-body">
+<div class="app-body " [ngClass]="{'background' : showMenu === false}">
   <div class="sidebar" *ngIf="showMenu">
     <nav class="sidebar-nav">
       <ul class="nav">

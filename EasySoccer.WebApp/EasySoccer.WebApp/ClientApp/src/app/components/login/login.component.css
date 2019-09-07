@@ -1,0 +1,26 @@
+.loginimg {
+	margin-bottom: 35px;
+}
+
+.transparent {
+}
+
+.logincard {
+	background-color: white;
+	-webkit-box-shadow: 9px 0px 17px -8px rgba(0, 0, 0, 0.75);
+	-moz-box-shadow: 9px 0px 17px -8px rgba(0, 0, 0, 0.75);
+	box-shadow: 9px 0px 17px -8px rgba(0, 0, 0, 0.75);
+	opacity: 0.85;
+}
+
+.logindiv {
+	height: 100%;
+}
+
+.content {
+	margin-top: 50%;
+}
+
+.inputlogin {
+	margin-top: 10px;
+}

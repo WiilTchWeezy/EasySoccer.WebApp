@@ -1,6 +1,11 @@
 @media (max-width: 767px) {
-  /* On small screens, the nav menu spans the full width of the screen. Leave a space for it. */
-  .body-content {
-    padding-top: 50px;
-  }
+	/* On small screens, the nav menu spans the full width of the screen. Leave a space for it. */
+	.body-content {
+		padding-top: 50px;
+	}
+}
+
+.background {
+	background-image: url('../assets/img/login-back.jpg');
+	margin-top: 0px;
 }
