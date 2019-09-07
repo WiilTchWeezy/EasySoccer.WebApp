@@ -49,13 +49,15 @@ export class AuthService {
 
 	checkIsAuth(): boolean {
 		let token = this.cookieService.get('token');
-		if (token != null && token != '' && token != undefined) {
+		var expireDate = new Date(this.cookieService.get('expireDate'));
+		if (token != null && token != '' && token != undefined && new Date() < expireDate) {
 			this.isAuth = true;
 			this.menuEmitter.emit(true);
 			return true;
 		} else {
 			this.isAuth = false;
-			this.menuEmitter.emit(true);
+			this.menuEmitter.emit(false);
+			this.logOff();
 			return false;
 		}
 	}
