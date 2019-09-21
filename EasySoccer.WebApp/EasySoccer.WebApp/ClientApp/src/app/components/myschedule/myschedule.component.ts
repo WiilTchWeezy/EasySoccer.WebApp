@@ -39,8 +39,6 @@ export class MyscheduleComponent implements OnInit {
 		public userService: UserService
 	) {}
 
-	@ViewChild('dp') datePicker: ElementRef;
-
 	ngOnInit() {
 		this.getReservations();
 		this.getSoccerPitchs();

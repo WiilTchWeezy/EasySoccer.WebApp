@@ -21,6 +21,7 @@ import { LoginComponent } from './components/login/login.component';
 import { AuthGuardService } from './guards/auth-guard.service';
 import { CookieService } from 'ngx-cookie-service';
 import { CustomHttpInterceptor } from './interceptor/http-interceptor';
+import { ToastcomponentComponent } from './components/toastcomponent/toastcomponent.component';
 
 @NgModule({
 	declarations: [
@@ -31,14 +32,15 @@ import { CustomHttpInterceptor } from './interceptor/http-interceptor';
 		SoccerpitchComponent,
 		SoccerpitchplanComponent,
 		AddUserModalComponent,
-		LoginComponent
+		LoginComponent,
+		ToastcomponentComponent
 	],
 	imports: [
 		BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
 		HttpClientModule,
 		ChartsModule,
 		FormsModule,
-		NgbModule.forRoot(),
+		NgbModule,
 		BrowserAnimationsModule,
 		RouterModule.forRoot([
 			{ path: '', component: DashboardComponent, pathMatch: 'full', canActivate: [ AuthGuardService ] },

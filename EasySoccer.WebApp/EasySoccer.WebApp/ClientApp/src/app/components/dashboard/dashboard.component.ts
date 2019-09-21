@@ -16,19 +16,6 @@ export class DashboardComponent implements OnInit {
 	constructor(private modalService: NgbModal) {}
 
 	ngOnInit() {
-		this.users = new Array<User>();
-		this.users.push(new User('22', 'Pedro Henrique', '991255409', 'tarcisiosouzabr@gmail.com'));
-		this.users.push(new User('22', 'Joao Paulo', '991255409', 'tarcisiosouzabr@gmail.com'));
-		this.users.push(new User('22', 'Joao Rafael', '991255409', 'tarcisiosouzabr@gmail.com'));
-		this.users.push(new User('22', 'Edimar Oliveira', '991255409', 'tarcisiosouzabr@gmail.com'));
-		this.users.push(new User('22', 'Marcelo ', '991255409', 'tarcisiosouzabr@gmail.com'));
-
-		this.pendingUsers = new Array<User>();
-		this.pendingUsers.push(new User('22', 'Pedro R.', '991255409', 'tarcisiosouzabr@gmail.com'));
-		this.pendingUsers.push(new User('22', 'Pedro R.', '991255409', 'tarcisiosouzabr@gmail.com'));
-		this.pendingUsers.push(new User('22', 'Pedro R.', '991255409', 'tarcisiosouzabr@gmail.com'));
-		this.pendingUsers.push(new User('22', 'Eduardo', '991255409', 'tarcisiosouzabr@gmail.com'));
-		this.pendingUsers.push(new User('22', 'Pedro R.', '991255409', 'tarcisiosouzabr@gmail.com'));
 	}
 	users: Array<User>;
 	pendingUsers: Array<User>;
