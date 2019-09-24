@@ -3,6 +3,7 @@ import { User } from '../../model/user';
 import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours } from 'date-fns';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView } from 'angular-calendar';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { DashboardService } from '../../service/dashboard.service';
 @Component({
 	selector: 'app-dashboard',
 	templateUrl: './dashboard.component.html',
@@ -13,15 +14,46 @@ export class DashboardComponent implements OnInit {
 	CalendarView = CalendarView;
 	viewDate: Date = new Date();
 	closeResult: string;
-	constructor(private modalService: NgbModal) {}
+	monthNames = [
+		'Janeiro',
+		'Fevereiro',
+		'Março',
+		'Abril',
+		'Maio',
+		'Junho',
+		'Julho',
+		'Agosto',
+		'Setembro',
+		'Outubro',
+		'Novembro',
+		'Dezembro'
+	];
+
+	constructor(private modalService: NgbModal, private dashboardService: DashboardService) {
+		let datesDescription = new Array<string>();
+		let currentDate = new Date();
+		for (let index = 0; index > -6; index--) {
+			datesDescription.push(this.monthNames[currentDate.getMonth() + index]);
+		}
+		this.lineChartLabels = datesDescription.reverse();
+	}
 
 	ngOnInit() {
+		this.dashboardService.getReservationChart().subscribe(
+			(res) => {
+				this.chartData = res;
+				this.lineChartData = [ { data: this.chartData.map((x) => x.dataCount).reverse(), label: '' } ];
+				this.lineChartLabels = this.chartData.map((x) => x.dataLabel);
+			},
+			(error) => {}
+		);
 	}
 	users: Array<User>;
 	pendingUsers: Array<User>;
+	chartData: Array<any>;
 	// lineChart
-	public lineChartData: Array<any> = [ { data: [ 40, 59, 65, 69, 73, 78, 85 ], label: '' } ];
-	public lineChartLabels: Array<any> = [ 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho' ];
+	public lineChartData: Array<any> = [ { data: [ 40, 59, 65, 69, 70 ], label: '' } ];
+	public lineChartLabels: Array<any> = [ '', '', '', '', '', '' ];
 	public lineChartOptions: any = {
 		animation: false,
 		responsive: true

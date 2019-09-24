@@ -25,4 +25,8 @@ export class DashboardService {
 	public getReservations(): Observable<any> {
 		return this.http.get(environment.urlApi + 'dashboard/reservations').pipe(map(this.extractData));
 	}
+
+	public getReservationChart(): Observable<any> {
+		return this.http.get(environment.urlApi + 'dashboard/reservationschart').pipe(map(this.extractData));
+	}
 }
