@@ -28,14 +28,35 @@ export class DashboardComponent implements OnInit {
 		'Novembro',
 		'Dezembro'
 	];
+	calendarEvents: Array<CalendarEvent>;
 
 	constructor(private modalService: NgbModal, private dashboardService: DashboardService) {
 		let datesDescription = new Array<string>();
+		this.calendarEvents = new Array<CalendarEvent>();
 		let currentDate = new Date();
 		for (let index = 0; index > -6; index--) {
 			datesDescription.push(this.monthNames[currentDate.getMonth() + index]);
 		}
 		this.lineChartLabels = datesDescription.reverse();
+		this.dashboardService.getReservationCalendar(new Date().getMonth() + 1, 0).subscribe(
+			(res) => {
+				res.forEach((element) => {
+					this.calendarEvents.push({
+						start: new Date(element.startDate),
+						end: new Date(element.endDate),
+						title: element.title,
+						color: {
+							primary: '#ad2121',
+							secondary: '#FAE3E3'
+						},
+						allDay: false,
+						draggable: false
+					});
+				});
+				console.log(this.calendarEvents);
+			},
+			(error) => {}
+		);
 	}
 
 	ngOnInit() {

@@ -29,4 +29,10 @@ export class DashboardService {
 	public getReservationChart(): Observable<any> {
 		return this.http.get(environment.urlApi + 'dashboard/reservationschart').pipe(map(this.extractData));
 	}
+
+	public getReservationCalendar(month: number, day: any): Observable<any> {
+		return this.http
+			.get(environment.urlApi + 'dashboard/reservationscalendar?month=' + month + '&day=' + day)
+			.pipe(map(this.extractData));
+	}
 }

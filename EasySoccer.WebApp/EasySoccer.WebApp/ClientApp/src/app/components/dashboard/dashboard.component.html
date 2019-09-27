@@ -36,7 +36,7 @@
         </div>
     </div>
 </div>
-  <div class="row">
+  <div class="row" *ngIf="calendarEvents.length > 0">
     <div class="col-sm-12">
       <div class="row text-center">
         <div class="col-md-4">
@@ -101,16 +101,19 @@
           *ngSwitchCase="CalendarView.Month"
           [viewDate]="viewDate"
           [activeDayIsOpen]="false"
+          [events]="calendarEvents"
         >
         </mwl-calendar-month-view>
         <mwl-calendar-week-view
           *ngSwitchCase="CalendarView.Week"
           [viewDate]="viewDate"
+          [events]="calendarEvents"
         >
         </mwl-calendar-week-view>
         <mwl-calendar-day-view
           *ngSwitchCase="CalendarView.Day"
           [viewDate]="viewDate"
+          [events]="calendarEvents"
         >
         </mwl-calendar-day-view>
       </div>
