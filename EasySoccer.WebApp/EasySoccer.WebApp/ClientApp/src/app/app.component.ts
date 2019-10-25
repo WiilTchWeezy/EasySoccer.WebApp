@@ -14,4 +14,8 @@ export class AppComponent implements OnInit {
 	title = 'app';
 
 	showMenu: boolean = false;
+
+	logout(){
+		this.authService.logOff();
+	}
 }
