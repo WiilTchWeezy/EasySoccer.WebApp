@@ -198,6 +198,9 @@ export class MyscheduleComponent implements OnInit {
               .patchSoccerPitchReservation(this.modalSoccerPitchReservation)
               .subscribe(
                 data => {
+                  this.toastService.showSuccess(
+                    "Agendamento atualizado com sucesso."
+                  );
                   this.getReservations();
                   this.modalSoccerPitchReservation = new SoccerPitchReservation();
                 },
@@ -212,6 +215,9 @@ export class MyscheduleComponent implements OnInit {
               .postSoccerPitchReservation(this.modalSoccerPitchReservation)
               .subscribe(
                 data => {
+                  this.toastService.showSuccess(
+                    "Agendamento inserido com sucesso."
+                  );
                   this.getReservations();
                   this.modalSoccerPitchReservation = new SoccerPitchReservation();
                 },

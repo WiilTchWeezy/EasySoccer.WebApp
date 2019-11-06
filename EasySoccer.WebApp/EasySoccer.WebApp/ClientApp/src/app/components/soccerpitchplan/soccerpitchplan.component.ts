@@ -59,6 +59,9 @@ export class SoccerpitchplanComponent implements OnInit {
               .patchSoccerPitchPlan(this.modalSelectedPlan)
               .subscribe(
                 data => {
+                  this.toastService.showSuccess(
+                    "Plano atualizado com sucesso!"
+                  );
                   this.getPlans();
                   this.modalSelectedPlan = new Soccerpitchplan();
                 },
@@ -74,6 +77,7 @@ export class SoccerpitchplanComponent implements OnInit {
               .postSoccerPitchPlan(this.modalSelectedPlan)
               .subscribe(
                 data => {
+                  this.toastService.showSuccess("Plano inserido com sucesso!");
                   this.getPlans();
                   this.modalSelectedPlan = new Soccerpitchplan();
                 },

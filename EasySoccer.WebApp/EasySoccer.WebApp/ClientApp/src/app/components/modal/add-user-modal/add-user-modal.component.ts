@@ -22,6 +22,7 @@ export class AddUserModalComponent implements OnInit {
   save() {
     this.userService.createAsync(this.user).subscribe(
       data => {
+        this.toastService.showSuccess("Usuário inserido com sucesso!");
         this.activeModal.close(data);
       },
       error => {

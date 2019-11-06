@@ -111,6 +111,9 @@ export class SoccerpitchComponent implements OnInit {
               .patchSoccerPitch(this.modalSoccerPitch)
               .subscribe(
                 data => {
+                  this.toastService.showSuccess(
+                    "Quadra atualizada com sucesso!"
+                  );
                   this.getSoccerpitchs();
                   this.modalSoccerPitch = new Soccerpitch();
                 },
@@ -125,6 +128,7 @@ export class SoccerpitchComponent implements OnInit {
               .postSoccerPitch(this.modalSoccerPitch)
               .subscribe(
                 data => {
+                  this.toastService.showSuccess("Quadra inserida com sucesso!");
                   this.getSoccerpitchs();
                   this.modalSoccerPitch = new Soccerpitch();
                 },
