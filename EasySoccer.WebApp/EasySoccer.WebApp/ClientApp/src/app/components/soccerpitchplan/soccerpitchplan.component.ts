@@ -40,7 +40,7 @@ export class SoccerpitchplanComponent implements OnInit {
   }
 
   openModal(content: any, selectedPlan: Soccerpitchplan) {
-    this.planId = selectedPlan.id;
+    this.planId = selectedPlan != null ? selectedPlan.id : 0;
     if (this.planId > 0) {
       this.modalTitle = "Editar plano";
       this.modalSelectedPlan = selectedPlan;

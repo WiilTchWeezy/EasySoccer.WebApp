@@ -174,6 +174,7 @@ export class MyscheduleComponent implements OnInit {
   openModal(content: any, selectedSoccerPitch: SoccerPitchReservation) {
     console.log(selectedSoccerPitch);
     if (
+      selectedSoccerPitch != null &&
       selectedSoccerPitch != undefined &&
       selectedSoccerPitch.id != "" &&
       selectedSoccerPitch.id != undefined
@@ -193,7 +194,7 @@ export class MyscheduleComponent implements OnInit {
       .result.then(
         result => {
           this.transformData();
-          if (selectedSoccerPitch.id != null) {
+          if (selectedSoccerPitch != null && selectedSoccerPitch.id != null) {
             this.scheduleService
               .patchSoccerPitchReservation(this.modalSoccerPitchReservation)
               .subscribe(

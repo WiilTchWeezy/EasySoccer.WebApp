@@ -85,7 +85,7 @@ export class SoccerpitchComponent implements OnInit {
 
   openModal(content: any, selectedSoccerPitch: Soccerpitch) {
     console.log(selectedSoccerPitch);
-    if (selectedSoccerPitch.id > 0) {
+    if (selectedSoccerPitch != null && selectedSoccerPitch.id > 0) {
       this.modalTitle = "Editar quadra";
       this.modalSoccerPitch = selectedSoccerPitch;
     } else {
@@ -106,7 +106,7 @@ export class SoccerpitchComponent implements OnInit {
       .open(content, { ariaLabelledBy: "modal-basic-title" })
       .result.then(
         result => {
-          if (selectedSoccerPitch.id > 0) {
+          if (selectedSoccerPitch != null && selectedSoccerPitch.id > 0) {
             this.soccerPitchService
               .patchSoccerPitch(this.modalSoccerPitch)
               .subscribe(
