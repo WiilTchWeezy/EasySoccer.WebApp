@@ -3,6 +3,7 @@ import { User } from "../../model/user";
 import { CalendarEvent, CalendarView } from "angular-calendar";
 import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 import { DashboardService } from "../../service/dashboard.service";
+import { ToastserviceService } from "../../service/toastservice.service";
 @Component({
   selector: "app-dashboard",
   templateUrl: "./dashboard.component.html",
@@ -31,7 +32,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    private dashboardService: DashboardService
+    private dashboardService: DashboardService,
+    private tostService: ToastserviceService
   ) {
     let datesDescription = new Array<string>();
     this.calendarEvents = new Array<CalendarEvent>();
@@ -59,7 +61,11 @@ export class DashboardComponent implements OnInit {
           });
           console.log(this.calendarEvents);
         },
-        error => {}
+        error => {
+          this.tostService.showError(
+            "Erro ao consultar dados. " + error.Message
+          );
+        }
       );
   }
 
@@ -72,7 +78,9 @@ export class DashboardComponent implements OnInit {
         ];
         this.lineChartLabels = this.chartData.map(x => x.dataLabel);
       },
-      error => {}
+      error => {
+        this.tostService.showError("Erro ao consultar dados. " + error.Message);
+      }
     );
   }
   users: Array<User>;
@@ -115,23 +123,6 @@ export class DashboardComponent implements OnInit {
     console.log(content);
     this.modalService
       .open(content, { ariaLabelledBy: "modal-basic-title" })
-      .result.then(
-        result => {
-          this.closeResult = `Closed with: ${result}`;
-        },
-        reason => {
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        }
-      );
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return "by pressing ESC";
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return "by clicking on a backdrop";
-    } else {
-      return `with: ${reason}`;
-    }
+      .result.then(result => {}, reason => {});
   }
 }
