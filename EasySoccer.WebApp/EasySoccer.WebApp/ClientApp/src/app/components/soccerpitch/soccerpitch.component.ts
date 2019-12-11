@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { SoccerpitchService } from "../../service/soccerpitch.service";
 import { SoccerpitchplanService } from "../../service/soccerpitchplan.service";
 import { Soccerpitch } from "../../model/soccerpitch";
@@ -6,6 +6,8 @@ import { Soccerpitchplan } from "../../model/soccerpitchplan";
 import { Soccerpitchsoccerpitchplan } from "../../model/soccerpitchsoccerpitchplan";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ToastserviceService } from "../../service/toastservice.service";
+import { Observable } from "rxjs";
+import { debounceTime, distinctUntilChanged, map } from "rxjs/operators";
 
 @Component({
   selector: "app-soccerpitch",
@@ -19,6 +21,9 @@ export class SoccerpitchComponent implements OnInit {
   soccerPitchsplan: Soccerpitchplan;
   modalTitle: String;
   modalSoccerPitch: Soccerpitch;
+  selectedPlans: Soccerpitchplan[] = [];
+
+  @ViewChild("input", null) inputEl;
 
   constructor(
     private soccerPitchService: SoccerpitchService,
@@ -38,7 +43,6 @@ export class SoccerpitchComponent implements OnInit {
   getSoccerpitchs() {
     this.soccerPitchService.getSoccerPitchs().subscribe(
       res => {
-        console.log(res);
         this.soccerPitchs = res;
       },
       error => {
@@ -64,8 +68,6 @@ export class SoccerpitchComponent implements OnInit {
 
   selectChange($event: any, planControl: Soccerpitchsoccerpitchplan) {
     planControl.soccerPitchPlanId = $event.id;
-    console.log($event.id);
-    console.log(planControl);
   }
 
   addPlan($event: any) {
@@ -84,7 +86,6 @@ export class SoccerpitchComponent implements OnInit {
   }
 
   openModal(content: any, selectedSoccerPitch: Soccerpitch) {
-    console.log(selectedSoccerPitch);
     if (selectedSoccerPitch != null && selectedSoccerPitch.id > 0) {
       this.modalTitle = "Editar quadra";
       this.modalSoccerPitch = selectedSoccerPitch;
@@ -96,12 +97,8 @@ export class SoccerpitchComponent implements OnInit {
         this.modalSoccerPitch.soccerPitchSoccerPitchPlans.length == 0
       ) {
         this.modalSoccerPitch.soccerPitchSoccerPitchPlans = [];
-        this.modalSoccerPitch.soccerPitchSoccerPitchPlans.push(
-          new Soccerpitchsoccerpitchplan()
-        );
       }
     }
-    console.log(this.modalSoccerPitch);
     this.modalService
       .open(content, { ariaLabelledBy: "modal-basic-title" })
       .result.then(
@@ -142,5 +139,42 @@ export class SoccerpitchComponent implements OnInit {
         },
         reason => {}
       );
+  }
+
+  search = (text$: Observable<string>) =>
+    text$.pipe(
+      debounceTime(200),
+      distinctUntilChanged(),
+      map(term => {
+        const matchRegExp = new RegExp(term, "gi");
+        return term.length === 0
+          ? []
+          : this.soccerPitchsplans.filter(v => {
+              var currentPlans = this.modalSoccerPitch.soccerPitchSoccerPitchPlans.map(
+                item => {
+                  return item.soccerPitchPlan.id;
+                }
+              );
+              console.log(currentPlans);
+              return (
+                currentPlans.indexOf(v.id) == -1 && matchRegExp.test(v.name)
+              );
+            });
+      })
+    );
+
+  selected($e) {
+    $e.preventDefault();
+    this.selectedPlans.push($e.item);
+    let itemToPush = new Soccerpitchsoccerpitchplan();
+    itemToPush.soccerPitchPlanId = $e.item.id;
+    itemToPush.soccerPitchPlan = $e.item;
+    this.modalSoccerPitch.soccerPitchSoccerPitchPlans.push(itemToPush);
+    console.log(this.selectedPlans);
+  }
+
+  close(item) {
+    this.selectedPlans.splice(this.selectedPlans.indexOf(item), 1);
+    this.removePlan(null, item);
   }
 }
