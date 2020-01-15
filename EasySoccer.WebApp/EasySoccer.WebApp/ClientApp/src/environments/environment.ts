@@ -4,6 +4,7 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-	production: false,
-	urlApi: 'http://localhost:56284/api/'
+  production: false,
+  // urlApi: 'http://localhost:56284/api/'
+  urlApi: "https://apieasysoccer.azurewebsites.net/api/"
 };
