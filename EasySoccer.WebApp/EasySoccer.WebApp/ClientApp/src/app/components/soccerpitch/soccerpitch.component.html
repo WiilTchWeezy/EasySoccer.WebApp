@@ -46,6 +46,20 @@
           </div>
         </div>
         <div class="row">
+          <div class="col-sm-12">
+            <label for="typeahead-basic">Tipo de Esporte:</label>
+            <input
+              [(ngModel)]="modalSoccerPitch.sportType"
+              id="typeahead-basic"
+              type="text"
+              class="form-control"
+              [resultFormatter]="formatter"
+              [ngbTypeahead]="searchSportType"
+              [inputFormatter]="inputFormmatter"
+            />
+          </div>
+        </div>
+        <div class="row">
           <div class="col-sm-6">
             <label for="hasRoof">Possui cobertura</label>
             <div class="input-group">

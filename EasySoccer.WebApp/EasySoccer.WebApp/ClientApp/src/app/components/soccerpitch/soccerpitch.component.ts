@@ -22,6 +22,8 @@ export class SoccerpitchComponent implements OnInit {
   modalTitle: String;
   modalSoccerPitch: Soccerpitch;
   selectedPlans: Soccerpitchplan[] = [];
+  sportTypes: any[];
+  selectedSportType: any;
 
   @ViewChild("input", null) inputEl;
 
@@ -37,6 +39,7 @@ export class SoccerpitchComponent implements OnInit {
   ngOnInit() {
     this.getSoccerpitchs();
     this.getSoccerpitchsplans();
+    this.getSportTypes();
     this.soccerPitchsplansControl = [];
   }
 
@@ -65,6 +68,39 @@ export class SoccerpitchComponent implements OnInit {
       }
     );
   }
+
+  getSportTypes() {
+    this.soccerPitchService.getSportTypes().subscribe(
+      res => {
+        this.sportTypes = res;
+      },
+      error => {
+        this.toastService.showError(
+          "Erro ao consultar dados. " + error.Message
+        );
+      }
+    );
+  }
+
+  formatter = (result: any) => result.name;
+  inputFormmatter = (x: { name: string }) => {
+    this.modalSoccerPitch.sportType = x;
+    return x.name;
+  };
+  searchSportType = (text$: Observable<string>) =>
+    text$.pipe(
+      debounceTime(200),
+      distinctUntilChanged(),
+      map(term => {
+        return term.length <= 1
+          ? []
+          : this.sportTypes
+              .filter(
+                v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1
+              )
+              .slice(0, 10);
+      })
+    );
 
   selectChange($event: any, planControl: Soccerpitchsoccerpitchplan) {
     planControl.soccerPitchPlanId = $event.id;
@@ -99,10 +135,14 @@ export class SoccerpitchComponent implements OnInit {
         this.modalSoccerPitch.soccerPitchSoccerPitchPlans = [];
       }
     }
+
     this.modalService
       .open(content, { ariaLabelledBy: "modal-basic-title" })
       .result.then(
         result => {
+          if (this.modalSoccerPitch && this.modalSoccerPitch.sportType) {
+            this.modalSoccerPitch.sportTypeId = this.modalSoccerPitch.sportType.id;
+          }
           if (selectedSoccerPitch != null && selectedSoccerPitch.id > 0) {
             this.soccerPitchService
               .patchSoccerPitch(this.modalSoccerPitch)
