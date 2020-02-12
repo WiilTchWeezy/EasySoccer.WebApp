@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -43,7 +44,16 @@ namespace EasySoccer.WebApp
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
+            StaticFileOptions options = new StaticFileOptions();
+            FileExtensionContentTypeProvider typeProvider = new FileExtensionContentTypeProvider();
+            if (!typeProvider.Mappings.ContainsKey(".woff2"))
+            {
+                typeProvider.Mappings.Add(".woff2", "application/font-woff2");
+                typeProvider.Mappings.Add(".ttf", "application/font-ttf");
+                typeProvider.Mappings.Add(".otf", "application/font-otf");
+            }
+            options.ContentTypeProvider = typeProvider;
+            app.UseStaticFiles(options);
             app.UseSpaStaticFiles();
 
             app.UseMvc(routes =>
