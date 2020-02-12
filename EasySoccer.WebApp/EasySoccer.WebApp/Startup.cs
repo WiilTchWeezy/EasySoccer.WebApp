@@ -44,15 +44,6 @@ namespace EasySoccer.WebApp
             }
 
             app.UseHttpsRedirection();
-            StaticFileOptions options = new StaticFileOptions();
-            FileExtensionContentTypeProvider typeProvider = new FileExtensionContentTypeProvider();
-            if (!typeProvider.Mappings.ContainsKey(".woff2"))
-            {
-                typeProvider.Mappings.Add(".woff2", "application/font-woff2");
-                typeProvider.Mappings.Add(".ttf", "application/font-ttf");
-                typeProvider.Mappings.Add(".otf", "application/font-otf");
-            }
-            options.ContentTypeProvider = typeProvider;
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
