@@ -53,7 +53,7 @@ namespace EasySoccer.WebApp
                 typeProvider.Mappings.Add(".otf", "application/font-otf");
             }
             options.ContentTypeProvider = typeProvider;
-            app.UseStaticFiles(options);
+            app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
             app.UseMvc(routes =>
