@@ -25,6 +25,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="ClientApp\src\web.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="ClientApp\src\assets\Gilroy-ExtraBold.otf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
