@@ -1,7 +1,5 @@
-
-
 <div class="container">
-<div class="animated fadeIn">
+  <!-- <div class="animated fadeIn">
     <div class="card-columns cols-2">
       <div class="card">
         <div class="card-header">
@@ -12,31 +10,33 @@
         </div>
         <div class="card-body">
           <div class="chart-wrapper">
-            <canvas baseChart class="chart"
-            [datasets]="lineChartData"
-            [labels]="lineChartLabels"
-            [options]="lineChartOptions"
-            [colors]="lineChartColours"
-            [legend]="lineChartLegend"
-            [chartType]="lineChartType"
-            (chartHover)="chartHovered($event)"
-            (chartClick)="chartClicked($event)"></canvas>
+            <canvas
+              baseChart
+              class="chart"
+              [datasets]="lineChartData"
+              [labels]="lineChartLabels"
+              [options]="lineChartOptions"
+              [colors]="lineChartColours"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"
+            ></canvas>
           </div>
         </div>
       </div>
       <div class="card">
-          <div class="card-header">
-            Meus Agendamentos
-            <div class="card-header-actions">
-            </div>
-          </div>
-          <div class="card-body" style="padding:0px;">
-              <app-user-list></app-user-list>
-          </div>
+        <div class="card-header">
+          Meus Agendamentos
+          <div class="card-header-actions"></div>
         </div>
+        <div class="card-body" style="padding:0px;">
+          <app-user-list></app-user-list>
+        </div>
+      </div>
     </div>
-</div>
-  <div class="row" *ngIf="calendarEvents.length > 0">
+  </div> -->
+  <div class="row card" *ngIf="calendarEvents.length > 0">
     <div class="col-sm-12">
       <div class="row text-center">
         <div class="col-md-4">
@@ -67,11 +67,11 @@
           </div>
         </div>
         <div class="col-md-4">
-          <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+          <h3>{{ viewDate | calendarDate: view + "ViewTitle":"en" }}</h3>
         </div>
         <div class="col-md-4">
           <div class="btn-group">
-            <div
+            <!-- <div
               class="btn btn-primary"
               (click)="view = CalendarView.Month"
               [class.active]="view === CalendarView.Month"
@@ -91,7 +91,7 @@
               [class.active]="view === CalendarView.Day"
             >
               Day
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -119,6 +119,7 @@
       </div>
     </div>
   </div>
-</div> 
-
-  
+  <div class="welcomeContainer" *ngIf="calendarEvents.length == 0">
+    <h1 class="welcomeTitle">Bem-vindo ao EasySoccer.</h1>
+  </div>
+</div>
