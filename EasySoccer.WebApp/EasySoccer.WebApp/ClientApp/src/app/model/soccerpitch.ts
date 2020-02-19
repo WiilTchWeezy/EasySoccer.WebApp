@@ -8,5 +8,5 @@ export class Soccerpitch {
   numberOfPlayers: Number;
   soccerPitchSoccerPitchPlans: Soccerpitchsoccerpitchplan[];
   sportType: any;
-  sportTypeId: number;
+  sportTypeId: any;
 }

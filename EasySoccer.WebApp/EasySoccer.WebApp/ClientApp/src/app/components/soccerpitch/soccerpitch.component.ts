@@ -140,9 +140,6 @@ export class SoccerpitchComponent implements OnInit {
       .open(content, { ariaLabelledBy: "modal-basic-title" })
       .result.then(
         result => {
-          if (this.modalSoccerPitch && this.modalSoccerPitch.sportType) {
-            this.modalSoccerPitch.sportTypeId = this.modalSoccerPitch.sportType.id;
-          }
           if (selectedSoccerPitch != null && selectedSoccerPitch.id > 0) {
             this.soccerPitchService
               .patchSoccerPitch(this.modalSoccerPitch)
