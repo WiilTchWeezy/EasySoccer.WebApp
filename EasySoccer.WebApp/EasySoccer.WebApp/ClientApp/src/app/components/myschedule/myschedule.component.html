@@ -2,145 +2,274 @@
   <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
 </ng-template>
 <ng-template #content let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Informações Agendamento</h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <form>
-        <h5>Usuário </h5>
-        <div class="form-group">
-          <div class="row">
-              <div class="col-sm-12">
-                  <label for="user" style="margin-top: 7px;">Responsável</label>
-                  <button type="button" class="btn btn-primary float-right" style="margin-bottom: 5px;" (click)="openUserModal(usuarioModal);"  >Adicionar Responsável</button>
-                  <div class="input-group">
-                    <input id="user" type="text" class="form-control" [class.is-invalid]="searchFailed" [ngbTypeahead]="search" placeholder="Digite nome ou telefone" name="selectedUser" [(ngModel)]="modalSoccerPitchReservation.selectedUser" (ngModelChange)="selectUser($event)" [inputFormatter]="formatter" [resultTemplate]="rt">
-                    <span *ngIf="searching">Pesquisando...</span>
-                    <div class="invalid-feedback" *ngIf="searchFailed">Não foi possível carregar sugestões.</div>
-                  </div>
-                </div>
-
-         </div>
-        <h5>Agendamento </h5>
-          <div class="row">
-            <div class="col-sm-6">
-              <label for="soccerPicht">Quadra</label>
-              <div class="input-group">
-                <select id="soccerPicht" class="form-control" name="soccerPicht" [(ngModel)]="modalSoccerPitchReservation.soccerPitchId" (ngModelChange)="selectSoccerPitch($event)" >                                                               
-                  <option *ngFor="let sp of soccerPitchs;" [ngValue]="sp.id">{{sp.name}}</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <label for="soccerPichtPlanId">Plano</label>
-              <div class="input-group">
-                <select id="soccerPichtPlanId" [(ngModel)]="modalSoccerPitchReservation.soccerPitchSoccerPitchPlanId" class="form-control" name="soccerPichtPlanId" >                                                               
-                  <option *ngFor="let sp of soccerPitchsPlans;" [ngValue]="sp.id">{{sp.name}}</option>
-                </select>
-              </div>
-            </div>
-
-          </div>
-          <div class="row">
-              <div class="col-sm-6">
-                  <label for="status">Data do agendamento</label>
-                  <div class="input-group">
-                    <ngb-datepicker #dp [(ngModel)]="modalSoccerPitchReservation.userSelectDate" name="selectedDate"></ngb-datepicker>
-                  </div>
-              </div>
-              <div class="col-sm-6">
-                  <div class="row">
-                      <div class="col-sm-12">
-                        <label for="phone">Horário inicio</label>
-                        <ngb-timepicker name="selectedHourStart" [(ngModel)]="modalSoccerPitchReservation.selectedHourStart"></ngb-timepicker>
-                      </div>
-                      <div class="col-sm-12">
-                        <label for="phone">Horário final</label>
-                        <ngb-timepicker name="selectedHourEnd" [(ngModel)]="modalSoccerPitchReservation.selectedHourEnd"></ngb-timepicker>
-                      </div>
-                  </div>
-              </div>
-           </div>
-        </div>
-      </form>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
-    </div>
-</ng-template>
-<ng-template #usuarioModal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Novo Responsável</h4>
-    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <h4 class="modal-title" id="modal-basic-title">Informações Agendamento</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-      <form>
-          <h5>Responsável </h5>
-          <div class="form-group">
-            <div class="row">
-                <div class="col-sm-6">
-                    <label for="user" >Nome(*)</label>
-                    <div class="input-group">
-                    <input id="user" class="form-control" placeholder="Nome" name="name" type="text">
-                    </div>
-                  </div>
-                  <div class="col-sm-6">
-                      <label for="phone" >Telefone(*)</label>
-                      <div class="input-group">
-                      <input id="phone" class="form-control" placeholder="Telefone" name="phone" type="text">
-                      </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <label for="phone" >Email</label>
-                        <div class="input-group">
-                        <input id="email" class="form-control" placeholder="Email" name="email" type="text">
-                        </div>
-                    </div>
-           </div>
+    <form>
+      <h5>Usuário</h5>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-sm-12">
+            <label for="user" style="margin-top: 7px;">Responsável</label>
+            <button
+              type="button"
+              class="btn btn-primary float-right"
+              style="margin-bottom: 5px;"
+              (click)="openUserModal(usuarioModal)"
+            >
+              Adicionar Responsável
+            </button>
+            <div class="input-group">
+              <input
+                id="user"
+                type="text"
+                class="form-control"
+                [class.is-invalid]="searchFailed"
+                [ngbTypeahead]="search"
+                placeholder="Digite nome ou telefone"
+                name="selectedUser"
+                [(ngModel)]="modalSoccerPitchReservation.selectedUser"
+                (ngModelChange)="selectUser($event)"
+                [inputFormatter]="formatter"
+                [resultTemplate]="rt"
+              />
+              <span *ngIf="searching">Pesquisando...</span>
+              <div class="invalid-feedback" *ngIf="searchFailed">
+                Não foi possível carregar sugestões.
+              </div>
+            </div>
           </div>
-          </form>
+        </div>
+        <h5>Agendamento</h5>
+        <div class="row">
+          <div class="col-sm-6">
+            <label for="soccerPicht">Quadra</label>
+            <div class="input-group">
+              <select
+                id="soccerPicht"
+                class="form-control"
+                name="soccerPicht"
+                [(ngModel)]="modalSoccerPitchReservation.soccerPitchId"
+                (ngModelChange)="selectSoccerPitch($event)"
+              >
+                <option *ngFor="let sp of soccerPitchs" [ngValue]="sp.id">{{
+                  sp.name
+                }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label for="soccerPichtPlanId">Plano</label>
+            <div class="input-group">
+              <select
+                id="soccerPichtPlanId"
+                [(ngModel)]="
+                  modalSoccerPitchReservation.soccerPitchSoccerPitchPlanId
+                "
+                class="form-control"
+                name="soccerPichtPlanId"
+              >
+                <option
+                  *ngFor="let sp of soccerPitchsPlans"
+                  [ngValue]="sp.id"
+                  >{{ sp.name }}</option
+                >
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <label for="status">Data do agendamento</label>
+            <div class="input-group">
+              <ngb-datepicker
+                #dp
+                [(ngModel)]="modalSoccerPitchReservation.userSelectDate"
+                name="selectedDate"
+              ></ngb-datepicker>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="row">
+              <div class="col-sm-12">
+                <label for="phone">Horário inicio</label>
+                <ngb-timepicker
+                  name="selectedHourStart"
+                  [(ngModel)]="modalSoccerPitchReservation.selectedHourStart"
+                ></ngb-timepicker>
+              </div>
+              <div class="col-sm-12">
+                <label for="phone">Horário final</label>
+                <ngb-timepicker
+                  name="selectedHourEnd"
+                  [(ngModel)]="modalSoccerPitchReservation.selectedHourEnd"
+                ></ngb-timepicker>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
   </div>
   <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Save click')">Save</button>
-    </div>
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      (click)="modal.close('Save click')"
+    >
+      Save
+    </button>
+  </div>
 </ng-template>
-  
+<ng-template #usuarioModal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Novo Responsável</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="activeModal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <h5>Responsável</h5>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-sm-6">
+            <label for="user">Nome(*)</label>
+            <div class="input-group">
+              <input
+                id="user"
+                class="form-control"
+                placeholder="Nome"
+                name="name"
+                type="text"
+              />
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label for="phone">Telefone(*)</label>
+            <div class="input-group">
+              <input
+                id="phone"
+                class="form-control"
+                placeholder="Telefone"
+                name="phone"
+                type="text"
+              />
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <label for="phone">Email</label>
+            <div class="input-group">
+              <input
+                id="email"
+                class="form-control"
+                placeholder="Email"
+                name="email"
+                type="text"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      (click)="activeModal.close('Save click')"
+    >
+      Save
+    </button>
+  </div>
+</ng-template>
+
 <div class="container">
-    <div style="padding:5px;">
-        <button type="button" class="btn btn-primary" (click)="openModal(content, null);" value="Click Me" style="float: right; margin-bottom: 5px;"> Adicionar novo agendamento </button>
+  <div class="card" style="margin-top: 10px;">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-8">
+          <h4>Horários</h4>
+        </div>
+        <div class="col-4">
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="openModal(content, null)"
+            value="Click Me"
+            style="float: right; margin-bottom: 5px;"
+          >
+            Adicionar novo agendamento
+          </button>
+        </div>
+      </div>
     </div>
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th scope="col">Responsável</th>
-      <th scope="col">Quadra</th>
-      <th scope="col">Data selecionada</th>
-      <th scope="col">Horário</th>
-      <th scope="col">Status</th>
-      <th scope="col">#</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let soccerPitchReservation of soccerPitchReservations; index as i">
-      <td>
-        {{ soccerPitchReservation.userName }}
-      </td>
-      <td>{{ soccerPitchReservation.soccerPitchName }}</td>
-      <td>{{ soccerPitchReservation.selectedDate | date:'dd/MM/yyyy' }}</td>
-      <td>{{ soccerPitchReservation.selectedHourStart.hour }} : {{ soccerPitchReservation.selectedHourStart.minute }} - {{ soccerPitchReservation.selectedHourEnd.hour }} : {{ soccerPitchReservation.selectedHourEnd.minute }}</td>
-      <td>{{ soccerPitchReservation.status }}</td>
-      <td><a title="Editar" (click)="openModal(content,soccerPitchReservation);" ><i class="nav-icon cui-pencil"></i></a></td>
-    </tr>
-    </tbody>
-  </table>
+    <div class="">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Responsável</th>
+            <th scope="col">Quadra</th>
+            <th scope="col">Data selecionada</th>
+            <th scope="col">Horário</th>
+            <th scope="col">#</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="
+              let soccerPitchReservation of soccerPitchReservations;
+              index as i
+            "
+          >
+            <td>
+              {{ soccerPitchReservation.userName }}
+            </td>
+            <td>{{ soccerPitchReservation.soccerPitchName }}</td>
+            <td>
+              {{ soccerPitchReservation.selectedDate | date: "dd/MM/yyyy" }}
+            </td>
+            <td>
+              {{ soccerPitchReservation.selectedHourStart.hour }} :
+              {{ soccerPitchReservation.selectedHourStart.minute }} -
+              {{ soccerPitchReservation.selectedHourEnd.hour }} :
+              {{ soccerPitchReservation.selectedHourEnd.minute }}
+            </td>
+            <td>
+              <a
+                title="Editar"
+                class="gridItem"
+                (click)="openModal(content, soccerPitchReservation)"
+                ><i class="nav-icon cui-pencil"></i
+              ></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
   <div class="d-flex justify-content-between p-2">
-      <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="getReservations();">
-      </ngb-pagination>
-    </div>
+    <ngb-pagination
+      [collectionSize]="collectionSize"
+      [(page)]="page"
+      [pageSize]="pageSize"
+      (pageChange)="getReservations()"
+    >
+    </ngb-pagination>
+  </div>
 </div>
