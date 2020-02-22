@@ -15,7 +15,7 @@ export class AuthService {
   menuEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
   isAuth: boolean = false;
   endpoint = environment.urlApi;
-
+  public loading: boolean = false;
   constructor(
     private router: Router,
     private httpClient: HttpClient,
@@ -26,6 +26,7 @@ export class AuthService {
   ngOnInit(): void {}
 
   authenticate(login: Login) {
+    this.loading = true;
     this.authApi(login.name, login.password).subscribe(
       res => {
         this.cookieService.set("token", res.token);
@@ -33,12 +34,14 @@ export class AuthService {
         this.isAuth = true;
         this.menuEmitter.emit(true);
         this.router.navigate(["/"]);
+        this.loading = false;
       },
       error => {
         this.toastService.showError("Erro ao realizar login. " + error.message);
         this.isAuth = false;
         this.menuEmitter.emit(false);
         this.router.navigate(["/login"]);
+        this.loading = false;
       }
     );
   }

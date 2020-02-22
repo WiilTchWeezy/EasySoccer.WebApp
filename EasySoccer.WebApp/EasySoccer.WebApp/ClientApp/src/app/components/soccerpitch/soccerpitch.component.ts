@@ -8,6 +8,7 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ToastserviceService } from "../../service/toastservice.service";
 import { Observable } from "rxjs";
 import { debounceTime, distinctUntilChanged, map } from "rxjs/operators";
+import { IDropdownSettings } from "ng-multiselect-dropdown";
 
 @Component({
   selector: "app-soccerpitch",
@@ -17,6 +18,7 @@ import { debounceTime, distinctUntilChanged, map } from "rxjs/operators";
 export class SoccerpitchComponent implements OnInit {
   soccerPitchs: Soccerpitch[];
   soccerPitchsplans: Soccerpitchplan[];
+  allSoccerPitchsplans: Soccerpitchplan[];
   soccerPitchsplansControl: Soccerpitchsoccerpitchplan[];
   soccerPitchsplan: Soccerpitchplan;
   modalTitle: String;
@@ -24,6 +26,7 @@ export class SoccerpitchComponent implements OnInit {
   selectedPlans: Soccerpitchplan[] = [];
   sportTypes: any[];
   selectedSportType: any;
+  currentPlan: any;
 
   @ViewChild("input", null) inputEl;
 
@@ -35,12 +38,22 @@ export class SoccerpitchComponent implements OnInit {
   ) {
     this.modalSoccerPitch = new Soccerpitch();
   }
-
+  dropdownSettings: IDropdownSettings = {};
   ngOnInit() {
     this.getSoccerpitchs();
     this.getSoccerpitchsplans();
     this.getSportTypes();
     this.soccerPitchsplansControl = [];
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: "id",
+      textField: "name",
+      selectAllText: "Selecione todos",
+      unSelectAllText: "Remove todos",
+      itemsShowLimit: 3,
+      allowSearchFilter: true,
+      searchPlaceholderText: "Pesquise"
+    };
   }
 
   getSoccerpitchs() {
@@ -60,6 +73,7 @@ export class SoccerpitchComponent implements OnInit {
     this.soccerPitchPlanService.getSoccerPitchPlan().subscribe(
       response => {
         this.soccerPitchsplans = response;
+        this.allSoccerPitchsplans = response;
       },
       error => {
         this.toastService.showError(
@@ -82,58 +96,14 @@ export class SoccerpitchComponent implements OnInit {
     );
   }
 
-  formatter = (result: any) => result.name;
-  inputFormmatter = (x: { name: string }) => {
-    this.modalSoccerPitch.sportType = x;
-    return x.name;
-  };
-  searchSportType = (text$: Observable<string>) =>
-    text$.pipe(
-      debounceTime(200),
-      distinctUntilChanged(),
-      map(term => {
-        return term.length <= 1
-          ? []
-          : this.sportTypes
-              .filter(
-                v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1
-              )
-              .slice(0, 10);
-      })
-    );
-
-  selectChange($event: any, planControl: Soccerpitchsoccerpitchplan) {
-    planControl.soccerPitchPlanId = $event.id;
-  }
-
-  addPlan($event: any) {
-    this.modalSoccerPitch.soccerPitchSoccerPitchPlans.push(
-      new Soccerpitchsoccerpitchplan()
-    );
-  }
-
-  removePlan($event: any, planControl: Soccerpitchsoccerpitchplan) {
-    let index = this.modalSoccerPitch.soccerPitchSoccerPitchPlans.indexOf(
-      planControl
-    );
-    if (index !== -1) {
-      this.modalSoccerPitch.soccerPitchSoccerPitchPlans.splice(index, 1);
-    }
-  }
-
   openModal(content: any, selectedSoccerPitch: Soccerpitch) {
     if (selectedSoccerPitch != null && selectedSoccerPitch.id > 0) {
       this.modalTitle = "Editar quadra";
+      console.log(selectedSoccerPitch);
       this.modalSoccerPitch = selectedSoccerPitch;
     } else {
       this.modalSoccerPitch = new Soccerpitch();
       this.modalTitle = "Adicionar nova quadra";
-      if (
-        this.modalSoccerPitch.soccerPitchSoccerPitchPlans == undefined ||
-        this.modalSoccerPitch.soccerPitchSoccerPitchPlans.length == 0
-      ) {
-        this.modalSoccerPitch.soccerPitchSoccerPitchPlans = [];
-      }
     }
 
     this.modalService
@@ -176,42 +146,5 @@ export class SoccerpitchComponent implements OnInit {
         },
         reason => {}
       );
-  }
-
-  search = (text$: Observable<string>) =>
-    text$.pipe(
-      debounceTime(200),
-      distinctUntilChanged(),
-      map(term => {
-        const matchRegExp = new RegExp(term, "gi");
-        return term.length === 0
-          ? []
-          : this.soccerPitchsplans.filter(v => {
-              var currentPlans = this.modalSoccerPitch.soccerPitchSoccerPitchPlans.map(
-                item => {
-                  return item.soccerPitchPlan.id;
-                }
-              );
-              console.log(currentPlans);
-              return (
-                currentPlans.indexOf(v.id) == -1 && matchRegExp.test(v.name)
-              );
-            });
-      })
-    );
-
-  selected($e) {
-    $e.preventDefault();
-    this.selectedPlans.push($e.item);
-    let itemToPush = new Soccerpitchsoccerpitchplan();
-    itemToPush.soccerPitchPlanId = $e.item.id;
-    itemToPush.soccerPitchPlan = $e.item;
-    this.modalSoccerPitch.soccerPitchSoccerPitchPlans.push(itemToPush);
-    console.log(this.selectedPlans);
-  }
-
-  close(item) {
-    this.selectedPlans.splice(this.selectedPlans.indexOf(item), 1);
-    this.removePlan(null, item);
   }
 }

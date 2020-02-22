@@ -22,6 +22,7 @@ import { AuthGuardService } from "./guards/auth-guard.service";
 import { CookieService } from "ngx-cookie-service";
 import { CustomHttpInterceptor } from "./interceptor/http-interceptor";
 import { ToastcomponentComponent } from "./components/toastcomponent/toastcomponent.component";
+import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import { ToastcomponentComponent } from "./components/toastcomponent/toastcompon
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory
-    })
+    }),
+    NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [
     AuthService,

@@ -10,8 +10,9 @@ import { ToastserviceService } from "../../service/toastservice.service";
 })
 export class LoginComponent implements OnInit {
   usuario: Login;
+  loading: boolean = true;
   constructor(
-    private authService: AuthService,
+    public authService: AuthService,
     private toastService: ToastserviceService
   ) {
     this.usuario = new Login();

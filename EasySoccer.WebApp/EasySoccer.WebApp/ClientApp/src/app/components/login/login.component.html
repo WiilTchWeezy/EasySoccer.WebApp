@@ -3,21 +3,49 @@
   <div class="col-sm-4 transparent"></div>
   <div class="col-sm-4 logincard">
     <div class="content">
-        <img class="navbar-brand-full loginimg" src="../assets/img/vertical@4x.png" alt="Easy Soccer Logo"
-        width="350" height="77">
-        <div class="col-sm-12">
-            <div class="input-group inputlogin">
-            <input id="user" class="form-control" placeholder="Usuário" [(ngModel)]="usuario.name" name="name" type="text">
-            </div>
+      <img
+        class="navbar-brand-full loginimg"
+        src="../assets/img/vertical@4x.png"
+        alt="Easy Soccer Logo"
+        width="350"
+        height="77"
+      />
+      <div class="col-sm-12">
+        <div class="input-group inputlogin">
+          <input
+            id="user"
+            class="form-control"
+            placeholder="Usuário"
+            [(ngModel)]="usuario.name"
+            name="name"
+            type="text"
+          />
         </div>
-        <div class="col-sm-12">
-            <div class="input-group inputlogin">
-            <input id="password" class="form-control" placeholder="Senha" [(ngModel)]="usuario.password" name="authenticate" type="password">
-            </div>
+      </div>
+      <div class="col-sm-12">
+        <div class="input-group inputlogin">
+          <input
+            id="password"
+            class="form-control"
+            placeholder="Senha"
+            [(ngModel)]="usuario.password"
+            name="authenticate"
+            type="password"
+          />
         </div>
-        <div class="col-sm-12">
-            <button type="button" class="btn btn-primary" (click)="authenticate();" style="margin-top: 10px;"> Login </button>
-        </div>
+      </div>
+      <div class="col-sm-12">
+        <button
+          type="button"
+          class="btn btn-primary btnLogin"
+          [ngClass]="{ spinner: authService.loading }"
+          [disabled]="authService.loading"
+          (click)="authenticate()"
+          style="margin-top: 10px;"
+        >
+          Login
+        </button>
+      </div>
     </div>
   </div>
 </div>

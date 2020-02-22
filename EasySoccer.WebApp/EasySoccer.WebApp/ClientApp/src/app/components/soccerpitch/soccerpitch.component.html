@@ -100,30 +100,17 @@
         </div>
         <div class="row">
           <div class="col-sm-12">
-            <label for="planId">Planos selecionados</label>
-            <div class="selected-plans">
-              <span
-                class="btn btn-primary btn-sm selected selected-plans-item"
-                *ngFor="
-                  let item of modalSoccerPitch.soccerPitchSoccerPitchPlans
-                "
+            <div class="form-group">
+              <label for="sportType">Planos:</label>
+              <ng-multiselect-dropdown
+                [placeholder]="'Selecione os planos'"
+                [data]="soccerPitchsplans"
+                [(ngModel)]="modalSoccerPitch.plans"
+                [settings]="dropdownSettings"
+                name="plans"
               >
-                {{ item.soccerPitchPlan.name
-                }}<span class="close-selected" (click)="close(item)"
-                  >&nbsp;x</span
-                >
-              </span>
+              </ng-multiselect-dropdown>
             </div>
-            <input
-              #input
-              type="text"
-              class="input-group form-control"
-              [ngbTypeahead]="search"
-              (selectItem)="selected($event)"
-              autofocus
-              placeholder="Selecione um plano"
-              [resultTemplate]="rt"
-            />
           </div>
         </div>
       </div>
