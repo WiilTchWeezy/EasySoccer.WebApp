@@ -6,3 +6,14 @@
 .selected-plans-item {
   margin-right: 5px;
 }
+.gridItem {
+  padding: 5px;
+  cursor: pointer;
+}
+.gridItem:hover {
+  background-color: #161e53;
+  color: #ff591f !important;
+  padding: 5px;
+  padding-bottom: 3px;
+  border-radius: 5px;
+}
