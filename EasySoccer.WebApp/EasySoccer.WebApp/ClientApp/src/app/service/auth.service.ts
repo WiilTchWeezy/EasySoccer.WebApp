@@ -90,4 +90,13 @@ export class AuthService {
     this.menuEmitter.emit(false);
     this.router.navigate(["/login"]);
   }
+
+  changePassword(oldPassword: string, newPassword: string): Observable<any> {
+    return this.httpClient
+      .post(environment.urlApi + "companyuser/changepassword", {
+        newPassword,
+        oldPassword
+      })
+      .pipe(map(this.extractData));
+  }
 }

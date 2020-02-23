@@ -23,6 +23,7 @@ import { CookieService } from "ngx-cookie-service";
 import { CustomHttpInterceptor } from "./interceptor/http-interceptor";
 import { ToastcomponentComponent } from "./components/toastcomponent/toastcomponent.component";
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
+import { UserChangePasswordComponent } from "./components/user-change-password/user-change-password.component";
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
     SoccerpitchplanComponent,
     AddUserModalComponent,
     LoginComponent,
-    ToastcomponentComponent
+    ToastcomponentComponent,
+    UserChangePasswordComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -70,7 +72,12 @@ import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
         component: SoccerpitchplanComponent,
         canActivate: [AuthGuardService]
       },
-      { path: "login", component: LoginComponent }
+      { path: "login", component: LoginComponent },
+      {
+        path: "changepassword",
+        component: UserChangePasswordComponent,
+        canActivate: [AuthGuardService]
+      }
     ]),
     CalendarModule.forRoot({
       provide: DateAdapter,

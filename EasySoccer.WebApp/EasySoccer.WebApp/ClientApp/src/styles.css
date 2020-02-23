@@ -8,6 +8,12 @@ body {
   font-family: "Gilroy-ExtraBold" !important;
 }
 
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .sidebar {
   background-color: #161e53 !important;
 }
@@ -39,4 +45,21 @@ body {
   padding: 5px;
   padding-bottom: 3px;
   border-radius: 5px;
+}
+
+.spinner:before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  border-top-color: #000000;
+  animation: spinner 0.8s linear infinite;
+  margin-left: 10px;
+}
+
+.btn-easy {
+  background-color: #161e53 !important;
 }
