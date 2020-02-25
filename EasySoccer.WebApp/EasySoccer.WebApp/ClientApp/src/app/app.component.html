@@ -42,13 +42,13 @@
         aria-haspopup="true"
         aria-expanded="false"
       >
-        Usuário
+        {{ userName }}
       </a>
       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         <a class="dropdown-item" routerLink="/changepassword" href="#"
           >Alterar minha senha</a
         >
-        <a class="dropdown-item" href="#">Meu usuário</a>
+        <a class="dropdown-item" routerLink="/userinfo" href="#">Meu usuário</a>
         <a class="dropdown-item" href="#">Empresa</a>
       </div>
     </li>

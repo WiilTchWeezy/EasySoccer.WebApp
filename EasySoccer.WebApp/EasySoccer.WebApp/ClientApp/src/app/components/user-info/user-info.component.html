@@ -1,0 +1,66 @@
+<div class="container">
+  <div class="card" style="margin-top:10px;">
+    <div class="card-header">
+      <h4>
+        Informações de usuário
+      </h4>
+    </div>
+    <form validate>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="name">Nome</label
+              ><input
+                class="form-control"
+                id="name"
+                required
+                type="text"
+                name="name"
+                [(ngModel)]="name"
+              />
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="email">Email</label
+              ><input
+                class="form-control"
+                id="email"
+                required
+                type="text"
+                name="email"
+                [(ngModel)]="email"
+              />
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="phone">Phone</label
+              ><input
+                class="form-control"
+                id="phone"
+                required
+                type="text"
+                name="phone"
+                [(ngModel)]="phone"
+              />
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group form-actions">
+              <button
+                class="btn btn-sm btn-primary btn-easy"
+                type="submit"
+                (click)="saveCompany()"
+                [ngClass]="{ spinner: loading }"
+              >
+                Salvar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

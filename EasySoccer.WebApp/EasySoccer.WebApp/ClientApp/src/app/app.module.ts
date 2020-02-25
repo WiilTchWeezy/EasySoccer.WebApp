@@ -24,6 +24,7 @@ import { CustomHttpInterceptor } from "./interceptor/http-interceptor";
 import { ToastcomponentComponent } from "./components/toastcomponent/toastcomponent.component";
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 import { UserChangePasswordComponent } from "./components/user-change-password/user-change-password.component";
+import { UserInfoComponent } from "./components/user-info/user-info.component";
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { UserChangePasswordComponent } from "./components/user-change-password/u
     AddUserModalComponent,
     LoginComponent,
     ToastcomponentComponent,
-    UserChangePasswordComponent
+    UserChangePasswordComponent,
+    UserInfoComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -76,6 +78,11 @@ import { UserChangePasswordComponent } from "./components/user-change-password/u
       {
         path: "changepassword",
         component: UserChangePasswordComponent,
+        canActivate: [AuthGuardService]
+      },
+      {
+        path: "userinfo",
+        component: UserInfoComponent,
         canActivate: [AuthGuardService]
       }
     ]),
