@@ -32,4 +32,23 @@ export class CompanyInfoComponent implements OnInit {
       }
     );
   }
+
+  saveCompany() {
+    this.companyService
+      .updateCompanyInfo(
+        this.name,
+        this.description,
+        this.cnpj,
+        this.completeAddress
+      )
+      .subscribe(
+        res => {
+          this.toastService.showSuccess("Empresa atualizada com sucesso.");
+          this.router.navigate(["/"]);
+        },
+        error => {
+          this.toastService.showError(error.error);
+        }
+      );
+  }
 }

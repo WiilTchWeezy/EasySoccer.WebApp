@@ -26,4 +26,20 @@ export class CompanyService {
       .get(environment.urlApi + "company/getcompanyinfo")
       .pipe(map(this.extractData));
   }
+
+  public updateCompanyInfo(
+    name,
+    description,
+    cnpj,
+    completeAddress
+  ): Observable<any> {
+    return this.http
+      .patch(environment.urlApi + "company/patchcompanyinfo", {
+        name,
+        description,
+        cnpj,
+        completeAddress
+      })
+      .pipe(map(this.extractData));
+  }
 }
