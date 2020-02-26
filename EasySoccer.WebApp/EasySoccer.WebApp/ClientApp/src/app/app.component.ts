@@ -10,13 +10,10 @@ import { CompanyUserService } from "./service/company-user.service";
 export class AppComponent implements OnInit {
   userName: string = "Usuário";
   ngOnInit(): void {
-    this.authService.menuEmitter.subscribe(show => (this.showMenu = show));
-    this.companyUserService.getUserInfo().subscribe(
-      res => {
-        this.userName = res.name;
-      },
-      error => {}
-    );
+    this.authService.menuEmitter.subscribe(show => {
+      this.showMenu = show;
+      this.GetUserInfo();
+    });
   }
   constructor(
     private authService: AuthService,
@@ -28,5 +25,14 @@ export class AppComponent implements OnInit {
 
   logout() {
     this.authService.logOff();
+  }
+
+  private GetUserInfo() {
+    this.companyUserService.getUserInfo().subscribe(
+      res => {
+        this.userName = res.name;
+      },
+      error => {}
+    );
   }
 }

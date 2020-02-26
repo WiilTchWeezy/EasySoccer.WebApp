@@ -25,6 +25,7 @@ import { ToastcomponentComponent } from "./components/toastcomponent/toastcompon
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 import { UserChangePasswordComponent } from "./components/user-change-password/user-change-password.component";
 import { UserInfoComponent } from "./components/user-info/user-info.component";
+import { CompanyInfoComponent } from "./components/company-info/company-info.component";
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { UserInfoComponent } from "./components/user-info/user-info.component";
     LoginComponent,
     ToastcomponentComponent,
     UserChangePasswordComponent,
-    UserInfoComponent
+    UserInfoComponent,
+    CompanyInfoComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -83,6 +85,11 @@ import { UserInfoComponent } from "./components/user-info/user-info.component";
       {
         path: "userinfo",
         component: UserInfoComponent,
+        canActivate: [AuthGuardService]
+      },
+      {
+        path: "companyinfo",
+        component: CompanyInfoComponent,
         canActivate: [AuthGuardService]
       }
     ]),

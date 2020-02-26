@@ -1,0 +1,80 @@
+<div class="container">
+  <div class="card" style="margin-top:10px;">
+    <div class="card-header">
+      <h4>
+        Informações do complexo esportivo
+      </h4>
+    </div>
+    <form validate>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="name">Nome</label
+              ><input
+                class="form-control"
+                id="name"
+                required
+                type="text"
+                name="name"
+                [(ngModel)]="name"
+              />
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="description">Descrição</label
+              ><input
+                class="form-control"
+                id="description"
+                required
+                type="text"
+                name="description"
+                [(ngModel)]="description"
+              />
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="completeAddress">Endereço</label
+              ><input
+                class="form-control"
+                id="completeAddress"
+                required
+                type="text"
+                name="completeAddress"
+                [(ngModel)]="completeAddress"
+              />
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="cnpj">CNPJ</label
+              ><input
+                class="form-control"
+                id="cnpj"
+                required
+                type="text"
+                name="cnpj"
+                [(ngModel)]="cnpj"
+              />
+            </div>
+          </div>
+
+          <div class="col-sm-12">
+            <div class="form-group form-actions">
+              <button
+                class="btn btn-sm btn-primary btn-easy"
+                type="submit"
+                (click)="saveCompany()"
+                [ngClass]="{ spinner: loading }"
+              >
+                Salvar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
