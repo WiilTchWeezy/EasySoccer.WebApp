@@ -12,6 +12,7 @@ export class UserInfoComponent implements OnInit {
   name: string;
   email: string;
   phone: string;
+  loading: boolean = false;
   constructor(
     private companyUserService: CompanyUserService,
     private toastService: ToastserviceService,
@@ -19,14 +20,17 @@ export class UserInfoComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.loading = true;
     this.companyUserService.getUserInfo().subscribe(
       res => {
         this.name = res.name;
         this.email = res.email;
         this.phone = res.phone;
+        this.loading = false;
       },
       error => {
         this.toastService.showError("Ops! ocorreu um erro:" + error.error);
+        this.loading = false;
       }
     );
   }

@@ -13,6 +13,7 @@ export class CompanyInfoComponent implements OnInit {
   description: string;
   completeAddress: string;
   cnpj: string;
+  loading: boolean = false;
   constructor(
     private companyService: CompanyService,
     private router: Router,
@@ -34,6 +35,7 @@ export class CompanyInfoComponent implements OnInit {
   }
 
   saveCompany() {
+    this.loading = true;
     this.companyService
       .updateCompanyInfo(
         this.name,
@@ -45,9 +47,11 @@ export class CompanyInfoComponent implements OnInit {
         res => {
           this.toastService.showSuccess("Empresa atualizada com sucesso.");
           this.router.navigate(["/"]);
+          this.loading = false;
         },
         error => {
           this.toastService.showError(error.error);
+          this.loading = false;
         }
       );
   }
