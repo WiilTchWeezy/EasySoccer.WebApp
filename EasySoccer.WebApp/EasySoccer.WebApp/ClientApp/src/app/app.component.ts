@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.authService.menuEmitter.subscribe(show => {
       this.showMenu = show;
-      this.GetUserInfo();
+      if (this.authService.isAuth) this.GetUserInfo();
     });
   }
   constructor(

@@ -18,14 +18,14 @@ export class ToastserviceService {
   showSuccess(textOrTpl: string) {
     this.toasts.push({
       textOrTpl,
-      ...{ classname: "bg-success text-light", delay: 10000 }
+      ...{ classname: "bg-success text-light", delay: 3000 }
     });
   }
 
   showError(textOrTpl: string) {
     this.toasts.push({
       textOrTpl,
-      ...{ classname: "bg-danger text-light", delay: 10000 }
+      ...{ classname: "bg-danger text-light", delay: 3000 }
     });
   }
 }
