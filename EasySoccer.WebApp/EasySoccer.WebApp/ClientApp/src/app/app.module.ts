@@ -26,6 +26,7 @@ import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 import { UserChangePasswordComponent } from "./components/user-change-password/user-change-password.component";
 import { UserInfoComponent } from "./components/user-info/user-info.component";
 import { CompanyInfoComponent } from "./components/company-info/company-info.component";
+import { LoginModalComponent } from "./components/modal/login-modal/login-modal.component";
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { CompanyInfoComponent } from "./components/company-info/company-info.com
     ToastcomponentComponent,
     UserChangePasswordComponent,
     UserInfoComponent,
-    CompanyInfoComponent
+    CompanyInfoComponent,
+    LoginModalComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -106,6 +108,6 @@ import { CompanyInfoComponent } from "./components/company-info/company-info.com
     { provide: HTTP_INTERCEPTORS, useClass: CustomHttpInterceptor, multi: true }
   ],
   bootstrap: [AppComponent],
-  entryComponents: [AddUserModalComponent]
+  entryComponents: [AddUserModalComponent, LoginModalComponent]
 })
 export class AppModule {}

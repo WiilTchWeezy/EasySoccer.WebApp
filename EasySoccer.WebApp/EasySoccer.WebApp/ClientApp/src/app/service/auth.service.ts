@@ -7,6 +7,8 @@ import { map } from "rxjs/operators";
 import { CookieService } from "ngx-cookie-service";
 import { Observable } from "rxjs";
 import { ToastserviceService } from "../service/toastservice.service";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { LoginModalComponent } from "../components/modal/login-modal/login-modal.component";
 
 @Injectable({
   providedIn: "root"
@@ -20,7 +22,8 @@ export class AuthService {
     private router: Router,
     private httpClient: HttpClient,
     private cookieService: CookieService,
-    private toastService: ToastserviceService
+    private toastService: ToastserviceService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {}
@@ -84,11 +87,16 @@ export class AuthService {
   }
 
   logOff() {
-    this.cookieService.delete("token");
-    this.cookieService.delete("expireDate");
-    this.isAuth = false;
-    this.menuEmitter.emit(false);
-    this.router.navigate(["/login"]);
+    this.modalService.open(LoginModalComponent).result.then(
+      success => {
+        this.cookieService.delete("token");
+        this.cookieService.delete("expireDate");
+        this.isAuth = false;
+        this.menuEmitter.emit(false);
+        this.router.navigate(["/login"]);
+      },
+      rejected => {}
+    );
   }
 
   changePassword(oldPassword: string, newPassword: string): Observable<any> {
