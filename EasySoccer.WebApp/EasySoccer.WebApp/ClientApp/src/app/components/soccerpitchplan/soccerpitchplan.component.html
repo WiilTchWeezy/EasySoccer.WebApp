@@ -40,6 +40,19 @@
               />
             </div>
           </div>
+          <div class="col-sm-12">
+            <label for="description">Descrição</label>
+            <div class="input-group">
+              <textarea
+                id="description"
+                type="text"
+                class="form-control"
+                placeholder="Insira aqui a descrição"
+                name="description"
+                [(ngModel)]="modalSelectedPlan.description"
+              ></textarea>
+            </div>
+          </div>
         </div>
       </div>
     </form>

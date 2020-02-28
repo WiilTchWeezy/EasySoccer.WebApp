@@ -59,7 +59,6 @@ export class DashboardComponent implements OnInit {
               draggable: false
             });
           });
-          console.log(this.calendarEvents);
         },
         error => {
           this.tostService.showError(
@@ -123,6 +122,9 @@ export class DashboardComponent implements OnInit {
     console.log(content);
     this.modalService
       .open(content, { ariaLabelledBy: "modal-basic-title" })
-      .result.then(result => {}, reason => {});
+      .result.then(
+        result => {},
+        reason => {}
+      );
   }
 }

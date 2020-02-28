@@ -23,7 +23,8 @@ export class AppComponent implements OnInit {
 
   showMenu: boolean = false;
 
-  logout() {
+  logout($event) {
+    $event.preventDefault();
     this.authService.logOff();
   }
 
