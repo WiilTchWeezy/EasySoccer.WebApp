@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
 
   logout($event) {
     $event.preventDefault();
-    this.authService.logOff();
+    this.authService.logOff(true);
   }
 
   private GetUserInfo() {

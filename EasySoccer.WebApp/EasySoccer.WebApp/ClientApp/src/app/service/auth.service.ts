@@ -86,17 +86,25 @@ export class AuthService {
     }
   }
 
-  logOff() {
-    this.modalService.open(LoginModalComponent).result.then(
-      success => {
-        this.cookieService.delete("token");
-        this.cookieService.delete("expireDate");
-        this.isAuth = false;
-        this.menuEmitter.emit(false);
-        this.router.navigate(["/login"]);
-      },
-      rejected => {}
-    );
+  logOff(showModal: boolean = false) {
+    if (showModal) {
+      this.modalService.open(LoginModalComponent).result.then(
+        success => {
+          this.cookieService.delete("token");
+          this.cookieService.delete("expireDate");
+          this.isAuth = false;
+          this.menuEmitter.emit(false);
+          this.router.navigate(["/login"]);
+        },
+        rejected => {}
+      );
+    } else {
+      this.cookieService.delete("token");
+      this.cookieService.delete("expireDate");
+      this.isAuth = false;
+      this.menuEmitter.emit(false);
+      this.router.navigate(["/login"]);
+    }
   }
 
   changePassword(oldPassword: string, newPassword: string): Observable<any> {
