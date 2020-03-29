@@ -21,7 +21,7 @@
               />
             </div>
           </div>
-          <div class="col-sm-12">
+          <div class="col-sm-6">
             <div class="form-group">
               <label for="description">Descrição</label
               ><input
@@ -31,6 +31,19 @@
                 type="text"
                 name="description"
                 [(ngModel)]="description"
+              />
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="cnpj">CNPJ</label
+              ><input
+                class="form-control"
+                id="cnpj"
+                required
+                type="text"
+                name="cnpj"
+                [(ngModel)]="cnpj"
               />
             </div>
           </div>
@@ -47,31 +60,106 @@
               />
             </div>
           </div>
-          <div class="col-sm-12">
-            <div class="form-group">
-              <label for="cnpj">CNPJ</label
-              ><input
-                class="form-control"
-                id="cnpj"
-                required
-                type="text"
-                name="cnpj"
-                [(ngModel)]="cnpj"
-              />
+        </div>
+        <div class="card-division">
+          <h5>Agenda do complexo esportivo</h5>
+        </div>
+        <div class="row">
+          <div class="col-sm-4" *ngFor="let item of companySchedules">
+            <div class="card">
+              <div class="card-header">
+                <i class="nav-icon cui-calendar cardicon"></i>
+                {{ daysDescription[item.day] }}
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <label>Trabalha neste dia?</label>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <input
+                          id="hasRoof"
+                          type="checkbox"
+                          class="form-control"
+                          name="hasRoof"
+                          [(ngModel)]="item.workOnThisDay"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <label>Horário Inicio:</label>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <select
+                        class="form-control"
+                        [disabled]="!item.workOnThisDay"
+                      >
+                        <option
+                          *ngFor="let op of hoursOptions"
+                          value="{{ op.key }}"
+                          [attr.selected]="
+                            item &&
+                            item.startHour &&
+                            op &&
+                            item.startHour == op.key
+                              ? true
+                              : null
+                          "
+                        >
+                          {{ op.value }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <label>Horário Fim:</label>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <select
+                        class="form-control"
+                        [disabled]="!item.workOnThisDay"
+                      >
+                        <option
+                          *ngFor="let op of hoursOptions"
+                          value="{{ op.key }}"
+                          [attr.selected]="
+                            item &&
+                            item.finalHour &&
+                            op &&
+                            item.finalHour == op.key
+                              ? true
+                              : null
+                          "
+                        >
+                          {{ op.value }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-
-          <div class="col-sm-12">
-            <div class="form-group form-actions">
-              <button
-                class="btn btn-sm btn-primary btn-easy"
-                type="submit"
-                (click)="saveCompany()"
-                [ngClass]="{ spinner: loading }"
-              >
-                Salvar
-              </button>
-            </div>
+        </div>
+        <div class="col-sm-12">
+          <div class="form-group form-actions">
+            <button
+              class="btn btn-sm btn-primary btn-easy"
+              type="submit"
+              (click)="saveCompany()"
+              [ngClass]="{ spinner: loading }"
+            >
+              Salvar
+            </button>
           </div>
         </div>
       </div>

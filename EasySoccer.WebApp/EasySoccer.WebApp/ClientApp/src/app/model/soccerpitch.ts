@@ -11,4 +11,5 @@ export class Soccerpitch {
   sportType: any;
   sportTypeId: any;
   plans: Soccerpitchplan[];
+  interval: any;
 }

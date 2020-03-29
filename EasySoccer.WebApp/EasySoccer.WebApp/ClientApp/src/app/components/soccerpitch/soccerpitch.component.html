@@ -46,7 +46,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-sm-6">
             <div class="form-group">
               <label for="sportType">Tipo de Esporte:</label>
               <select
@@ -68,6 +68,18 @@
                   >{{ sportType.name }}</option
                 >
               </select>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label for="description">Intervalo padrão</label>
+            <div class="input-group">
+              <input
+                id="interval"
+                class="form-control"
+                placeholder="Intervalo padrão (minutos)"
+                name="interval"
+                [(ngModel)]="modalSoccerPitch.interval"
+              />
             </div>
           </div>
         </div>
