@@ -31,14 +31,16 @@ export class CompanyService {
     name,
     description,
     cnpj,
-    completeAddress
+    completeAddress,
+    companySchedules
   ): Observable<any> {
     return this.http
       .patch(environment.urlApi + "company/patchcompanyinfo", {
         name,
         description,
         cnpj,
-        completeAddress
+        completeAddress,
+        companySchedules
       })
       .pipe(map(this.extractData));
   }

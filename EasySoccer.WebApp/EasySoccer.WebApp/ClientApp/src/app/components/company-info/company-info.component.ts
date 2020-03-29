@@ -77,7 +77,8 @@ export class CompanyInfoComponent implements OnInit {
         this.name,
         this.description,
         this.cnpj,
-        this.completeAddress
+        this.completeAddress,
+        this.companySchedules
       )
       .subscribe(
         res => {
