@@ -1,0 +1,80 @@
+<div class="card">
+  <div class="card-header">
+    <i class="nav-icon cui-calendar cardicon"></i>
+    {{ daysDescription[item.day] }}
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-sm-6">
+        <label>Trabalha neste dia?</label>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <div class="input-group">
+            <input
+              id="hasRoof"
+              type="checkbox"
+              class="form-control"
+              name="hasRoof"
+              [(ngModel)]="item.workOnThisDay"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <label>Horário Inicio:</label>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <select
+            class="form-control"
+            [disabled]="!item.workOnThisDay"
+            [(ngModel)]="item.startHour"
+            name="startHour"
+          >
+            <option
+              *ngFor="let op of hoursOptions"
+              value="{{ op.key }}"
+              [attr.selected]="
+                item && item.startHour && op && item.startHour == op.key
+                  ? true
+                  : null
+              "
+            >
+              {{ op.value }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <label>Horário Fim:</label>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <select
+            class="form-control"
+            [disabled]="!item.workOnThisDay"
+            [(ngModel)]="item.finalHour"
+            name="finalHour"
+          >
+            <option
+              *ngFor="let op of hoursOptions"
+              value="{{ op.key }}"
+              [attr.selected]="
+                item && item.finalHour && op && item.finalHour == op.key
+                  ? true
+                  : null
+              "
+            >
+              {{ op.value }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

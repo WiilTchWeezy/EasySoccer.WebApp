@@ -27,6 +27,7 @@ import { UserChangePasswordComponent } from "./components/user-change-password/u
 import { UserInfoComponent } from "./components/user-info/user-info.component";
 import { CompanyInfoComponent } from "./components/company-info/company-info.component";
 import { LoginModalComponent } from "./components/modal/login-modal/login-modal.component";
+import { CompanyScheduleComponent } from './components/company-schedule/company-schedule.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { LoginModalComponent } from "./components/modal/login-modal/login-modal.
     UserChangePasswordComponent,
     UserInfoComponent,
     CompanyInfoComponent,
-    LoginModalComponent
+    LoginModalComponent,
+    CompanyScheduleComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
