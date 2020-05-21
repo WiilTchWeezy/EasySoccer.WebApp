@@ -16,6 +16,33 @@
   <div class="modal-body">
     <form>
       <h5>Quadra</h5>
+      <div class="row">
+        <div class="col-sm-12">
+          <input
+            style="display: none;"
+            (change)="onFileChanged($event)"
+            type="file"
+            accept="image/png, image/jpeg"
+            #fileInput
+          />
+          <div class="text-center">
+            <img
+              class="img-thumbnail img-size"
+              [src]="
+                selectedImage ||
+                'https://easysoccer.blob.core.windows.net/soccerpitch/default.png'
+              "
+              alt="your image"
+              (click)="fileInput.click()"
+            />
+          </div>
+        </div>
+        <div class="col-sm-12 text-center" style="margin-top: 10px;">
+          <button class="btn btn-primary" (click)="fileInput.click()">
+            <i class="cui-arrow-thick-from-bottom"></i> Salvar imagem
+          </button>
+        </div>
+      </div>
       <div class="form-group">
         <div class="row">
           <div class="col-sm-12">

@@ -13,7 +13,7 @@ import { IDropdownSettings } from "ng-multiselect-dropdown";
 @Component({
   selector: "app-soccerpitch",
   templateUrl: "./soccerpitch.component.html",
-  styleUrls: ["./soccerpitch.component.css"]
+  styleUrls: ["./soccerpitch.component.css"],
 })
 export class SoccerpitchComponent implements OnInit {
   soccerPitchs: Soccerpitch[];
@@ -27,6 +27,7 @@ export class SoccerpitchComponent implements OnInit {
   sportTypes: any[];
   selectedSportType: any;
   currentPlan: any;
+  selectedImage: any;
 
   @ViewChild("input", null) inputEl;
 
@@ -52,16 +53,16 @@ export class SoccerpitchComponent implements OnInit {
       unSelectAllText: "Remove todos",
       itemsShowLimit: 3,
       allowSearchFilter: true,
-      searchPlaceholderText: "Pesquise"
+      searchPlaceholderText: "Pesquise",
     };
   }
 
   getSoccerpitchs() {
     this.soccerPitchService.getSoccerPitchs().subscribe(
-      res => {
+      (res) => {
         this.soccerPitchs = res;
       },
-      error => {
+      (error) => {
         this.toastService.showError(
           "Erro ao consultar dados. " + error.Message
         );
@@ -71,11 +72,11 @@ export class SoccerpitchComponent implements OnInit {
 
   getSoccerpitchsplans() {
     this.soccerPitchPlanService.getSoccerPitchPlan().subscribe(
-      response => {
+      (response) => {
         this.soccerPitchsplans = response;
         this.allSoccerPitchsplans = response;
       },
-      error => {
+      (error) => {
         this.toastService.showError(
           "Erro ao consultar dados. " + error.Message
         );
@@ -85,10 +86,10 @@ export class SoccerpitchComponent implements OnInit {
 
   getSportTypes() {
     this.soccerPitchService.getSportTypes().subscribe(
-      res => {
+      (res) => {
         this.sportTypes = res;
       },
-      error => {
+      (error) => {
         this.toastService.showError(
           "Erro ao consultar dados. " + error.Message
         );
@@ -109,19 +110,19 @@ export class SoccerpitchComponent implements OnInit {
     this.modalService
       .open(content, { ariaLabelledBy: "modal-basic-title" })
       .result.then(
-        result => {
+        (result) => {
           if (selectedSoccerPitch != null && selectedSoccerPitch.id > 0) {
             this.soccerPitchService
               .patchSoccerPitch(this.modalSoccerPitch)
               .subscribe(
-                data => {
+                (data) => {
                   this.toastService.showSuccess(
                     "Quadra atualizada com sucesso!"
                   );
                   this.getSoccerpitchs();
                   this.modalSoccerPitch = new Soccerpitch();
                 },
-                error => {
+                (error) => {
                   this.toastService.showError(
                     "Erro ao atualizar dados. " + error.Message
                   );
@@ -131,12 +132,12 @@ export class SoccerpitchComponent implements OnInit {
             this.soccerPitchService
               .postSoccerPitch(this.modalSoccerPitch)
               .subscribe(
-                data => {
+                (data) => {
                   this.toastService.showSuccess("Quadra inserida com sucesso!");
                   this.getSoccerpitchs();
                   this.modalSoccerPitch = new Soccerpitch();
                 },
-                error => {
+                (error) => {
                   this.toastService.showError(
                     "Erro ao inserir dados. " + error.Message
                   );
@@ -144,7 +145,18 @@ export class SoccerpitchComponent implements OnInit {
               );
           }
         },
-        reason => {}
+        (reason) => {}
       );
+  }
+
+  onFileChanged(event) {
+    const file = event.target.files[0];
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+
+      const reader = new FileReader();
+      reader.onload = (e) => (this.selectedImage = reader.result);
+      reader.readAsDataURL(file);
+    }
   }
 }

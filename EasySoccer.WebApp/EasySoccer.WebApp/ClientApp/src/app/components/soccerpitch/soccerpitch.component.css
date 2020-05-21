@@ -1,0 +1,9 @@
+.img-size {
+  max-width: 350px;
+  max-height: 200px;
+  cursor: pointer;
+}
+
+.img-size:hover {
+  background-color: #dcdcdc;
+}
