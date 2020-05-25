@@ -6,14 +6,14 @@ import { map } from "rxjs/operators";
 import { Soccerpitch } from "../model/soccerpitch";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class SoccerpitchService {
   endpoint = environment.urlApi;
   httpOptions = {
     headers: new HttpHeaders({
-      "Content-Type": "application/json"
-    })
+      "Content-Type": "application/json",
+    }),
   };
   constructor(private http: HttpClient) {}
 
@@ -46,5 +46,15 @@ export class SoccerpitchService {
     return this.http
       .get(environment.urlApi + "soccerpitch/getsporttypes")
       .pipe(map(this.extractData));
+  }
+
+  public postSoccerPitchImage(imageBase64: any, soccerpitchId: Number): any {
+    return this.http.post<Soccerpitch>(
+      environment.urlApi + "soccerpitch/saveImage",
+      {
+        ImageBase64: imageBase64,
+        SoccerPitchId: soccerpitchId,
+      }
+    );
   }
 }

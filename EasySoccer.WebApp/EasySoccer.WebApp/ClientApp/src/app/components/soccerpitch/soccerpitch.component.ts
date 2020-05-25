@@ -28,7 +28,8 @@ export class SoccerpitchComponent implements OnInit {
   selectedSportType: any;
   currentPlan: any;
   selectedImage: any;
-
+  selectedImageBase64: any;
+  selectedImageUrl: any;
   @ViewChild("input", null) inputEl;
 
   constructor(
@@ -70,6 +71,16 @@ export class SoccerpitchComponent implements OnInit {
     );
   }
 
+  getImageUrl(soccerPitch: Soccerpitch) {
+    this.selectedImageUrl =
+      "https://easysoccer.blob.core.windows.net/soccerpitch/default.png";
+    if (soccerPitch.imageName != null) {
+      this.selectedImageUrl =
+        "https://easysoccer.blob.core.windows.net/soccerpitch/" +
+        soccerPitch.imageName;
+    }
+  }
+
   getSoccerpitchsplans() {
     this.soccerPitchPlanService.getSoccerPitchPlan().subscribe(
       (response) => {
@@ -106,7 +117,7 @@ export class SoccerpitchComponent implements OnInit {
       this.modalSoccerPitch = new Soccerpitch();
       this.modalTitle = "Adicionar nova quadra";
     }
-
+    this.getImageUrl(this.modalSoccerPitch);
     this.modalService
       .open(content, { ariaLabelledBy: "modal-basic-title" })
       .result.then(
@@ -155,8 +166,29 @@ export class SoccerpitchComponent implements OnInit {
       const file = event.target.files[0];
 
       const reader = new FileReader();
-      reader.onload = (e) => (this.selectedImage = reader.result);
+      reader.onload = (e) => {
+        this.selectedImage = reader.result;
+        let base64Splitted = this.selectedImage.split(",");
+        if (base64Splitted.length > 0) {
+          this.selectedImageBase64 = base64Splitted[1];
+        }
+      };
       reader.readAsDataURL(file);
     }
+  }
+
+  sendImageBase64() {
+    this.soccerPitchService
+      .postSoccerPitchImage(this.selectedImageBase64, this.modalSoccerPitch.id)
+      .subscribe(
+        (res) => {
+          this.toastService.showSuccess("Imagem salva com sucesso. ");
+        },
+        (error) => {
+          this.toastService.showError(
+            "Erro ao consultar dados. " + error.Message
+          );
+        }
+      );
   }
 }

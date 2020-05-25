@@ -29,7 +29,7 @@
             <img
               class="img-thumbnail img-size"
               [src]="
-                selectedImage ||
+                selectedImageUrl ||
                 'https://easysoccer.blob.core.windows.net/soccerpitch/default.png'
               "
               alt="your image"
@@ -38,7 +38,7 @@
           </div>
         </div>
         <div class="col-sm-12 text-center" style="margin-top: 10px;">
-          <button class="btn btn-primary" (click)="fileInput.click()">
+          <button class="btn btn-primary" (click)="sendImageBase64()">
             <i class="cui-arrow-thick-from-bottom"></i> Salvar imagem
           </button>
         </div>
