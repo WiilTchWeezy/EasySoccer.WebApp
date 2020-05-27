@@ -44,7 +44,7 @@ export class SoccerpitchService {
 
   public getSportTypes(): Observable<any> {
     return this.http
-      .get(environment.urlApi + "soccerpitch/getsporttypes")
+      .get(environment.urlApi + "soccerpitch/getcompanysporttypes")
       .pipe(map(this.extractData));
   }
 
