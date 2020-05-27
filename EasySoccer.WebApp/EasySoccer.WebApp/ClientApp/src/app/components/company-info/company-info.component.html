@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="card" style="margin-top:10px;">
+  <div class="card" style="margin-top: 10px;">
     <div class="card-header">
       <h4>
         Informações do complexo esportivo
@@ -7,6 +7,40 @@
     </div>
     <form validate>
       <div class="card-body">
+        <div class="row">
+          <div class="col-sm-12">
+            <input
+              style="display: none;"
+              (change)="onFileChanged($event)"
+              type="file"
+              accept="image/png, image/jpeg"
+              #fileInput
+            />
+            <div class="text-center">
+              <img
+                class="img-thumbnail img-size"
+                [src]="
+                  selectedImageUrl ||
+                  'https://easysoccer.blob.core.windows.net/soccerpitch/default.png'
+                "
+                alt="your image"
+                (click)="fileInput.click()"
+              />
+            </div>
+          </div>
+          <div
+            class="col-sm-12 text-center"
+            [hidden]="hideSaveImage"
+            style="margin-top: 10px;"
+          >
+            <button
+              class="btn btn-primary"
+              (click)="sendImageBase64(modalSoccerPitch.id)"
+            >
+              <i class="cui-arrow-thick-from-bottom"></i> Salvar imagem
+            </button>
+          </div>
+        </div>
         <div class="row">
           <div class="col-sm-12">
             <div class="form-group">

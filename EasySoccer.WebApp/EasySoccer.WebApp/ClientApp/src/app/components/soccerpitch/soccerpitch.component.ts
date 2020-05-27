@@ -30,6 +30,7 @@ export class SoccerpitchComponent implements OnInit {
   selectedImage: any;
   selectedImageBase64: any;
   selectedImageUrl: any;
+  hideSaveImage: boolean;
   @ViewChild("input", null) inputEl;
 
   constructor(
@@ -39,6 +40,7 @@ export class SoccerpitchComponent implements OnInit {
     private toastService: ToastserviceService
   ) {
     this.modalSoccerPitch = new Soccerpitch();
+    this.hideSaveImage = false;
   }
   dropdownSettings: IDropdownSettings = {};
   ngOnInit() {
@@ -72,6 +74,7 @@ export class SoccerpitchComponent implements OnInit {
   }
 
   getImageUrl(soccerPitch: Soccerpitch) {
+    debugger;
     this.selectedImageUrl =
       "https://easysoccer.blob.core.windows.net/soccerpitch/default.png";
     if (soccerPitch.imageName != null) {
@@ -113,9 +116,11 @@ export class SoccerpitchComponent implements OnInit {
       this.modalTitle = "Editar quadra";
       console.log(selectedSoccerPitch);
       this.modalSoccerPitch = selectedSoccerPitch;
+      this.hideSaveImage = false;
     } else {
       this.modalSoccerPitch = new Soccerpitch();
       this.modalTitle = "Adicionar nova quadra";
+      this.hideSaveImage = true;
     }
     this.getImageUrl(this.modalSoccerPitch);
     this.modalService
@@ -147,6 +152,7 @@ export class SoccerpitchComponent implements OnInit {
                   this.toastService.showSuccess("Quadra inserida com sucesso!");
                   this.getSoccerpitchs();
                   this.modalSoccerPitch = new Soccerpitch();
+                  this.sendImageBase64(data.id);
                 },
                 (error) => {
                   this.toastService.showError(
@@ -168,6 +174,7 @@ export class SoccerpitchComponent implements OnInit {
       const reader = new FileReader();
       reader.onload = (e) => {
         this.selectedImage = reader.result;
+        this.selectedImageUrl = reader.result;
         let base64Splitted = this.selectedImage.split(",");
         if (base64Splitted.length > 0) {
           this.selectedImageBase64 = base64Splitted[1];
@@ -177,12 +184,13 @@ export class SoccerpitchComponent implements OnInit {
     }
   }
 
-  sendImageBase64() {
+  sendImageBase64(soccerPitchId) {
     this.soccerPitchService
-      .postSoccerPitchImage(this.selectedImageBase64, this.modalSoccerPitch.id)
+      .postSoccerPitchImage(this.selectedImageBase64, soccerPitchId)
       .subscribe(
         (res) => {
           this.toastService.showSuccess("Imagem salva com sucesso. ");
+          this.getSoccerpitchs();
         },
         (error) => {
           this.toastService.showError(
