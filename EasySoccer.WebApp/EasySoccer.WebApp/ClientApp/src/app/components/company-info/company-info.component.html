@@ -20,8 +20,8 @@
               <img
                 class="img-thumbnail img-size"
                 [src]="
-                  selectedImageUrl ||
-                  'https://easysoccer.blob.core.windows.net/soccerpitch/default.png'
+                  companyImageUrl ||
+                  'https://easysoccer.blob.core.windows.net/company/default.png'
                 "
                 alt="your image"
                 (click)="fileInput.click()"
@@ -33,10 +33,7 @@
             [hidden]="hideSaveImage"
             style="margin-top: 10px;"
           >
-            <button
-              class="btn btn-primary"
-              (click)="sendImageBase64(modalSoccerPitch.id)"
-            >
+            <button class="btn btn-primary" (click)="sendImageBase64()">
               <i class="cui-arrow-thick-from-bottom"></i> Salvar imagem
             </button>
           </div>

@@ -5,14 +5,14 @@ import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class CompanyService {
   endpoint = environment.urlApi;
   httpOptions = {
     headers: new HttpHeaders({
-      "Content-Type": "application/json"
-    })
+      "Content-Type": "application/json",
+    }),
   };
   constructor(private http: HttpClient) {}
 
@@ -40,8 +40,14 @@ export class CompanyService {
         description,
         cnpj,
         completeAddress,
-        companySchedules
+        companySchedules,
       })
       .pipe(map(this.extractData));
+  }
+
+  public postSoccerPitchImage(imageBase64: any): any {
+    return this.http.post<any>(environment.urlApi + "company/saveImage", {
+      ImageBase64: imageBase64,
+    });
   }
 }

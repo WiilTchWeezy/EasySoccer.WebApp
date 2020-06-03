@@ -9,6 +9,7 @@ import { ToastserviceService } from "../../service/toastservice.service";
 import { Observable } from "rxjs";
 import { debounceTime, distinctUntilChanged, map } from "rxjs/operators";
 import { IDropdownSettings } from "ng-multiselect-dropdown";
+import { ImageService } from "../../service/image.service";
 
 @Component({
   selector: "app-soccerpitch",
@@ -37,7 +38,8 @@ export class SoccerpitchComponent implements OnInit {
     private soccerPitchService: SoccerpitchService,
     private modalService: NgbModal,
     private soccerPitchPlanService: SoccerpitchplanService,
-    private toastService: ToastserviceService
+    private toastService: ToastserviceService,
+    private imageService: ImageService
   ) {
     this.modalSoccerPitch = new Soccerpitch();
     this.hideSaveImage = false;
@@ -71,17 +73,6 @@ export class SoccerpitchComponent implements OnInit {
         );
       }
     );
-  }
-
-  getImageUrl(soccerPitch: Soccerpitch) {
-    debugger;
-    this.selectedImageUrl =
-      "https://easysoccer.blob.core.windows.net/soccerpitch/default.png";
-    if (soccerPitch.imageName != null) {
-      this.selectedImageUrl =
-        "https://easysoccer.blob.core.windows.net/soccerpitch/" +
-        soccerPitch.imageName;
-    }
   }
 
   getSoccerpitchsplans() {
@@ -122,7 +113,9 @@ export class SoccerpitchComponent implements OnInit {
       this.modalTitle = "Adicionar nova quadra";
       this.hideSaveImage = true;
     }
-    this.getImageUrl(this.modalSoccerPitch);
+    this.selectedImageUrl = this.imageService.getImageUrlBySoccerPitch(
+      this.modalSoccerPitch
+    );
     this.modalService
       .open(content, { ariaLabelledBy: "modal-basic-title" })
       .result.then(
