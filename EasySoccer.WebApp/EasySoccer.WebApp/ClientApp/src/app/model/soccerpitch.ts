@@ -13,4 +13,5 @@ export class Soccerpitch {
   plans: Soccerpitchplan[];
   interval: any;
   imageName: string;
+  color: string;
 }

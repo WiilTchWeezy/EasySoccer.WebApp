@@ -7,3 +7,38 @@
 .img-size:hover {
   background-color: #dcdcdc;
 }
+
+.btn-outline-primary:hover {
+  color: #fff;
+  background-color: #161e53;
+  border-color: #161e53;
+}
+.btn-outline-primary:not(:disabled):not(.disabled).active,
+.btn-outline-primary:not(:disabled):not(.disabled):active,
+.show > .btn-outline-primary.dropdown-toggle {
+  color: #fff;
+  background-color: #161e53;
+  border-color: #161e53;
+}
+
+.btn-outline-primary {
+  color: #161e53;
+  border-color: #161e53;
+}
+
+.item-preview {
+  width: 20px;
+  height: 20px;
+  border-radius: 30%;
+  border: 2px solid #161e53;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.right {
+  float: right;
+}
+
+.w-100p {
+  width: 100%;
+}

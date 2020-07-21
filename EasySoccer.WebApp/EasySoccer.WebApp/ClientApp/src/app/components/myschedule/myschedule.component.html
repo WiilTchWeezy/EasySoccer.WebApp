@@ -88,26 +88,38 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col-sm-12">
             <label for="status">Data do agendamento</label>
             <div class="input-group">
-              <ngb-datepicker
-                #dp
-                [(ngModel)]="modalSoccerPitchReservation.userSelectDate"
+              <input
+                class="form-control"
+                placeholder="dd/mm/yyyy"
                 name="selectedDate"
-              ></ngb-datepicker>
+                [(ngModel)]="modalSoccerPitchReservation.userSelectDate"
+                ngbDatepicker
+                #d="ngbDatepicker"
+              />
+              <div class="input-group-append">
+                <button
+                  class="btn btn-outline-secondary calendar"
+                  (click)="d.toggle()"
+                  type="button"
+                >
+                  <i class="cui-calendar"></i>
+                </button>
+              </div>
             </div>
           </div>
-          <div class="col-sm-6">
+          <div class="col-sm-12">
             <div class="row">
-              <div class="col-sm-12">
+              <div class="col-sm-6">
                 <label for="phone">Horário inicio</label>
                 <ngb-timepicker
                   name="selectedHourStart"
                   [(ngModel)]="modalSoccerPitchReservation.selectedHourStart"
                 ></ngb-timepicker>
               </div>
-              <div class="col-sm-12">
+              <div class="col-sm-6">
                 <label for="phone">Horário final</label>
                 <ngb-timepicker
                   name="selectedHourEnd"

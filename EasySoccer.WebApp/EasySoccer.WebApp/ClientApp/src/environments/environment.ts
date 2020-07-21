@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  // urlApi: 'http://localhost:56284/api/'
-  urlApi: "https://apieasysoccer.azurewebsites.net/api/"
+  urlApi: "http://localhost:56284/api/",
+  // urlApi: "https://apieasysoccer.azurewebsites.net/api/",
 };

@@ -46,52 +46,67 @@
               mwlCalendarPreviousView
               [view]="view"
               [(viewDate)]="viewDate"
+              (click)="checkIfHaveToGet()"
+              (viewDateChange)="closeOpenMonthViewDay()"
             >
-              Previous
+              Anterior
             </div>
             <div
-              class="btn btn-outline-secondary"
+              class="btn btn-outline-primary"
               mwlCalendarToday
               [(viewDate)]="viewDate"
+              (click)="checkIfHaveToGet()"
+              (viewDateChange)="closeOpenMonthViewDay()"
             >
-              Today
+              Hoje
             </div>
             <div
               class="btn btn-primary"
               mwlCalendarNextView
               [view]="view"
               [(viewDate)]="viewDate"
+              (click)="checkIfHaveToGet()"
+              (viewDateChange)="closeOpenMonthViewDay()"
             >
-              Next
+              Próximo
             </div>
           </div>
         </div>
         <div class="col-md-4">
-          <h3>{{ viewDate | calendarDate: view + "ViewTitle":"en" }}</h3>
+          <h3>{{ viewDate | calendarDate: view + "ViewTitle":"pt-PT" }}</h3>
         </div>
         <div class="col-md-4">
           <div class="btn-group">
-            <!-- <div
-              class="btn btn-primary"
-              (click)="view = CalendarView.Month"
-              [class.active]="view === CalendarView.Month"
-            >
-              Month
-            </div>
             <div
               class="btn btn-primary"
-              (click)="view = CalendarView.Week"
-              [class.active]="view === CalendarView.Week"
+              (click)="view = CalendarView.Month"
+              [ngClass]="{
+                'btn-outline-primary': view === CalendarView.Month,
+                'btn-primary': view != CalendarView.Month
+              }"
             >
-              Week
+              Mensal
+            </div>
+            <div
+              class="btn"
+              (click)="view = CalendarView.Week"
+              [ngClass]="{
+                'btn-outline-primary': view === CalendarView.Week,
+                'btn-primary': view != CalendarView.Week
+              }"
+            >
+              Semanal
             </div>
             <div
               class="btn btn-primary"
               (click)="view = CalendarView.Day"
-              [class.active]="view === CalendarView.Day"
+              [ngClass]="{
+                'btn-outline-primary': view === CalendarView.Day,
+                'btn-primary': view != CalendarView.Day
+              }"
             >
-              Day
-            </div> -->
+              Diário
+            </div>
           </div>
         </div>
       </div>
@@ -100,20 +115,27 @@
         <mwl-calendar-month-view
           *ngSwitchCase="CalendarView.Month"
           [viewDate]="viewDate"
-          [activeDayIsOpen]="false"
           [events]="calendarEvents"
+          [locale]="locale"
+          [refresh]="refresh"
+          [activeDayIsOpen]="activeDayIsOpen"
+          (dayClicked)="dayClicked($event.day)"
         >
         </mwl-calendar-month-view>
         <mwl-calendar-week-view
           *ngSwitchCase="CalendarView.Week"
           [viewDate]="viewDate"
           [events]="calendarEvents"
+          [locale]="locale"
+          [refresh]="refresh"
         >
         </mwl-calendar-week-view>
         <mwl-calendar-day-view
           *ngSwitchCase="CalendarView.Day"
           [viewDate]="viewDate"
           [events]="calendarEvents"
+          [locale]="locale"
+          [refresh]="refresh"
         >
         </mwl-calendar-day-view>
       </div>

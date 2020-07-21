@@ -4,10 +4,12 @@ import { CalendarEvent, CalendarView } from "angular-calendar";
 import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 import { DashboardService } from "../../service/dashboard.service";
 import { ToastserviceService } from "../../service/toastservice.service";
+import { Subject } from "rxjs";
+import { isSameDay, isSameMonth } from "date-fns";
 @Component({
   selector: "app-dashboard",
   templateUrl: "./dashboard.component.html",
-  styleUrls: ["./dashboard.component.css"]
+  styleUrls: ["./dashboard.component.css"],
 })
 export class DashboardComponent implements OnInit {
   view: CalendarView = CalendarView.Month;
@@ -26,9 +28,12 @@ export class DashboardComponent implements OnInit {
     "Setembro",
     "Outubro",
     "Novembro",
-    "Dezembro"
+    "Dezembro",
   ];
   calendarEvents: Array<CalendarEvent>;
+  locale: string = "pt-PT";
+  monthsAlreadyGet: Array<any> = new Array<any>();
+  refresh: Subject<any> = new Subject();
 
   constructor(
     private modalService: NgbModal,
@@ -42,42 +47,19 @@ export class DashboardComponent implements OnInit {
       datesDescription.push(this.monthNames[currentDate.getMonth() + index]);
     }
     this.lineChartLabels = datesDescription.reverse();
-    this.dashboardService
-      .getReservationCalendar(new Date().getMonth() + 1, 0)
-      .subscribe(
-        res => {
-          res.forEach(element => {
-            this.calendarEvents.push({
-              start: new Date(element.startDate),
-              end: new Date(element.endDate),
-              title: element.title,
-              color: {
-                primary: "#ad2121",
-                secondary: "#FAE3E3"
-              },
-              allDay: false,
-              draggable: false
-            });
-          });
-        },
-        error => {
-          this.tostService.showError(
-            "Erro ao consultar dados. " + error.Message
-          );
-        }
-      );
+    this.getReservationCalendar();
   }
 
   ngOnInit() {
     this.dashboardService.getReservationChart().subscribe(
-      res => {
+      (res) => {
         this.chartData = res;
         this.lineChartData = [
-          { data: this.chartData.map(x => x.dataCount).reverse(), label: "" }
+          { data: this.chartData.map((x) => x.dataCount).reverse(), label: "" },
         ];
-        this.lineChartLabels = this.chartData.map(x => x.dataLabel);
+        this.lineChartLabels = this.chartData.map((x) => x.dataLabel);
       },
-      error => {
+      (error) => {
         this.tostService.showError("Erro ao consultar dados. " + error.Message);
       }
     );
@@ -87,12 +69,12 @@ export class DashboardComponent implements OnInit {
   chartData: Array<any>;
   // lineChart
   public lineChartData: Array<any> = [
-    { data: [40, 59, 65, 69, 70], label: "" }
+    { data: [40, 59, 65, 69, 70], label: "" },
   ];
   public lineChartLabels: Array<any> = ["", "", "", "", "", ""];
   public lineChartOptions: any = {
     animation: false,
-    responsive: true
+    responsive: true,
   };
   public lineChartColours: Array<any> = [
     {
@@ -101,8 +83,8 @@ export class DashboardComponent implements OnInit {
       pointBackgroundColor: "rgba(255,89,31,1)",
       pointBorderColor: "#fff",
       pointHoverBackgroundColor: "#fff",
-      pointHoverBorderColor: "rgba(22,30,83,0.8)"
-    }
+      pointHoverBorderColor: "rgba(22,30,83,0.8)",
+    },
   ];
   public lineChartLegend = false;
   public lineChartType = "line";
@@ -117,14 +99,80 @@ export class DashboardComponent implements OnInit {
   }
 
   open(content: any) {
-    console.log("called open");
-    console.log(this.modalService);
-    console.log(content);
     this.modalService
       .open(content, { ariaLabelledBy: "modal-basic-title" })
       .result.then(
-        result => {},
-        reason => {}
+        (result) => {},
+        (reason) => {}
       );
+  }
+
+  getReservationCalendar() {
+    this.monthsAlreadyGet.push({
+      month: this.viewDate.getMonth() + 1,
+      year: this.viewDate.getFullYear(),
+    });
+    this.dashboardService
+      .getReservationCalendar(
+        this.viewDate.getFullYear(),
+        this.viewDate.getMonth() + 1,
+        0
+      )
+      .subscribe(
+        (res) => {
+          res.forEach((element) => {
+            this.calendarEvents.push({
+              start: new Date(element.startDate),
+              end: new Date(element.endDate),
+              title: element.title,
+              color: {
+                primary: element.color,
+                secondary: "#FAE3E3",
+              },
+              allDay: false,
+              draggable: false,
+            });
+            this.refresh.next();
+          });
+        },
+        (error) => {
+          this.tostService.showError(
+            "Erro ao consultar dados. " + error.Message
+          );
+        }
+      );
+  }
+
+  checkIfHaveToGet() {
+    let currentMonth = this.viewDate.getMonth() + 1;
+    let currentYear = this.viewDate.getFullYear();
+    if (
+      this.monthsAlreadyGet.some(
+        (n) => n.month == currentMonth && n.year == currentYear
+      ) == false
+    ) {
+      this.getReservationCalendar();
+    }
+  }
+
+  activeDayIsOpen: boolean = false;
+
+  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+    debugger;
+    if (isSameMonth(date, this.viewDate)) {
+      if (
+        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
+        events.length === 0
+      ) {
+        this.activeDayIsOpen = false;
+      } else {
+        this.activeDayIsOpen = true;
+      }
+      this.viewDate = date;
+    }
+  }
+
+  closeOpenMonthViewDay() {
+    this.activeDayIsOpen = false;
   }
 }

@@ -11,7 +11,7 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { LoginModalComponent } from "../components/modal/login-modal/login-modal.component";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class AuthService {
   menuEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -31,7 +31,7 @@ export class AuthService {
   authenticate(login: Login) {
     this.loading = true;
     this.authApi(login.name, login.password).subscribe(
-      res => {
+      (res) => {
         this.cookieService.set("token", res.token);
         this.cookieService.set("expireDate", res.expireDate);
         this.isAuth = true;
@@ -39,8 +39,16 @@ export class AuthService {
         this.router.navigate(["/"]);
         this.loading = false;
       },
-      error => {
-        this.toastService.showError("Erro ao realizar login. " + error.message);
+      (error) => {
+        if (error != null && error.error != null) {
+          this.toastService.showError(
+            "Erro ao realizar login. " + error.error.message
+          );
+        } else {
+          this.toastService.showError(
+            "Erro ao realizar login. " + error.message
+          );
+        }
         this.isAuth = false;
         this.menuEmitter.emit(false);
         this.router.navigate(["/login"]);
@@ -89,14 +97,14 @@ export class AuthService {
   logOff(showModal: boolean = false) {
     if (showModal) {
       this.modalService.open(LoginModalComponent).result.then(
-        success => {
+        (success) => {
           this.cookieService.delete("token");
           this.cookieService.delete("expireDate");
           this.isAuth = false;
           this.menuEmitter.emit(false);
           this.router.navigate(["/login"]);
         },
-        rejected => {}
+        (rejected) => {}
       );
     } else {
       this.cookieService.delete("token");
@@ -111,7 +119,7 @@ export class AuthService {
     return this.httpClient
       .post(environment.urlApi + "companyuser/changepassword", {
         newPassword,
-        oldPassword
+        oldPassword,
       })
       .pipe(map(this.extractData));
   }

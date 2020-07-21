@@ -66,7 +66,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-sm-6">
             <label for="description">Descrição</label>
             <div class="input-group">
               <input
@@ -76,6 +76,38 @@
                 name="description"
                 [(ngModel)]="modalSoccerPitch.description"
               />
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="sportType">Cor no calendário:</label>
+              <div
+                class="btn-group w-100p"
+                ngbDropdown
+                role="group"
+                aria-label="Button group with nested dropdown"
+              >
+                <button class="btn btn-outline-primary" ngbDropdownToggle>
+                  {{ currentColor.name }}
+                  <span
+                    class="item-preview"
+                    [style.background-color]="currentColor.value"
+                  ></span>
+                </button>
+                <div class="dropdown-menu w-100p" ngbDropdownMenu>
+                  <button
+                    *ngFor="let item of colorsOptions"
+                    ngbDropdownItem
+                    (click)="updateColorDropDown(item)"
+                  >
+                    {{ item.name }}
+                    <span
+                      class="item-preview right"
+                      [style.background-color]="item.value"
+                    ></span>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -33,6 +33,29 @@ export class SoccerpitchComponent implements OnInit {
   selectedImageUrl: any;
   hideSaveImage: boolean;
   @ViewChild("input", null) inputEl;
+  currentColor: any = { name: "Laranja", value: "#ff591f" };
+  colorsOptions: any[] = [
+    {
+      name: "Laranja",
+      value: "#ff591f",
+    },
+    {
+      name: "Verde",
+      value: "#1fff59",
+    },
+    {
+      name: "Azul",
+      value: "#1fc5ff",
+    },
+    {
+      name: "Rosa",
+      value: "#ff1f55",
+    },
+    {
+      name: "Amarelo",
+      value: "#ffc91f",
+    },
+  ];
 
   constructor(
     private soccerPitchService: SoccerpitchService,
@@ -107,6 +130,21 @@ export class SoccerpitchComponent implements OnInit {
       this.modalTitle = "Editar quadra";
       console.log(selectedSoccerPitch);
       this.modalSoccerPitch = selectedSoccerPitch;
+      var selectedColor;
+      if (selectedSoccerPitch.color != null) {
+        this.colorsOptions.map(function (item) {
+          if (item.value == selectedSoccerPitch.color) {
+            selectedColor = item;
+            return;
+          }
+        });
+      }
+
+      if (selectedColor) {
+        this.currentColor = selectedColor;
+      } else {
+        this.currentColor = this.colorsOptions[0];
+      }
       this.hideSaveImage = false;
     } else {
       this.modalSoccerPitch = new Soccerpitch();
@@ -121,6 +159,7 @@ export class SoccerpitchComponent implements OnInit {
       .result.then(
         (result) => {
           if (selectedSoccerPitch != null && selectedSoccerPitch.id > 0) {
+            this.modalSoccerPitch.color = this.currentColor.value;
             this.soccerPitchService
               .patchSoccerPitch(this.modalSoccerPitch)
               .subscribe(
@@ -191,5 +230,10 @@ export class SoccerpitchComponent implements OnInit {
           );
         }
       );
+  }
+
+  updateColorDropDown(dropDownItem: any) {
+    this.currentColor = dropDownItem;
+    this.modalSoccerPitch.color = dropDownItem.value;
   }
 }

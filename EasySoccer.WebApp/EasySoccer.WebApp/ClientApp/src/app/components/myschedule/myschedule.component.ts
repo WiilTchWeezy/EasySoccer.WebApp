@@ -3,7 +3,7 @@ import { ScheduleService } from "../../service/schedule.service";
 import { SoccerpitchService } from "../../service/soccerpitch.service";
 import { UserService } from "../../service/user.service";
 import { SoccerPitchReservation } from "../../model/soccer-pitch-reservation";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgbModal, NgbDateParserFormatter } from "@ng-bootstrap/ng-bootstrap";
 import { Soccerpitch } from "../../model/soccerpitch";
 import { SoccerpitchplanService } from "../../service/soccerpitchplan.service";
 import { Soccerpitchplan } from "../../model/soccerpitchplan";
@@ -14,15 +14,19 @@ import {
   distinctUntilChanged,
   map,
   tap,
-  switchMap
+  switchMap,
 } from "rxjs/operators";
 import { AddUserModalComponent } from "../modal/add-user-modal/add-user-modal.component";
 import { ToastserviceService } from "../../service/toastservice.service";
+import { CustomDateParserFormatter } from "../../service/adapter/CustomDateParseAdapter";
 
 @Component({
   selector: "app-myschedule",
   templateUrl: "./myschedule.component.html",
-  styleUrls: ["./myschedule.component.css"]
+  styleUrls: ["./myschedule.component.css"],
+  providers: [
+    { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter },
+  ],
 })
 export class MyscheduleComponent implements OnInit {
   page = 1;
@@ -58,7 +62,7 @@ export class MyscheduleComponent implements OnInit {
       debounceTime(300),
       distinctUntilChanged(),
       tap(() => (this.searching = true)),
-      switchMap(term =>
+      switchMap((term) =>
         this.userService.filterAsync(term).pipe(
           tap(() => (this.searchFailed = false)),
           catchError(() => {
@@ -74,12 +78,12 @@ export class MyscheduleComponent implements OnInit {
 
   getReservations() {
     this.scheduleService.getSchedules(this.page, this.pageSize).subscribe(
-      res => {
+      (res) => {
         this.soccerPitchReservations = res.data;
         this.collectionSize = res.total;
         console.log(res);
       },
-      error => {
+      (error) => {
         this.toastService.showError(
           "Erro ao consultar dados. " + error.Message
         );
@@ -89,10 +93,10 @@ export class MyscheduleComponent implements OnInit {
 
   getSoccerPitchs() {
     this.soccerpitchService.getSoccerPitchs().subscribe(
-      res => {
+      (res) => {
         this.soccerPitchs = res;
       },
-      error => {
+      (error) => {
         this.toastService.showError(
           "Erro ao consultar dados. " + error.Message
         );
@@ -102,10 +106,10 @@ export class MyscheduleComponent implements OnInit {
 
   getPlansBySoccerPitchId(id: any) {
     this.soccerpitchplanService.getSoccerPitchPlanBySoccerPitchId(id).subscribe(
-      res => {
+      (res) => {
         this.soccerPitchsPlans = res;
       },
-      error => {
+      (error) => {
         this.toastService.showError(
           "Erro ao consultar dados. " + error.Message
         );
@@ -124,14 +128,14 @@ export class MyscheduleComponent implements OnInit {
 
   openUserModal(content: any) {
     this.modalService.open(AddUserModalComponent).result.then(
-      result => {
+      (result) => {
         this.modalSoccerPitchReservation.userId = result.id;
         this.modalSoccerPitchReservation.selectedUser = {
           name: result.name + "(" + result.phone + ")",
-          id: result.id
+          id: result.id,
         };
       },
-      reason => {}
+      (reason) => {}
     );
   }
 
@@ -158,7 +162,7 @@ export class MyscheduleComponent implements OnInit {
       ).getFullYear(),
       month:
         new Date(this.modalSoccerPitchReservation.selectedDate).getMonth() + 1,
-      day: new Date(this.modalSoccerPitchReservation.selectedDate).getDate()
+      day: new Date(this.modalSoccerPitchReservation.selectedDate).getDate(),
     };
 
     this.modalSoccerPitchReservation.selectedUser = {
@@ -167,7 +171,7 @@ export class MyscheduleComponent implements OnInit {
         "(" +
         this.modalSoccerPitchReservation.userPhone +
         ")",
-      id: this.modalSoccerPitchReservation.userId
+      id: this.modalSoccerPitchReservation.userId,
     };
   }
 
@@ -192,20 +196,20 @@ export class MyscheduleComponent implements OnInit {
     this.modalService
       .open(content, { ariaLabelledBy: "modal-basic-title" })
       .result.then(
-        result => {
+        (result) => {
           this.transformData();
           if (selectedSoccerPitch != null && selectedSoccerPitch.id != null) {
             this.scheduleService
               .patchSoccerPitchReservation(this.modalSoccerPitchReservation)
               .subscribe(
-                data => {
+                (data) => {
                   this.toastService.showSuccess(
                     "Agendamento atualizado com sucesso."
                   );
                   this.getReservations();
                   this.modalSoccerPitchReservation = new SoccerPitchReservation();
                 },
-                error => {
+                (error) => {
                   this.toastService.showError(
                     "Erro ao atualizar dados. " + error.Message
                   );
@@ -215,14 +219,14 @@ export class MyscheduleComponent implements OnInit {
             this.scheduleService
               .postSoccerPitchReservation(this.modalSoccerPitchReservation)
               .subscribe(
-                data => {
+                (data) => {
                   this.toastService.showSuccess(
                     "Agendamento inserido com sucesso."
                   );
                   this.getReservations();
                   this.modalSoccerPitchReservation = new SoccerPitchReservation();
                 },
-                error => {
+                (error) => {
                   this.toastService.showError(
                     "Erro ao inserir dados. " + error.Message
                   );
@@ -230,7 +234,7 @@ export class MyscheduleComponent implements OnInit {
               );
           }
         },
-        reason => {}
+        (reason) => {}
       );
   }
 }

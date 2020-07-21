@@ -27,7 +27,11 @@ import { UserChangePasswordComponent } from "./components/user-change-password/u
 import { UserInfoComponent } from "./components/user-info/user-info.component";
 import { CompanyInfoComponent } from "./components/company-info/company-info.component";
 import { LoginModalComponent } from "./components/modal/login-modal/login-modal.component";
-import { CompanyScheduleComponent } from './components/company-schedule/company-schedule.component';
+import { CompanyScheduleComponent } from "./components/company-schedule/company-schedule.component";
+import localePTBR from "@angular/common/locales/pt-PT";
+import { registerLocaleData } from "@angular/common";
+
+registerLocaleData(localePTBR);
 
 @NgModule({
   declarations: [
@@ -44,7 +48,7 @@ import { CompanyScheduleComponent } from './components/company-schedule/company-
     UserInfoComponent,
     CompanyInfoComponent,
     LoginModalComponent,
-    CompanyScheduleComponent
+    CompanyScheduleComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -58,58 +62,62 @@ import { CompanyScheduleComponent } from './components/company-schedule/company-
         path: "",
         component: DashboardComponent,
         pathMatch: "full",
-        canActivate: [AuthGuardService]
+        canActivate: [AuthGuardService],
       },
       {
         path: "dashboard",
         component: DashboardComponent,
-        canActivate: [AuthGuardService]
+        canActivate: [AuthGuardService],
       },
       {
         path: "myschedule",
         component: MyscheduleComponent,
-        canActivate: [AuthGuardService]
+        canActivate: [AuthGuardService],
       },
       {
         path: "soccerpitch",
         component: SoccerpitchComponent,
-        canActivate: [AuthGuardService]
+        canActivate: [AuthGuardService],
       },
       {
         path: "soccerpitchplan",
         component: SoccerpitchplanComponent,
-        canActivate: [AuthGuardService]
+        canActivate: [AuthGuardService],
       },
       { path: "login", component: LoginComponent },
       {
         path: "changepassword",
         component: UserChangePasswordComponent,
-        canActivate: [AuthGuardService]
+        canActivate: [AuthGuardService],
       },
       {
         path: "userinfo",
         component: UserInfoComponent,
-        canActivate: [AuthGuardService]
+        canActivate: [AuthGuardService],
       },
       {
         path: "companyinfo",
         component: CompanyInfoComponent,
-        canActivate: [AuthGuardService]
-      }
+        canActivate: [AuthGuardService],
+      },
     ]),
     CalendarModule.forRoot({
       provide: DateAdapter,
-      useFactory: adapterFactory
+      useFactory: adapterFactory,
     }),
-    NgMultiSelectDropDownModule.forRoot()
+    NgMultiSelectDropDownModule.forRoot(),
   ],
   providers: [
     AuthService,
     AuthGuardService,
     CookieService,
-    { provide: HTTP_INTERCEPTORS, useClass: CustomHttpInterceptor, multi: true }
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CustomHttpInterceptor,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
-  entryComponents: [AddUserModalComponent, LoginModalComponent]
+  entryComponents: [AddUserModalComponent, LoginModalComponent],
 })
 export class AppModule {}
