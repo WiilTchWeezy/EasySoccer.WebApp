@@ -75,12 +75,13 @@
                 type="text"
                 name="cnpj"
                 [(ngModel)]="cnpj"
+                mask="00.000.000/0000-00"
               />
             </div>
           </div>
           <div class="col-sm-12">
             <div class="form-group">
-              <label for="completeAddress">Endereço</label
+              <label for="completeAddress">Endereço (Texto a ser Exibido)</label
               ><input
                 class="form-control"
                 id="completeAddress"
@@ -89,6 +90,37 @@
                 name="completeAddress"
                 [(ngModel)]="completeAddress"
               />
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div></div>
+            <div class="form-group">
+              <label for="mapsAddress">Endereço (Google Maps)</label>
+
+              <input
+                id="mapsAddress"
+                class="form-control"
+                [options]="options"
+                ngx-google-places-autocomplete
+                #placesRef="ngx-places"
+                (onAddressChange)="handleAddressChange($event)"
+                [(ngModel)]="completeAddressMaps"
+                name="completeAddressMaps"
+                style="margin-bottom: 15px;"
+              />
+              <agm-map
+                [latitude]="latitude"
+                [zoom]="17"
+                [longitude]="longitude"
+                [disableDefaultUI]="true"
+                [mapDraggable]="false"
+                *ngIf="latitude && longitude"
+              >
+                <agm-marker
+                  [latitude]="latitude"
+                  [longitude]="longitude"
+                ></agm-marker>
+              </agm-map>
             </div>
           </div>
         </div>

@@ -30,8 +30,13 @@ import { LoginModalComponent } from "./components/modal/login-modal/login-modal.
 import { CompanyScheduleComponent } from "./components/company-schedule/company-schedule.component";
 import localePTBR from "@angular/common/locales/pt-PT";
 import { registerLocaleData } from "@angular/common";
+import { GooglePlaceModule } from "ngx-google-places-autocomplete";
+import { AgmCoreModule } from "@agm/core";
+import { NgxMaskModule, IConfig } from "ngx-mask";
 
 registerLocaleData(localePTBR);
+
+export const options: Partial<IConfig> | (() => Partial<IConfig>);
 
 @NgModule({
   declarations: [
@@ -106,6 +111,11 @@ registerLocaleData(localePTBR);
       useFactory: adapterFactory,
     }),
     NgMultiSelectDropDownModule.forRoot(),
+    GooglePlaceModule,
+    AgmCoreModule.forRoot({
+      apiKey: "AIzaSyCi2hnhPwsHYMqTe-CNnAZOaw9Grtt3ESQ",
+    }),
+    NgxMaskModule.forRoot(),
   ],
   providers: [
     AuthService,

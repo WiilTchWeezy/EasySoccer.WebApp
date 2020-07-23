@@ -32,7 +32,9 @@ export class CompanyService {
     description,
     cnpj,
     completeAddress,
-    companySchedules
+    companySchedules,
+    longitude,
+    latitude
   ): Observable<any> {
     return this.http
       .patch(environment.urlApi + "company/patchcompanyinfo", {
@@ -41,6 +43,8 @@ export class CompanyService {
         cnpj,
         completeAddress,
         companySchedules,
+        longitude,
+        latitude,
       })
       .pipe(map(this.extractData));
   }

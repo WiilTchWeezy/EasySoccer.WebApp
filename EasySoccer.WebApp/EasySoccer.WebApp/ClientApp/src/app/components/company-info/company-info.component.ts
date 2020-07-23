@@ -3,6 +3,7 @@ import { CompanyService } from "../../service/company.service";
 import { Router } from "@angular/router";
 import { ToastserviceService } from "../../service/toastservice.service";
 import { ImageService } from "../../service/image.service";
+import { Address } from "ngx-google-places-autocomplete/objects/address";
 
 @Component({
   selector: "app-company-info",
@@ -13,12 +14,19 @@ export class CompanyInfoComponent implements OnInit {
   name: string;
   description: string;
   completeAddress: string;
+  completeAddressMaps: string;
   cnpj: string;
   loading: boolean = false;
   companySchedules: any[];
   companyImageUrl: any;
   selectedImage: any;
   selectedImageBase64: any;
+  options: any = {
+    types: [],
+    componentRestrictions: { country: "BR" },
+  };
+  longitude: any;
+  latitude: any;
 
   constructor(
     private companyService: CompanyService,
@@ -37,8 +45,11 @@ export class CompanyInfoComponent implements OnInit {
         this.name = res.name;
         this.description = res.description;
         this.completeAddress = res.completeAddress;
+        this.completeAddressMaps = res.completeAddress;
         this.cnpj = res.cnpj;
         this.companySchedules = res.companySchedules;
+        this.longitude = res.longitude;
+        this.latitude = res.latitude;
         this.companyImageUrl = this.imageService.getImageUrlByImageName(
           res.logo,
           "company"
@@ -58,7 +69,9 @@ export class CompanyInfoComponent implements OnInit {
         this.description,
         this.cnpj,
         this.completeAddress,
-        this.companySchedules
+        this.companySchedules,
+        this.longitude,
+        this.latitude
       )
       .subscribe(
         (res) => {
@@ -106,5 +119,10 @@ export class CompanyInfoComponent implements OnInit {
           );
         }
       );
+  }
+
+  public handleAddressChange(address: Address) {
+    this.longitude = address.geometry.location.lng();
+    this.latitude = address.geometry.location.lat();
   }
 }

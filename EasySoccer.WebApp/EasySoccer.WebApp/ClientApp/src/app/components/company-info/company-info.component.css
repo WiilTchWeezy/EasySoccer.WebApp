@@ -18,3 +18,8 @@
 .img-size:hover {
   background-color: #dcdcdc;
 }
+
+agm-map {
+  margin-top: 15px;
+  height: 300px;
+}
