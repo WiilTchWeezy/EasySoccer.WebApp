@@ -176,7 +176,6 @@ export class MyscheduleComponent implements OnInit {
   }
 
   openModal(content: any, selectedSoccerPitch: SoccerPitchReservation) {
-    console.log(selectedSoccerPitch);
     if (
       selectedSoccerPitch != null &&
       selectedSoccerPitch != undefined &&
@@ -211,7 +210,7 @@ export class MyscheduleComponent implements OnInit {
                 },
                 (error) => {
                   this.toastService.showError(
-                    "Erro ao atualizar dados. " + error.Message
+                    "Erro ao atualizar dados. " + error.error
                   );
                 }
               );
@@ -227,8 +226,9 @@ export class MyscheduleComponent implements OnInit {
                   this.modalSoccerPitchReservation = new SoccerPitchReservation();
                 },
                 (error) => {
+                  console.log(error);
                   this.toastService.showError(
-                    "Erro ao inserir dados. " + error.Message
+                    "Erro ao inserir dados. " + error.error
                   );
                 }
               );

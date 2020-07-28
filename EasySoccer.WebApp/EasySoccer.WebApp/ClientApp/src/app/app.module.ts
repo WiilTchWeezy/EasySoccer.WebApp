@@ -36,7 +36,7 @@ import { NgxMaskModule, IConfig } from "ngx-mask";
 
 registerLocaleData(localePTBR);
 
-export const options: Partial<IConfig> | (() => Partial<IConfig>);
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
 
 @NgModule({
   declarations: [
