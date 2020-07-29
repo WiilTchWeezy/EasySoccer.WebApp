@@ -114,17 +114,63 @@
             <div class="row">
               <div class="col-sm-6">
                 <label for="phone">Horário inicio</label>
-                <ngb-timepicker
+                <!-- <ngb-timepicker
                   name="selectedHourStart"
                   [(ngModel)]="modalSoccerPitchReservation.selectedHourStart"
-                ></ngb-timepicker>
+                ></ngb-timepicker> -->
+                <div class="row" style="padding: 15px; padding-top: 0px;">
+                  <input
+                    class="form-control col-sm-5"
+                    name="selectedHourStart"
+                    type="number"
+                    max="23"
+                    [(ngModel)]="
+                      modalSoccerPitchReservation.selectedHourStart.hour
+                    "
+                    style="text-align: center;"
+                    mask="00"
+                  />
+                  <div style="padding: 5px;">:</div>
+                  <input
+                    class="form-control col-sm-5"
+                    name="selectedHourStartMinute"
+                    [(ngModel)]="
+                      modalSoccerPitchReservation.selectedHourStart.minute
+                    "
+                    type="number"
+                    max="59"
+                    style="text-align: center;"
+                    mask="00"
+                  />
+                </div>
               </div>
               <div class="col-sm-6">
                 <label for="phone">Horário final</label>
-                <ngb-timepicker
-                  name="selectedHourEnd"
-                  [(ngModel)]="modalSoccerPitchReservation.selectedHourEnd"
-                ></ngb-timepicker>
+                <div class="row" style="padding: 15px; padding-top: 0px;">
+                  <input
+                    class="form-control col-sm-5"
+                    name="selectedHourEnd"
+                    type="number"
+                    max="23"
+                    [(ngModel)]="
+                      modalSoccerPitchReservation.selectedHourEnd.hour
+                    "
+                    style="text-align: center;"
+                    mask="00"
+                  />
+                  <div style="padding: 5px;">:</div>
+                  <input
+                    class="form-control col-sm-5"
+                    name="selectedHourEndMinute"
+                    [(ngModel)]="
+                      modalSoccerPitchReservation.selectedHourEnd.minute
+                    "
+                    type="number"
+                    max="59"
+                    style="text-align: center;"
+                    mask="00"
+                  />
+                </div>
               </div>
             </div>
           </div>

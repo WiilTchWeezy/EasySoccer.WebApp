@@ -38,7 +38,10 @@ export class MyscheduleComponent implements OnInit {
   selectedSoccerPitch: Soccerpitch;
   searching = false;
   searchFailed = false;
-
+  time: any = {
+    hour: 13,
+    minute: 30,
+  };
   modalTitle: String;
   userRespId: String;
   modalSoccerPitchReservation: SoccerPitchReservation;
@@ -196,6 +199,7 @@ export class MyscheduleComponent implements OnInit {
       .open(content, { ariaLabelledBy: "modal-basic-title" })
       .result.then(
         (result) => {
+          console.log(this.modalSoccerPitchReservation);
           this.transformData();
           if (selectedSoccerPitch != null && selectedSoccerPitch.id != null) {
             this.scheduleService
