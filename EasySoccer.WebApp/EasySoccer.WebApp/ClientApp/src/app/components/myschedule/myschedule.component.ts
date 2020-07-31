@@ -3,7 +3,12 @@ import { ScheduleService } from "../../service/schedule.service";
 import { SoccerpitchService } from "../../service/soccerpitch.service";
 import { UserService } from "../../service/user.service";
 import { SoccerPitchReservation } from "../../model/soccer-pitch-reservation";
-import { NgbModal, NgbDateParserFormatter } from "@ng-bootstrap/ng-bootstrap";
+import {
+  NgbModal,
+  NgbDateParserFormatter,
+  NgbDateStruct,
+  NgbModalOptions,
+} from "@ng-bootstrap/ng-bootstrap";
 import { Soccerpitch } from "../../model/soccerpitch";
 import { SoccerpitchplanService } from "../../service/soccerpitchplan.service";
 import { Soccerpitchplan } from "../../model/soccerpitchplan";
@@ -19,6 +24,7 @@ import {
 import { AddUserModalComponent } from "../modal/add-user-modal/add-user-modal.component";
 import { ToastserviceService } from "../../service/toastservice.service";
 import { CustomDateParserFormatter } from "../../service/adapter/CustomDateParseAdapter";
+import { ConfirmModalComponent } from "../modal/confirm-modal/confirm-modal.component";
 
 @Component({
   selector: "app-myschedule",
@@ -46,6 +52,7 @@ export class MyscheduleComponent implements OnInit {
   userRespId: String;
   modalSoccerPitchReservation: SoccerPitchReservation;
   selectedDate: any;
+  modalOption: NgbModalOptions = {};
   constructor(
     public scheduleService: ScheduleService,
     private modalService: NgbModal,
@@ -111,6 +118,9 @@ export class MyscheduleComponent implements OnInit {
     this.soccerpitchplanService.getSoccerPitchPlanBySoccerPitchId(id).subscribe(
       (res) => {
         this.soccerPitchsPlans = res;
+        if (this.soccerPitchsPlans.length > 0) {
+          this.modalSoccerPitchReservation.soccerPitchSoccerPitchPlanId = this.soccerPitchsPlans[0].id;
+        }
       },
       (error) => {
         this.toastService.showError(
@@ -134,7 +144,7 @@ export class MyscheduleComponent implements OnInit {
       (result) => {
         this.modalSoccerPitchReservation.userId = result.id;
         this.modalSoccerPitchReservation.selectedUser = {
-          name: result.name + "(" + result.phone + ")",
+          name: result.name + " (" + result.phone + ")",
           id: result.id,
         };
       },
@@ -179,6 +189,8 @@ export class MyscheduleComponent implements OnInit {
   }
 
   openModal(content: any, selectedSoccerPitch: SoccerPitchReservation) {
+    let isEditting = false;
+    let isSaved = false;
     if (
       selectedSoccerPitch != null &&
       selectedSoccerPitch != undefined &&
@@ -189,56 +201,68 @@ export class MyscheduleComponent implements OnInit {
       this.modalSoccerPitchReservation = selectedSoccerPitch;
       this.fitDataToFront();
       this.getPlansBySoccerPitchId(selectedSoccerPitch.soccerPitchId);
+      isEditting = true;
     } else {
       this.modalSoccerPitchReservation = new SoccerPitchReservation();
+      this.modalSoccerPitchReservation.selectedHourStart = {
+        hour: null,
+        minute: null,
+      };
+      this.modalSoccerPitchReservation.selectedHourEnd = {
+        hour: null,
+        minute: null,
+      };
       this.modalTitle = "Adicionar nova quadra";
     }
 
     console.log(this.modalSoccerPitchReservation);
-    this.modalService
-      .open(content, { ariaLabelledBy: "modal-basic-title" })
-      .result.then(
-        (result) => {
-          console.log(this.modalSoccerPitchReservation);
-          this.transformData();
-          if (selectedSoccerPitch != null && selectedSoccerPitch.id != null) {
-            this.scheduleService
-              .patchSoccerPitchReservation(this.modalSoccerPitchReservation)
-              .subscribe(
-                (data) => {
-                  this.toastService.showSuccess(
-                    "Agendamento atualizado com sucesso."
-                  );
-                  this.getReservations();
-                  this.modalSoccerPitchReservation = new SoccerPitchReservation();
-                },
-                (error) => {
-                  this.toastService.showError(
-                    "Erro ao atualizar dados. " + error.error
-                  );
-                }
-              );
-          } else {
-            this.scheduleService
-              .postSoccerPitchReservation(this.modalSoccerPitchReservation)
-              .subscribe(
-                (data) => {
-                  this.toastService.showSuccess(
-                    "Agendamento inserido com sucesso."
-                  );
-                  this.getReservations();
-                  this.modalSoccerPitchReservation = new SoccerPitchReservation();
-                },
-                (error) => {
-                  console.log(error);
-                  this.toastService.showError(
-                    "Erro ao inserir dados. " + error.error
-                  );
-                }
-              );
+    this.modalOption.backdrop = "static";
+    this.modalOption.keyboard = false;
+    this.modalOption.ariaLabelledBy = "modal-basic-title";
+    this.modalService.open(content, this.modalOption).result.then(
+      (result) => {
+        isSaved = true;
+        this.transformData();
+        this.sendRequest(isEditting);
+      },
+      (reason) => {}
+    );
+  }
+  sendRequest(edit) {
+    console.log(this.modalSoccerPitchReservation);
+    if (edit) {
+      this.scheduleService
+        .patchSoccerPitchReservation(this.modalSoccerPitchReservation)
+        .subscribe(
+          (data) => {
+            this.toastService.showSuccess(
+              "Agendamento atualizado com sucesso."
+            );
+            this.getReservations();
+            this.modalSoccerPitchReservation = new SoccerPitchReservation();
+          },
+          (error) => {
+            this.toastService.showError(
+              "Erro ao atualizar dados. " + error.error
+            );
           }
-        },
-        (reason) => {}
-      );
+        );
+    } else {
+      this.scheduleService
+        .postSoccerPitchReservation(this.modalSoccerPitchReservation)
+        .subscribe(
+          (data) => {
+            this.toastService.showSuccess("Agendamento inserido com sucesso.");
+            this.getReservations();
+            this.modalSoccerPitchReservation = new SoccerPitchReservation();
+          },
+          (error) => {
+            console.log(error);
+            this.toastService.showError(
+              "Erro ao inserir dados. " + error.error
+            );
+          }
+        );
+    }
   }
 }

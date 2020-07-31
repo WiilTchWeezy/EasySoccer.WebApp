@@ -1,7 +1,8 @@
-import { Component } from "@angular/core";
-import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { Component, OnInit } from "@angular/core";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+
 @Component({
-  selector: "login-confirm-modal",
+  selector: "app-confirm-modal",
   template: `
     <div class="modal-header">
       <h4 class="modal-title" id="modal-title">EasySoccer</h4>
@@ -17,28 +18,28 @@ import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
     </div>
     <div class="modal-body">
       <p>
-        <strong>Tem certeza que deseja sair do sistema ? </strong>
+        <strong>Tem certeza que deseja sair sem salvar a alteração ? </strong>
       </p>
     </div>
     <div class="modal-footer">
       <button
         type="button"
-        class="btn btn-outline-secondary"
+        class="btn btn-secondary"
         (click)="modal.dismiss('cancel click')"
       >
-        Cancelar
+        Não Salvar
       </button>
       <button
         type="button"
         ngbAutofocus
-        class="btn btn-danger"
+        class="btn btn-primary"
         (click)="modal.close('Ok click')"
       >
-        Sair
+        Salvar
       </button>
     </div>
   `,
 })
-export class LoginModalComponent {
+export class ConfirmModalComponent {
   constructor(public modal: NgbActiveModal) {}
 }

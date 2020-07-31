@@ -33,6 +33,7 @@ import { registerLocaleData } from "@angular/common";
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 import { AgmCoreModule } from "@agm/core";
 import { NgxMaskModule, IConfig } from "ngx-mask";
+import { ConfirmModalComponent } from "./components/modal/confirm-modal/confirm-modal.component";
 
 registerLocaleData(localePTBR);
 
@@ -54,6 +55,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     CompanyInfoComponent,
     LoginModalComponent,
     CompanyScheduleComponent,
+    ConfirmModalComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -128,6 +130,10 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     },
   ],
   bootstrap: [AppComponent],
-  entryComponents: [AddUserModalComponent, LoginModalComponent],
+  entryComponents: [
+    AddUserModalComponent,
+    LoginModalComponent,
+    ConfirmModalComponent,
+  ],
 })
 export class AppModule {}
