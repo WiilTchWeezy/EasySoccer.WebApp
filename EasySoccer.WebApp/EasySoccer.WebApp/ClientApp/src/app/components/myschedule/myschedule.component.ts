@@ -24,7 +24,7 @@ import {
 import { AddUserModalComponent } from "../modal/add-user-modal/add-user-modal.component";
 import { ToastserviceService } from "../../service/toastservice.service";
 import { CustomDateParserFormatter } from "../../service/adapter/CustomDateParseAdapter";
-import { ConfirmModalComponent } from "../modal/confirm-modal/confirm-modal.component";
+import { ReservationModalComponent } from "../modal/reservation-modal/reservation-modal.component";
 
 @Component({
   selector: "app-myschedule",
@@ -42,17 +42,13 @@ export class MyscheduleComponent implements OnInit {
   soccerPitchsPlans: Soccerpitchplan[];
   collectionSize = 0;
   selectedSoccerPitch: Soccerpitch;
-  searching = false;
-  searchFailed = false;
-  time: any = {
-    hour: 13,
-    minute: 30,
-  };
   modalTitle: String;
   userRespId: String;
   modalSoccerPitchReservation: SoccerPitchReservation;
   selectedDate: any;
   modalOption: NgbModalOptions = {};
+  filter: any = {};
+  loading = false;
   constructor(
     public scheduleService: ScheduleService,
     private modalService: NgbModal,
@@ -65,40 +61,34 @@ export class MyscheduleComponent implements OnInit {
   ngOnInit() {
     this.getReservations();
     this.getSoccerPitchs();
+    this.getSoccerPitchsPlans();
   }
 
-  search = (text$: Observable<string>) =>
-    text$.pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-      tap(() => (this.searching = true)),
-      switchMap((term) =>
-        this.userService.filterAsync(term).pipe(
-          tap(() => (this.searchFailed = false)),
-          catchError(() => {
-            this.searchFailed = true;
-            return of([]);
-          })
-        )
-      ),
-      tap(() => (this.searching = false))
-    );
-
-  formatter = (x: { name: string }) => x.name;
-
   getReservations() {
-    this.scheduleService.getSchedules(this.page, this.pageSize).subscribe(
-      (res) => {
-        this.soccerPitchReservations = res.data;
-        this.collectionSize = res.total;
-        console.log(res);
-      },
-      (error) => {
-        this.toastService.showError(
-          "Erro ao consultar dados. " + error.Message
-        );
-      }
-    );
+    this.loading = true;
+    this.scheduleService
+      .getSchedules(
+        this.page,
+        this.pageSize,
+        this.filter.initialDate,
+        this.filter.finalDate,
+        this.filter.soccerPitchId,
+        this.filter.soccerPitchPlanId,
+        this.filter.userName
+      )
+      .subscribe(
+        (res) => {
+          this.soccerPitchReservations = res.data;
+          this.collectionSize = res.total;
+          this.loading = false;
+        },
+        (error) => {
+          this.toastService.showError(
+            "Erro ao consultar dados. " + error.Message
+          );
+          this.loading = false;
+        }
+      );
   }
 
   getSoccerPitchs() {
@@ -107,48 +97,19 @@ export class MyscheduleComponent implements OnInit {
         this.soccerPitchs = res;
       },
       (error) => {
-        this.toastService.showError(
-          "Erro ao consultar dados. " + error.Message
-        );
+        this.toastService.showError("Erro ao consultar dados. " + error.error);
       }
     );
   }
 
-  getPlansBySoccerPitchId(id: any) {
-    this.soccerpitchplanService.getSoccerPitchPlanBySoccerPitchId(id).subscribe(
+  getSoccerPitchsPlans() {
+    this.soccerpitchplanService.getSoccerPitchPlan().subscribe(
       (res) => {
         this.soccerPitchsPlans = res;
-        if (this.soccerPitchsPlans.length > 0) {
-          this.modalSoccerPitchReservation.soccerPitchSoccerPitchPlanId = this.soccerPitchsPlans[0].id;
-        }
       },
       (error) => {
-        this.toastService.showError(
-          "Erro ao consultar dados. " + error.Message
-        );
+        this.toastService.showError("Erro ao consultar dados. " + error.error);
       }
-    );
-  }
-
-  selectSoccerPitch($event: any) {
-    this.modalSoccerPitchReservation.soccerPitchId = $event;
-    this.getPlansBySoccerPitchId($event);
-  }
-
-  selectUser($event: any) {
-    this.modalSoccerPitchReservation.userId = $event.id;
-  }
-
-  openUserModal(content: any) {
-    this.modalService.open(AddUserModalComponent).result.then(
-      (result) => {
-        this.modalSoccerPitchReservation.userId = result.id;
-        this.modalSoccerPitchReservation.selectedUser = {
-          name: result.name + " (" + result.phone + ")",
-          id: result.id,
-        };
-      },
-      (reason) => {}
     );
   }
 
@@ -200,7 +161,6 @@ export class MyscheduleComponent implements OnInit {
       this.modalTitle = "Editar quadra";
       this.modalSoccerPitchReservation = selectedSoccerPitch;
       this.fitDataToFront();
-      this.getPlansBySoccerPitchId(selectedSoccerPitch.soccerPitchId);
       isEditting = true;
     } else {
       this.modalSoccerPitchReservation = new SoccerPitchReservation();
@@ -214,12 +174,14 @@ export class MyscheduleComponent implements OnInit {
       };
       this.modalTitle = "Adicionar nova quadra";
     }
-
-    console.log(this.modalSoccerPitchReservation);
     this.modalOption.backdrop = "static";
     this.modalOption.keyboard = false;
     this.modalOption.ariaLabelledBy = "modal-basic-title";
-    this.modalService.open(content, this.modalOption).result.then(
+    const modalRef = this.modalService.open(
+      ReservationModalComponent,
+      this.modalOption
+    );
+    modalRef.result.then(
       (result) => {
         isSaved = true;
         this.transformData();
@@ -227,7 +189,9 @@ export class MyscheduleComponent implements OnInit {
       },
       (reason) => {}
     );
+    modalRef.componentInstance.modalSoccerPitchReservation = this.modalSoccerPitchReservation;
   }
+
   sendRequest(edit) {
     console.log(this.modalSoccerPitchReservation);
     if (edit) {

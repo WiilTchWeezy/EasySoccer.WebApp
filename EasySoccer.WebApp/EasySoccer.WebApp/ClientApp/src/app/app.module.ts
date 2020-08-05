@@ -34,6 +34,7 @@ import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 import { AgmCoreModule } from "@agm/core";
 import { NgxMaskModule, IConfig } from "ngx-mask";
 import { ConfirmModalComponent } from "./components/modal/confirm-modal/confirm-modal.component";
+import { ReservationModalComponent } from "./components/modal/reservation-modal/reservation-modal.component";
 
 registerLocaleData(localePTBR);
 
@@ -56,6 +57,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     LoginModalComponent,
     CompanyScheduleComponent,
     ConfirmModalComponent,
+    ReservationModalComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -134,6 +136,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     AddUserModalComponent,
     LoginModalComponent,
     ConfirmModalComponent,
+    ReservationModalComponent,
   ],
 })
 export class AppModule {}

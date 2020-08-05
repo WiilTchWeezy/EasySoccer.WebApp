@@ -16,4 +16,5 @@ export class SoccerPitchReservation {
   soccerPitchSoccerPitchPlanId: number;
   selectedUser: any;
   userSelectDate: any;
+  SoccerPitchPlanId: number;
 }

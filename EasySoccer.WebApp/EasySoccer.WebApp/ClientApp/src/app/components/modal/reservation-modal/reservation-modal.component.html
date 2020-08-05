@@ -1,0 +1,194 @@
+<ng-template #rt let-r="result" let-t="term">
+  <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
+</ng-template>
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Informações Agendamento</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form>
+    <h5>Usuário</h5>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-sm-12">
+          <label for="user" style="margin-top: 7px;">Responsável</label>
+          <button
+            type="button"
+            class="btn btn-primary float-right"
+            style="margin-bottom: 5px;"
+            (click)="openUserModal(usuarioModal)"
+          >
+            Adicionar Responsável
+          </button>
+          <div class="input-group">
+            <input
+              id="user"
+              type="text"
+              class="form-control"
+              [class.is-invalid]="searchFailed"
+              [ngbTypeahead]="search"
+              placeholder="Digite nome ou telefone"
+              name="selectedUser"
+              [(ngModel)]="modalSoccerPitchReservation.selectedUser"
+              (ngModelChange)="selectUser($event)"
+              [inputFormatter]="formatter"
+              [resultTemplate]="rt"
+            />
+            <span *ngIf="searching">Pesquisando...</span>
+            <div class="invalid-feedback" *ngIf="searchFailed">
+              Não foi possível carregar sugestões.
+            </div>
+          </div>
+        </div>
+      </div>
+      <h5>Agendamento</h5>
+      <div class="row">
+        <div class="col-sm-6">
+          <label for="soccerPicht">Quadra</label>
+          <div class="input-group">
+            <select
+              id="soccerPicht"
+              class="form-control"
+              name="soccerPicht"
+              [(ngModel)]="modalSoccerPitchReservation.soccerPitchId"
+              (ngModelChange)="selectSoccerPitch($event)"
+            >
+              <option *ngFor="let sp of soccerPitchs" [ngValue]="sp.id">{{
+                sp.name
+              }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <label for="soccerPichtPlanId">Plano</label>
+          <div class="input-group">
+            <select
+              id="soccerPichtPlanId"
+              [(ngModel)]="modalSoccerPitchReservation.soccerPitchPlanId"
+              class="form-control"
+              name="soccerPichtPlanId"
+            >
+              <option
+                *ngFor="let sp of soccerPitchsPlans"
+                [selected]="
+                  sp.id == modalSoccerPitchReservation.soccerPitchPlanId
+                "
+                [ngValue]="sp.id"
+              >
+                {{ sp.name }}</option
+              >
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <label for="status">Data do agendamento</label>
+          <div class="input-group">
+            <input
+              class="form-control"
+              placeholder="dd/mm/yyyy"
+              name="selectedDate"
+              [(ngModel)]="modalSoccerPitchReservation.userSelectDate"
+              ngbDatepicker
+              #d="ngbDatepicker"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-outline-secondary calendar"
+                (click)="d.toggle()"
+                type="button"
+              >
+                <i class="cui-calendar"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <div class="row">
+            <div class="col-sm-6">
+              <label for="phone">Horário inicio</label>
+              <!-- <ngb-timepicker
+                    name="selectedHourStart"
+                    [(ngModel)]="modalSoccerPitchReservation.selectedHourStart"
+                  ></ngb-timepicker> -->
+              <div
+                class="row"
+                style="padding: 15px; padding-top: 0px; padding-bottom: 0px;"
+              >
+                <input
+                  class="form-control col-sm-5"
+                  name="selectedHourStart"
+                  type="number"
+                  max="23"
+                  [(ngModel)]="
+                    modalSoccerPitchReservation.selectedHourStart.hour
+                  "
+                  style="text-align: center;"
+                  mask="00"
+                />
+                <div style="padding: 5px;">:</div>
+                <input
+                  class="form-control col-sm-5"
+                  name="selectedHourStartMinute"
+                  [(ngModel)]="
+                    modalSoccerPitchReservation.selectedHourStart.minute
+                  "
+                  type="number"
+                  max="59"
+                  style="text-align: center;"
+                  mask="00"
+                />
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <label for="phone">Horário final</label>
+              <div
+                class="row"
+                style="padding: 15px; padding-top: 0px; padding-bottom: 0px;"
+              >
+                <input
+                  class="form-control col-sm-5"
+                  name="selectedHourEnd"
+                  type="number"
+                  max="23"
+                  [(ngModel)]="modalSoccerPitchReservation.selectedHourEnd.hour"
+                  style="text-align: center;"
+                  mask="00"
+                />
+                <div style="padding: 5px;">:</div>
+                <input
+                  class="form-control col-sm-5"
+                  name="selectedHourEndMinute"
+                  [(ngModel)]="
+                    modalSoccerPitchReservation.selectedHourEnd.minute
+                  "
+                  type="number"
+                  max="59"
+                  style="text-align: center;"
+                  mask="00"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-outline-dark"
+    (click)="activeModal.close('Save click')"
+  >
+    Salvar
+  </button>
+</div>

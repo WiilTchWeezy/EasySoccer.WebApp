@@ -1,268 +1,119 @@
-<ng-template #rt let-r="result" let-t="term">
-  <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
-</ng-template>
-<ng-template #content let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Informações Agendamento</h4>
-    <button
-      type="button"
-      class="close"
-      aria-label="Close"
-      (click)="modal.dismiss('Cross click')"
-    >
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <form>
-      <h5>Usuário</h5>
-      <div class="form-group">
-        <div class="row">
-          <div class="col-sm-12">
-            <label for="user" style="margin-top: 7px;">Responsável</label>
-            <button
-              type="button"
-              class="btn btn-primary float-right"
-              style="margin-bottom: 5px;"
-              (click)="openUserModal(usuarioModal)"
-            >
-              Adicionar Responsável
-            </button>
-            <div class="input-group">
-              <input
-                id="user"
-                type="text"
-                class="form-control"
-                [class.is-invalid]="searchFailed"
-                [ngbTypeahead]="search"
-                placeholder="Digite nome ou telefone"
-                name="selectedUser"
-                [(ngModel)]="modalSoccerPitchReservation.selectedUser"
-                (ngModelChange)="selectUser($event)"
-                [inputFormatter]="formatter"
-                [resultTemplate]="rt"
-              />
-              <span *ngIf="searching">Pesquisando...</span>
-              <div class="invalid-feedback" *ngIf="searchFailed">
-                Não foi possível carregar sugestões.
-              </div>
-            </div>
-          </div>
-        </div>
-        <h5>Agendamento</h5>
-        <div class="row">
-          <div class="col-sm-6">
-            <label for="soccerPicht">Quadra</label>
-            <div class="input-group">
-              <select
-                id="soccerPicht"
-                class="form-control"
-                name="soccerPicht"
-                [(ngModel)]="modalSoccerPitchReservation.soccerPitchId"
-                (ngModelChange)="selectSoccerPitch($event)"
-              >
-                <option *ngFor="let sp of soccerPitchs" [ngValue]="sp.id">{{
-                  sp.name
-                }}</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-sm-6">
-            <label for="soccerPichtPlanId">Plano</label>
-            <div class="input-group">
-              <select
-                id="soccerPichtPlanId"
-                [(ngModel)]="
-                  modalSoccerPitchReservation.soccerPitchSoccerPitchPlanId
-                "
-                class="form-control"
-                name="soccerPichtPlanId"
-              >
-                <option
-                  *ngFor="let sp of soccerPitchsPlans"
-                  [ngValue]="sp.id"
-                  >{{ sp.name }}</option
-                >
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-12">
-            <label for="status">Data do agendamento</label>
-            <div class="input-group">
-              <input
-                class="form-control"
-                placeholder="dd/mm/yyyy"
-                name="selectedDate"
-                [(ngModel)]="modalSoccerPitchReservation.userSelectDate"
-                ngbDatepicker
-                #d="ngbDatepicker"
-              />
-              <div class="input-group-append">
-                <button
-                  class="btn btn-outline-secondary calendar"
-                  (click)="d.toggle()"
-                  type="button"
-                >
-                  <i class="cui-calendar"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-12">
-            <div class="row">
-              <div class="col-sm-6">
-                <label for="phone">Horário inicio</label>
-                <!-- <ngb-timepicker
-                  name="selectedHourStart"
-                  [(ngModel)]="modalSoccerPitchReservation.selectedHourStart"
-                ></ngb-timepicker> -->
-                <div
-                  class="row"
-                  style="padding: 15px; padding-top: 0px; padding-bottom: 0px;"
-                >
-                  <input
-                    class="form-control col-sm-5"
-                    name="selectedHourStart"
-                    type="number"
-                    max="23"
-                    [(ngModel)]="
-                      modalSoccerPitchReservation.selectedHourStart.hour
-                    "
-                    style="text-align: center;"
-                    mask="00"
-                  />
-                  <div style="padding: 5px;">:</div>
-                  <input
-                    class="form-control col-sm-5"
-                    name="selectedHourStartMinute"
-                    [(ngModel)]="
-                      modalSoccerPitchReservation.selectedHourStart.minute
-                    "
-                    type="number"
-                    max="59"
-                    style="text-align: center;"
-                    mask="00"
-                  />
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <label for="phone">Horário final</label>
-                <div
-                  class="row"
-                  style="padding: 15px; padding-top: 0px; padding-bottom: 0px;"
-                >
-                  <input
-                    class="form-control col-sm-5"
-                    name="selectedHourEnd"
-                    type="number"
-                    max="23"
-                    [(ngModel)]="
-                      modalSoccerPitchReservation.selectedHourEnd.hour
-                    "
-                    style="text-align: center;"
-                    mask="00"
-                  />
-                  <div style="padding: 5px;">:</div>
-                  <input
-                    class="form-control col-sm-5"
-                    name="selectedHourEndMinute"
-                    [(ngModel)]="
-                      modalSoccerPitchReservation.selectedHourEnd.minute
-                    "
-                    type="number"
-                    max="59"
-                    style="text-align: center;"
-                    mask="00"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </form>
-  </div>
-  <div class="modal-footer">
-    <button
-      type="button"
-      class="btn btn-outline-dark"
-      (click)="modal.close('Save click')"
-    >
-      Save
-    </button>
-  </div>
-</ng-template>
-<ng-template #usuarioModal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Novo Responsável</h4>
-    <button
-      type="button"
-      class="close"
-      aria-label="Close"
-      (click)="activeModal.dismiss('Cross click')"
-    >
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <form>
-      <h5>Responsável</h5>
-      <div class="form-group">
-        <div class="row">
-          <div class="col-sm-6">
-            <label for="user">Nome(*)</label>
-            <div class="input-group">
-              <input
-                id="user"
-                class="form-control"
-                placeholder="Nome"
-                name="name"
-                type="text"
-              />
-            </div>
-          </div>
-          <div class="col-sm-6">
-            <label for="phone">Telefone(*)</label>
-            <div class="input-group">
-              <input
-                id="phone"
-                class="form-control"
-                placeholder="Telefone"
-                name="phone"
-                type="text"
-              />
-            </div>
-          </div>
-          <div class="col-sm-12">
-            <label for="phone">Email</label>
-            <div class="input-group">
-              <input
-                id="email"
-                class="form-control"
-                placeholder="Email"
-                name="email"
-                type="text"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </form>
-  </div>
-  <div class="modal-footer">
-    <button
-      type="button"
-      class="btn btn-outline-dark"
-      (click)="activeModal.close('Save click')"
-    >
-      Save
-    </button>
-  </div>
-</ng-template>
-
 <div class="container">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-12">
+          Filtros
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-3">
+          <label for="status">Data inicial agendamento</label>
+          <div class="input-group">
+            <input
+              class="form-control"
+              placeholder="dd/mm/yyyy"
+              name="initialDate"
+              [(ngModel)]="filter.initialDate"
+              ngbDatepicker
+              #d="ngbDatepicker"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-outline-secondary calendar"
+                (click)="d.toggle()"
+                type="button"
+              >
+                <i class="cui-calendar"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <label for="status">Data final agendamento</label>
+          <div class="input-group">
+            <input
+              class="form-control"
+              placeholder="dd/mm/yyyy"
+              name="finalDate"
+              [(ngModel)]="filter.finalDate"
+              ngbDatepicker
+              #dfinal="ngbDatepicker"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-outline-secondary calendar"
+                (click)="dfinal.toggle()"
+                type="button"
+              >
+                <i class="cui-calendar"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <label for="soccerPicht">Quadra</label>
+          <div class="input-group">
+            <select
+              id="soccerPicht"
+              class="form-control"
+              name="soccerPichtId"
+              [(ngModel)]="filter.soccerPitchId"
+            >
+              <option value="0">Selecione</option>
+              <option *ngFor="let sp of soccerPitchs" [ngValue]="sp.id">{{
+                sp.name
+              }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <label for="soccerPichtPlanId">Plano</label>
+          <div class="input-group">
+            <select
+              id="soccerPichtPlanId"
+              [(ngModel)]="filter.soccerPitchPlanId"
+              class="form-control"
+              name="soccerPichtPlanId"
+            >
+              <option value="0">Selecione</option>
+              <option *ngFor="let sp of soccerPitchsPlans" [ngValue]="sp.id">
+                {{ sp.name }}</option
+              >
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <label for="soccerPichtPlanId">Responsável</label>
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="filter.userName"
+              id="userName"
+              name="userName"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <button
+            type="button"
+            class="btn btn-primary btnLogin"
+            [ngClass]="{ spinner: loading }"
+            [disabled]="loading"
+            (click)="getReservations()"
+            style="float: right; margin-bottom: 5px; margin-top: 10px;"
+          >
+            Filtrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="card" style="margin-top: 10px;">
     <div class="card-header">
       <div class="row">
@@ -282,7 +133,7 @@
         </div>
       </div>
     </div>
-    <div class="">
+    <div>
       <table class="table table-striped">
         <thead>
           <tr>
