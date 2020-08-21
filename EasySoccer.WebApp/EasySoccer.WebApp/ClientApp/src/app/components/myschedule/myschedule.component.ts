@@ -47,7 +47,10 @@ export class MyscheduleComponent implements OnInit {
   modalSoccerPitchReservation: SoccerPitchReservation;
   selectedDate: any;
   modalOption: NgbModalOptions = {};
-  filter: any = {};
+  filter: any = {
+    soccerPitchId: 0,
+    soccerPitchPlanId: 0,
+  };
   loading = false;
   constructor(
     public scheduleService: ScheduleService,
@@ -145,7 +148,7 @@ export class MyscheduleComponent implements OnInit {
         "(" +
         this.modalSoccerPitchReservation.userPhone +
         ")",
-      id: this.modalSoccerPitchReservation.userId,
+      id: this.modalSoccerPitchReservation.personId,
     };
   }
 

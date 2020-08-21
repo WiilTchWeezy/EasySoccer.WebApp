@@ -1,5 +1,5 @@
 import { BrowserModule } from "@angular/platform-browser";
-import { NgModule } from "@angular/core";
+import { NgModule, LOCALE_ID } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
@@ -29,6 +29,7 @@ import { CompanyInfoComponent } from "./components/company-info/company-info.com
 import { LoginModalComponent } from "./components/modal/login-modal/login-modal.component";
 import { CompanyScheduleComponent } from "./components/company-schedule/company-schedule.component";
 import localePTBR from "@angular/common/locales/pt-PT";
+import ptBr from "@angular/common/locales/pt";
 import { registerLocaleData } from "@angular/common";
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 import { AgmCoreModule } from "@agm/core";
@@ -36,7 +37,7 @@ import { NgxMaskModule, IConfig } from "ngx-mask";
 import { ConfirmModalComponent } from "./components/modal/confirm-modal/confirm-modal.component";
 import { ReservationModalComponent } from "./components/modal/reservation-modal/reservation-modal.component";
 
-registerLocaleData(localePTBR);
+registerLocaleData(ptBr);
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
 
@@ -129,6 +130,10 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
       provide: HTTP_INTERCEPTORS,
       useClass: CustomHttpInterceptor,
       multi: true,
+    },
+    {
+      provide: LOCALE_ID,
+      useValue: "pt",
     },
   ],
   bootstrap: [AppComponent],

@@ -6,14 +6,14 @@ import { map } from "rxjs/operators";
 import { User } from "../model/user";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class UserService {
   endpoint = environment.urlApi;
   httpOptions = {
     headers: new HttpHeaders({
-      "Content-Type": "application/json"
-    })
+      "Content-Type": "application/json",
+    }),
   };
   constructor(private http: HttpClient) {}
 
@@ -32,6 +32,6 @@ export class UserService {
   }
 
   public createAsync(user: User): any {
-    return this.http.post<User>(environment.urlApi + "user/create", user);
+    return this.http.post<User>(environment.urlApi + "user/createPerson", user);
   }
 }

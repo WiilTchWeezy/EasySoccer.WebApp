@@ -62,10 +62,10 @@ export class ReservationModalComponent implements OnInit {
   openUserModal(content: any) {
     this.modalService.open(AddUserModalComponent).result.then(
       (result) => {
-        this.modalSoccerPitchReservation.userId = result.id;
+        this.modalSoccerPitchReservation.personId = result.personId;
         this.modalSoccerPitchReservation.selectedUser = {
           name: result.name + " (" + result.phone + ")",
-          id: result.id,
+          personId: result.personId,
         };
       },
       (reason) => {}
@@ -73,7 +73,7 @@ export class ReservationModalComponent implements OnInit {
   }
 
   selectUser($event: any) {
-    this.modalSoccerPitchReservation.userId = $event.id;
+    this.modalSoccerPitchReservation.personId = $event.id;
   }
 
   search = (text$: Observable<string>) =>
