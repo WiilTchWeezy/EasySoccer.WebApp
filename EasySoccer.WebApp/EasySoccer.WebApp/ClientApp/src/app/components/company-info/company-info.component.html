@@ -1,16 +1,14 @@
 <div class="container">
-  <div class="card" style="margin-top: 10px;">
+  <div class="card" style="margin-top: 10px">
     <div class="card-header">
-      <h4>
-        Informações do complexo esportivo
-      </h4>
+      <h4>Informações do complexo esportivo</h4>
     </div>
     <form validate>
       <div class="card-body">
         <div class="row">
           <div class="col-sm-12">
             <input
-              style="display: none;"
+              style="display: none"
               (change)="onFileChanged($event)"
               type="file"
               accept="image/png, image/jpeg"
@@ -31,7 +29,7 @@
           <div
             class="col-sm-12 text-center"
             [hidden]="hideSaveImage"
-            style="margin-top: 10px;"
+            style="margin-top: 10px"
           >
             <button class="btn btn-primary" (click)="sendImageBase64()">
               <i class="cui-arrow-thick-from-bottom"></i> Salvar imagem
@@ -79,7 +77,7 @@
               />
             </div>
           </div>
-          <div class="col-sm-12">
+          <div class="col-sm-6">
             <div class="form-group">
               <label for="completeAddress">Endereço (Texto a ser Exibido)</label
               ><input
@@ -92,7 +90,42 @@
               />
             </div>
           </div>
-          <div class="col-sm-12">
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label for="state">Estado</label
+              ><input
+                class="form-control"
+                id="state"
+                required
+                type="text"
+                name="state"
+                [(ngModel)]="selectedState"
+                (change)="changeSelectedState();"
+                [ngbTypeahead]="searchState"
+                [resultFormatter]="formatter"
+                [inputFormatter]="formatter"
+                placeholder="Pesquisa o estado"
+              />
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label for="city">Cidade</label
+              ><input
+                class="form-control"
+                id="city"
+                required
+                type="text"
+                name="city"
+                [(ngModel)]="selectedCity"
+                [ngbTypeahead]="searchCity"
+                [resultFormatter]="formatter"
+                [inputFormatter]="formatter"
+                placeholder="Pesquisa a cidade"
+              />
+            </div>
+          </div>
+          <div class="col-sm-6">
             <div></div>
             <div class="form-group">
               <label for="mapsAddress">Endereço (Google Maps)</label>
@@ -106,8 +139,40 @@
                 (onAddressChange)="handleAddressChange($event)"
                 [(ngModel)]="completeAddressMaps"
                 name="completeAddressMaps"
-                style="margin-bottom: 15px;"
+                style="margin-bottom: 15px"
               />
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label for="longitude">Longitude</label
+              ><input
+                class="form-control"
+                id="longitude"
+                required
+                type="text"
+                disabled
+                name="longitude"
+                [(ngModel)]="longitude"
+              />
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label for="latitude">Latitude</label
+              ><input
+                class="form-control"
+                id="latitude"
+                required
+                type="text"
+                disabled
+                name="latitude"
+                [(ngModel)]="latitude"
+              />
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group border-simple">
               <agm-map
                 [latitude]="latitude"
                 [zoom]="17"
@@ -135,7 +200,7 @@
         <div class="col-sm-12">
           <div class="form-group form-actions">
             <button
-              class="btn btn-sm btn-primary btn-easy"
+              class="btn btn-sm btn-primary btn-easy fright"
               type="submit"
               (click)="saveCompany()"
               [ngClass]="{ spinner: loading }"

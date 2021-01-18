@@ -9,10 +9,14 @@ import { CompanyUserService } from "./service/company-user.service";
 })
 export class AppComponent implements OnInit {
   userName: string = "Usuário";
+  notifications: any[];
   ngOnInit(): void {
     this.authService.menuEmitter.subscribe(show => {
       this.showMenu = show;
-      if (this.authService.isAuth) this.GetUserInfo();
+      if (this.authService.isAuth) {
+        this.GetUserInfo();
+        this.GetUserNotification();
+      }
     });
   }
   constructor(
@@ -32,6 +36,15 @@ export class AppComponent implements OnInit {
     this.companyUserService.getUserInfo().subscribe(
       res => {
         this.userName = res.name;
+      },
+      error => {}
+    );
+  }
+
+  private GetUserNotification(){
+    this.companyUserService.getUserNotification().subscribe(
+      res => {
+        this.notifications = res;
       },
       error => {}
     );

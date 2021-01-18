@@ -4,6 +4,9 @@ import { Router } from "@angular/router";
 import { ToastserviceService } from "../../service/toastservice.service";
 import { ImageService } from "../../service/image.service";
 import { Address } from "ngx-google-places-autocomplete/objects/address";
+import { Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: "app-company-info",
@@ -27,6 +30,11 @@ export class CompanyInfoComponent implements OnInit {
   };
   longitude: any;
   latitude: any;
+  states: any[] = [];
+  cities: any[] = [];
+  selectedState: any;
+  selectedCity: any;
+
 
   constructor(
     private companyService: CompanyService,
@@ -37,7 +45,10 @@ export class CompanyInfoComponent implements OnInit {
 
   ngOnInit() {
     this.getCompanyInfo();
+    this.getStates();
   }
+
+  
 
   getCompanyInfo() {
     this.companyService.getCompanyInfo().subscribe(
@@ -50,10 +61,34 @@ export class CompanyInfoComponent implements OnInit {
         this.companySchedules = res.companySchedules;
         this.longitude = res.longitude;
         this.latitude = res.latitude;
+        this.selectedCity = { id :res.idCity, name: res.city };
+        this.selectedState = { id:res.idState, name: res.state }; 
         this.companyImageUrl = this.imageService.getImageUrlByImageName(
           res.logo,
           "company"
         );
+      },
+      (error) => {
+        this.toastService.showError(error.error);
+      }
+    );
+  }
+
+  getStates() {
+    this.companyService.getStates().subscribe(
+      (res) => {
+        this.states = res;
+      },
+      (error) => {
+        this.toastService.showError(error.error);
+      }
+    );
+  }
+
+  getCities(){
+    this.companyService.getCitiesByState(this.selectedState.id).subscribe(
+      (res) => {
+        this.cities = res;
       },
       (error) => {
         this.toastService.showError(error.error);
@@ -71,7 +106,8 @@ export class CompanyInfoComponent implements OnInit {
         this.completeAddress,
         this.companySchedules,
         this.longitude,
-        this.latitude
+        this.latitude,
+        this.selectedCity.id
       )
       .subscribe(
         (res) => {
@@ -125,4 +161,25 @@ export class CompanyInfoComponent implements OnInit {
     this.longitude = address.geometry.location.lng();
     this.latitude = address.geometry.location.lat();
   }
+
+  searchState = (text$: Observable<string>) =>
+    text$.pipe(
+      debounceTime(200),
+      distinctUntilChanged(),
+      map(term => this.states.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
+    )
+
+    searchCity = (text$: Observable<string>) =>
+    text$.pipe(
+      debounceTime(200),
+      distinctUntilChanged(),
+      map(term => this.cities.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
+    )
+
+    formatter = (result: any) => result.name;
+
+    changeSelectedState(){
+      this.getCities();
+      this.selectedCity = {};
+    }
 }

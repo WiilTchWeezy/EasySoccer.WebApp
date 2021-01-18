@@ -32,4 +32,10 @@ export class CompanyUserService {
       .patch(environment.urlApi + "companyuser/patch", { name, email, phone })
       .pipe(map(this.extractData));
   }
+
+  public getUserNotification(): Observable<any> {
+    return this.http
+      .get(environment.urlApi + "companyuser/getNotifications")
+      .pipe(map(this.extractData));
+  }
 }

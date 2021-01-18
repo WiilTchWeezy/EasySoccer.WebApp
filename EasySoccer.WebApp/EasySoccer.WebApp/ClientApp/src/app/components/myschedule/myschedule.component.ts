@@ -143,13 +143,13 @@ export class MyscheduleComponent implements OnInit {
     };
 
     this.modalSoccerPitchReservation.selectedUser = {
-      name:
-        this.modalSoccerPitchReservation.userName +
-        "(" +
-        this.modalSoccerPitchReservation.userPhone +
-        ")",
+      name: this.modalSoccerPitchReservation.userName,
       id: this.modalSoccerPitchReservation.personId,
     };
+    if (this.modalSoccerPitchReservation.userPhone) {
+      this.modalSoccerPitchReservation.selectedUser.name +=
+        "(" + this.modalSoccerPitchReservation.userPhone + ")";
+    }
   }
 
   openModal(content: any, selectedSoccerPitch: SoccerPitchReservation) {

@@ -4,8 +4,13 @@
   src: url(/assets/fonts/Gilroy-ExtraBold.otf) format("opentype");
 }
 
+@font-face {
+  font-family: Gilroy-Light;
+  src: url(/assets/fonts/Gilroy-Light.otf) format("opentype");
+}
+
 body {
-  font-family: "Gilroy-ExtraBold" !important;
+  font-family: "Gilroy-Light" !important;
 }
 
 @keyframes spinner {
@@ -16,6 +21,10 @@ body {
 
 .sidebar {
   background-color: #161e53 !important;
+}
+
+.gilroy-bold {
+  font-family: "Gilroy-ExtraBold" !important;
 }
 
 .sidebar .nav-link:hover {
