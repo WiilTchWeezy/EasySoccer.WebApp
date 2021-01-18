@@ -1,0 +1,161 @@
+<div class="container">
+    <div class="card" style="margin-top: 10px">
+      <div class="card-header">
+        <h4>Realize seu pagamento</h4>
+      </div>
+      <form validate>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="name">Nome</label
+                    ><input
+                      class="form-control"
+                      id="name"
+                      required
+                      type="text"
+                      name="name"
+                      [(ngModel)]="financialName"
+                    />
+                  </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="financialDocument">CPF</label
+                    ><input
+                      class="form-control"
+                      id="financialDocument"
+                      required
+                      type="text"
+                      name="financialDocument"
+                      mask="000.000.000-00"
+                      placeholder="000.000.000-00"
+                      [(ngModel)]="financialDocument"
+                    />
+                  </div>
+            </div>
+            <div class="col-sm-4">
+                <label for="status">Data de Nascimento</label>
+                <div class="input-group">
+                  <input
+                    class="form-control"
+                    placeholder="dd/mm/yyyy"
+                    name="selectedDate"
+                    [(ngModel)]="financialBirthDay"
+                    ngbDatepicker
+                    #d="ngbDatepicker"
+                  />
+                  <div class="input-group-append">
+                    <button
+                      class="btn btn-outline-secondary calendar"
+                      (click)="d.toggle()"
+                      type="button"
+                    >
+                      <i class="cui-calendar"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="cardNumber">Número do Cartão</label
+                    ><input
+                      class="form-control"
+                      id="cardNumber"
+                      required
+                      type="text"
+                      name="cardNumber"
+                      mask="0000 0000 0000 0000"
+                      placeholder="0000 0000 0000 0000"
+                      [(ngModel)]="cardNumber"
+                    />
+                  </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="seurityCode">Cod. Segurança</label
+                    ><input
+                      class="form-control"
+                      id="seurityCode"
+                      required
+                      type="text"
+                      name="seurityCode"
+                      mask="000"
+                      [(ngModel)]="securityCode"
+                      placeholder="000"
+                    />
+                  </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="cardexpiration">Expiração do Cartão</label
+                    ><input
+                      class="form-control"
+                      id="cardexpiration"
+                      required
+                      type="text"
+                      name="cardexpiration"
+                      mask="00/0000"
+                      [(ngModel)]="cardExpiration"
+                      placeholder="MM/AAAA"
+                    />
+                  </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="plan">Plano</label
+                    ><div class="input-group">
+                        <select
+                          id="plan"
+                          [(ngModel)]="plan"
+                          class="form-control"
+                          name="plan"
+                          (change)="LoadInstallment()"
+                        >
+                          <option
+                            *ngFor="let sp of plans"
+                            [ngValue]="sp"
+                          >
+                            {{ sp.PlanName }} - {{sp.Value | currency:'BRL'}}</option
+                          >
+                        </select>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="installment">Quantidade de parcelas</label
+                    ><div class="input-group">
+                        <select
+                          id="installment"
+                          [(ngModel)]="installment"
+                          class="form-control"
+                          name="installment"
+                        >
+                          <option
+                            *ngFor="let sp of installments"
+                            [ngValue]="sp.id"
+                          >
+                            {{ sp.text }} - {{sp.value | currency:'BRL'}}</option
+                          >
+                        </select>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-group form-actions">
+                  <button
+                    class="btn btn-sm btn-primary btn-easy fright"
+                    type="submit"
+                    (click)="Pay()"
+                    [ngClass]="{ spinner: loading }"
+                  >
+                  <i class="nav-icon cui-credit-card" style="font-size: 20px; text-align: center; vertical-align: middle;"></i> <span style="margin-left: 10px;">Realizar Pagamento</span>
+                  </button>
+                </div>
+              </div>
+          </div>
+        </div>
+      </form>
+    </div>
+</div>

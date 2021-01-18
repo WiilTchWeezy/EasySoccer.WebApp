@@ -50,12 +50,18 @@
           <div>
             <p class="gilroy-bold"><b>{{item.title}}</b></p>
             <span style="white-space: pre-line;"><p>{{item.message}}</p></span>
+            <div style="height: 20px;">
+              <span style="float: right;"><p>{{item.createdDate | date: 'dd/MM/yyyy'}}</p></span>
+            </div>
           </div>
         </a>
         <a class="dropdown-item" href="#" *ngIf="item.notificationType != 2">
           <div>
             <p class="gilroy-bold"><b>{{item.title}}</b></p>
             <span style="white-space: pre-line;"><p>{{item.message}}</p></span>
+            <div style="height: 20px;">
+              <span style="float: right;"><p>{{item.createdDate | date: 'dd/MM/yyyy'}}</p></span>
+            </div>
           </div>
         </a>
       </div>

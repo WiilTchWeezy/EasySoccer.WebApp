@@ -36,6 +36,7 @@ import { AgmCoreModule } from "@agm/core";
 import { NgxMaskModule, IConfig } from "ngx-mask";
 import { ConfirmModalComponent } from "./components/modal/confirm-modal/confirm-modal.component";
 import { ReservationModalComponent } from "./components/modal/reservation-modal/reservation-modal.component";
+import { PaymentComponent } from './components/payment/payment.component';
 
 registerLocaleData(ptBr);
 
@@ -59,6 +60,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     CompanyScheduleComponent,
     ConfirmModalComponent,
     ReservationModalComponent,
+    PaymentComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -108,6 +110,11 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
       {
         path: "companyinfo",
         component: CompanyInfoComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
+        path: "payment",
+        component: PaymentComponent,
         canActivate: [AuthGuardService],
       },
     ]),

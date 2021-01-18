@@ -38,4 +38,10 @@ export class CompanyUserService {
       .get(environment.urlApi + "companyuser/getNotifications")
       .pipe(map(this.extractData));
   }
+
+  public payment(request: any):Observable<any>{
+    return this.http
+    .post(environment.urlApi + "companyuser/payment",request)
+    .pipe(map(this.extractData));
+  }
 }

@@ -28,4 +28,11 @@ export class ToastserviceService {
       ...{ classname: "bg-danger text-light", delay: 3000 }
     });
   }
+
+  showWarnig(textOrTpl: string) {
+    this.toasts.push({
+      textOrTpl,
+      ...{ classname: "bg-warning text-light", delay: 3000 }
+    });
+  }
 }
