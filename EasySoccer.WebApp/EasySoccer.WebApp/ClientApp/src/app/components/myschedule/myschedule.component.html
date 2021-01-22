@@ -2,9 +2,7 @@
   <div class="card">
     <div class="card-header">
       <div class="row">
-        <div class="col-12">
-          Filtros
-        </div>
+        <div class="col-12">Filtros</div>
       </div>
     </div>
     <div class="card-body">
@@ -63,9 +61,9 @@
               [(ngModel)]="filter.soccerPitchId"
             >
               <option value="0" selected>Selecione</option>
-              <option *ngFor="let sp of soccerPitchs" [ngValue]="sp.id">{{
-                sp.name
-              }}</option>
+              <option *ngFor="let sp of soccerPitchs" [ngValue]="sp.id">
+                {{ sp.name }}
+              </option>
             </select>
           </div>
         </div>
@@ -80,8 +78,8 @@
             >
               <option value="0" selected>Selecione</option>
               <option *ngFor="let sp of soccerPitchsPlans" [ngValue]="sp.id">
-                {{ sp.name }}</option
-              >
+                {{ sp.name }}
+              </option>
             </select>
           </div>
         </div>
@@ -106,7 +104,7 @@
             [ngClass]="{ spinner: loading }"
             [disabled]="loading"
             (click)="getReservations()"
-            style="float: right; margin-bottom: 5px; margin-top: 10px;"
+            style="float: right; margin-bottom: 5px; margin-top: 10px"
           >
             Filtrar
           </button>
@@ -114,7 +112,7 @@
       </div>
     </div>
   </div>
-  <div class="card" style="margin-top: 10px;">
+  <div class="card" style="margin-top: 10px">
     <div class="card-header">
       <div class="row">
         <div class="col-8">
@@ -124,9 +122,9 @@
           <button
             type="button"
             class="btn btn-primary"
-            (click)="openModal(content, null)"
+            (click)="openModal(null)"
             value="Click Me"
-            style="float: right; margin-bottom: 5px;"
+            style="float: right; margin-bottom: 5px"
           >
             Adicionar novo agendamento
           </button>

@@ -59,7 +59,7 @@ export class ReservationModalComponent implements OnInit {
     this.getSoccerPitchs();
   }
 
-  openUserModal(content: any) {
+  openUserModal() {
     this.modalService.open(AddUserModalComponent).result.then(
       (result) => {
         this.modalSoccerPitchReservation.personId = result.personId;

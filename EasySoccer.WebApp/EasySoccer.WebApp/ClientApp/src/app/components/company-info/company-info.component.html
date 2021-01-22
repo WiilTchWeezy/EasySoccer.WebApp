@@ -26,11 +26,7 @@
               />
             </div>
           </div>
-          <div
-            class="col-sm-12 text-center"
-            [hidden]="hideSaveImage"
-            style="margin-top: 10px"
-          >
+          <div class="col-sm-12 text-center" style="margin-top: 10px">
             <button class="btn btn-primary" (click)="sendImageBase64()">
               <i class="cui-arrow-thick-from-bottom"></i> Salvar imagem
             </button>
@@ -100,7 +96,7 @@
                 type="text"
                 name="state"
                 [(ngModel)]="selectedState"
-                (change)="changeSelectedState();"
+                (change)="changeSelectedState()"
                 [ngbTypeahead]="searchState"
                 [resultFormatter]="formatter"
                 [inputFormatter]="formatter"

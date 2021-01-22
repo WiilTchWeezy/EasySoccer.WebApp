@@ -152,7 +152,7 @@ export class MyscheduleComponent implements OnInit {
     }
   }
 
-  openModal(content: any, selectedSoccerPitch: SoccerPitchReservation) {
+  openModal(selectedSoccerPitch: SoccerPitchReservation) {
     let isEditting = false;
     let isSaved = false;
     if (
