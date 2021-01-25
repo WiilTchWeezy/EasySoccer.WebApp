@@ -42,33 +42,62 @@
         aria-haspopup="true"
         aria-expanded="false"
       >
-      <i class="nav-icon cui-bell" style="font-size: 20px; text-align: center; vertical-align: middle;"></i> Notificações
+        <i
+          class="nav-icon cui-bell"
+          style="font-size: 20px; text-align: center; vertical-align: middle"
+        ></i>
+        Notificações
       </a>
       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <div *ngFor="let item of notifications" class="notific" style="width: 450px;">
-        <a class="dropdown-item" href="#" routerLink="/payment" *ngIf="item.notificationType == 2">
-          <div>
-            <p class="gilroy-bold"><b>{{item.title}}</b></p>
-            <span style="white-space: pre-line;"><p>{{item.message}}</p></span>
-            <div style="height: 20px;">
-              <span style="float: right;"><p>{{item.createdDate | date: 'dd/MM/yyyy'}}</p></span>
+        <div
+          *ngFor="let item of notifications"
+          class="notific"
+          style="width: 450px"
+        >
+          <a
+            class="dropdown-item"
+            href="#"
+            routerLink="/payment"
+            *ngIf="item.notificationType == 2"
+          >
+            <div>
+              <p class="gilroy-bold">
+                <b>{{ item.title }}</b>
+              </p>
+              <span style="white-space: pre-line"
+                ><p>{{ item.message }}</p></span
+              >
+              <div style="height: 20px">
+                <span style="float: right"
+                  ><p>{{ item.createdDate | date: "dd/MM/yyyy" }}</p></span
+                >
+              </div>
             </div>
-          </div>
-        </a>
-        <a class="dropdown-item" href="#" *ngIf="item.notificationType != 2">
-          <div>
-            <p class="gilroy-bold"><b>{{item.title}}</b></p>
-            <span style="white-space: pre-line;"><p>{{item.message}}</p></span>
-            <div style="height: 20px;">
-              <span style="float: right;"><p>{{item.createdDate | date: 'dd/MM/yyyy'}}</p></span>
+          </a>
+          <a
+            class="dropdown-item"
+            (click)="openScheduleInfo(item)"
+            *ngIf="item.notificationType != 2"
+          >
+            <div>
+              <p class="gilroy-bold">
+                <b>{{ item.title }}</b>
+              </p>
+              <span style="white-space: pre-line"
+                ><p>{{ item.message }}</p></span
+              >
+              <div style="height: 20px">
+                <span style="float: right"
+                  ><p>{{ item.createdDate | date: "dd/MM/yyyy" }}</p></span
+                >
+              </div>
             </div>
-          </div>
-        </a>
-      </div>
+          </a>
+        </div>
       </div>
     </li>
   </ul>
-  <ul class="nav navbar-nav ml-auto" style="margin-left: 0px !important;">
+  <ul class="nav navbar-nav ml-auto" style="margin-left: 0px !important">
     <li class="nav-item dropdown dropleft">
       <a
         class="nav-link dropdown-toggle"
@@ -93,7 +122,7 @@
     </li>
   </ul>
 </header>
-<div class="app-body " [ngClass]="{ background: showMenu === false }">
+<div class="app-body" [ngClass]="{ background: showMenu === false }">
   <div class="sidebar" *ngIf="showMenu">
     <nav class="sidebar-nav">
       <ul class="nav">
@@ -135,6 +164,4 @@
   </main>
 </div>
 
-<footer *ngIf="showMenu" class="app-footer">
-  EasySoccer - 2020
-</footer>
+<footer *ngIf="showMenu" class="app-footer">EasySoccer - 2020</footer>

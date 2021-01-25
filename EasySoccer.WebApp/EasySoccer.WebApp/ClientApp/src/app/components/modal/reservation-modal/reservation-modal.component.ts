@@ -22,6 +22,7 @@ import { ToastserviceService } from "../../../service/toastservice.service";
 import { Soccerpitch } from "../../../model/soccerpitch";
 import { Soccerpitchplan } from "../../../model/soccerpitchplan";
 import { CustomDateParserFormatter } from "../../../service/adapter/CustomDateParseAdapter";
+import { ScheduleService } from "../../../service/schedule.service";
 
 @Component({
   selector: "app-reservation-modal",
@@ -35,16 +36,19 @@ export class ReservationModalComponent implements OnInit {
   modalSoccerPitchReservation: SoccerPitchReservation;
   searchFailed = false;
   searching = false;
+  isEditting = false;
   soccerPitchs: Soccerpitch[];
   soccerPitchsPlans: Soccerpitchplan[];
-
+  reservationId;
+  reservationInfo;
   constructor(
     private modalService: NgbModal,
     public userService: UserService,
     public activeModal: NgbActiveModal,
     public soccerpitchService: SoccerpitchService,
     public soccerpitchplanService: SoccerpitchplanService,
-    private toastService: ToastserviceService
+    private toastService: ToastserviceService,
+    public scheduleService: ScheduleService
   ) {}
 
   ngOnInit() {
@@ -57,6 +61,35 @@ export class ReservationModalComponent implements OnInit {
       );
     }
     this.getSoccerPitchs();
+    if(this.isEditting){
+    }
+    if(this.reservationId){
+      this.isEditting = true;
+      this.getReservationInfo();
+    }
+  }
+
+  fitDataToFront() {
+    this.modalSoccerPitchReservation.selectedDate = this.reservationInfo.selectedDateStart;
+    this.modalSoccerPitchReservation.userName = this.reservationInfo.personName;
+    this.modalSoccerPitchReservation.userPhone = this.reservationInfo.personPhone;
+    this.modalSoccerPitchReservation.userSelectDate = {
+      year: new Date(
+        this.modalSoccerPitchReservation.selectedDate
+      ).getFullYear(),
+      month:
+        new Date(this.modalSoccerPitchReservation.selectedDate).getMonth() + 1,
+      day: new Date(this.modalSoccerPitchReservation.selectedDate).getDate(),
+    };
+
+    this.modalSoccerPitchReservation.selectedUser = {
+      name: this.modalSoccerPitchReservation.userName,
+      id: this.modalSoccerPitchReservation.personId,
+    };
+    if (this.modalSoccerPitchReservation.userPhone) {
+      this.modalSoccerPitchReservation.selectedUser.name +=
+        "(" + this.modalSoccerPitchReservation.userPhone + ")";
+    }
   }
 
   openUserModal() {
@@ -124,5 +157,73 @@ export class ReservationModalComponent implements OnInit {
   selectSoccerPitch($event: any) {
     this.modalSoccerPitchReservation.soccerPitchId = $event;
     this.getPlansBySoccerPitchId($event);
+  }
+  transformData() {
+    this.modalSoccerPitchReservation.hourStart =
+      this.modalSoccerPitchReservation.selectedHourStart.hour +
+      ":" +
+      this.modalSoccerPitchReservation.selectedHourStart.minute;
+    this.modalSoccerPitchReservation.hourEnd =
+      this.modalSoccerPitchReservation.selectedHourEnd.hour +
+      ":" +
+      this.modalSoccerPitchReservation.selectedHourEnd.minute;
+
+    this.modalSoccerPitchReservation.selectedDate = new Date(
+      this.modalSoccerPitchReservation.userSelectDate.year,
+      this.modalSoccerPitchReservation.userSelectDate.month - 1,
+      this.modalSoccerPitchReservation.userSelectDate.day
+    );
+  }
+  sendRequest() {
+    this.transformData();
+    if (this.isEditting) {
+      this.scheduleService
+        .patchSoccerPitchReservation(this.modalSoccerPitchReservation)
+        .subscribe(
+          (data) => {
+            this.toastService.showSuccess(
+              "Agendamento atualizado com sucesso."
+            );
+            this.modalSoccerPitchReservation = new SoccerPitchReservation();
+            this.activeModal.close();
+          },
+          (error) => {
+            this.toastService.showError(
+              "Erro ao atualizar dados. " + error.error
+            );
+          }
+        );
+    } else {
+      this.scheduleService
+        .postSoccerPitchReservation(this.modalSoccerPitchReservation)
+        .subscribe(
+          (data) => {
+            this.toastService.showSuccess("Agendamento inserido com sucesso.");
+            this.modalSoccerPitchReservation = new SoccerPitchReservation();
+            this.activeModal.close();
+          },
+          (error) => {
+            console.log(error);
+            this.toastService.showError(
+              "Erro ao inserir dados. " + error.error
+            );
+          }
+        );
+    }
+  }
+
+  getReservationInfo(){
+    this.scheduleService.getReservationInfo(this.reservationId).subscribe(      
+      res => {
+        this.modalSoccerPitchReservation = res;
+        this.reservationInfo = res;
+        this.fitDataToFront();
+        this.getPlansBySoccerPitchId(
+          this.modalSoccerPitchReservation.soccerPitchId
+        );
+      },
+      error => {
+      this.toastService.showError("Erro ao consultar dados. " + error.message);
+      });
   }
 }

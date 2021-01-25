@@ -89,4 +89,10 @@ export class ScheduleService {
       plan
     );
   }
+
+  public getReservationInfo(reservationId): Observable<any>{
+    return this.http
+    .get(environment.urlApi + "SoccerPitchReservation/getInfo?reservationId=" + reservationId)
+    .pipe(map(this.extractData));
+  }
 }
