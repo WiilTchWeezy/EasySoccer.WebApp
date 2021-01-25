@@ -65,7 +65,7 @@ export class AppComponent implements OnInit {
     if(notificationInfo){
       if(notificationInfo.data){
         let notificationData = JSON.parse(notificationInfo.data);
-        let modalOption : NgbModalOptions = {};
+          let modalOption : NgbModalOptions = {};
           modalOption.backdrop = "static";
           modalOption.keyboard = false;
           modalOption.ariaLabelledBy = "modal-basic-title";

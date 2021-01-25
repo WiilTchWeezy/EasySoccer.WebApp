@@ -4,8 +4,8 @@ export class SoccerPitchReservation {
   id: string;
   selectedDateStruct: any;
   selectedDate: Date;
-  selectedHourStart: any;
-  selectedHourEnd: any;
+  selectedHourStart: any = {};
+  selectedHourEnd: any = {};
   hourStart: string;
   hourEnd: string;
   soccerPitchName: string;
@@ -14,7 +14,7 @@ export class SoccerPitchReservation {
   personId: string;
   soccerPitchId: string;
   soccerPitchSoccerPitchPlanId: number;
-  selectedUser: any;
+  selectedUser: any = {};
   userSelectDate: any;
   soccerPitchPlanId: number;
 }

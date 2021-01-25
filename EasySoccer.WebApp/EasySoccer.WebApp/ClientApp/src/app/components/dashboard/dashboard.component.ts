@@ -1,11 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { User } from "../../model/user";
-import { CalendarEvent, CalendarView } from "angular-calendar";
-import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
+import { CalendarEvent, CalendarEventAction, CalendarView } from "angular-calendar";
+import { NgbModal, ModalDismissReasons, NgbModalOptions } from "@ng-bootstrap/ng-bootstrap";
 import { DashboardService } from "../../service/dashboard.service";
 import { ToastserviceService } from "../../service/toastservice.service";
 import { Subject } from "rxjs";
 import { isSameDay, isSameMonth } from "date-fns";
+import { ReservationModalComponent } from "../modal/reservation-modal/reservation-modal.component";
 @Component({
   selector: "app-dashboard",
   templateUrl: "./dashboard.component.html",
@@ -131,6 +132,7 @@ export class DashboardComponent implements OnInit {
               },
               allDay: false,
               draggable: false,
+              id : element.id
             });
             this.refresh.next();
           });
@@ -141,6 +143,23 @@ export class DashboardComponent implements OnInit {
           );
         }
       );
+  }
+
+  openModalReservation(event){
+    let modalOption : NgbModalOptions = {};
+    modalOption.backdrop = "static";
+          modalOption.keyboard = false;
+          modalOption.ariaLabelledBy = "modal-basic-title";
+          const modalRef = this.modalService.open(
+            ReservationModalComponent,
+            modalOption
+          );
+          modalRef.result.then(
+            (result) => {
+            },
+            (reason) => {}
+          );
+          modalRef.componentInstance.reservationId = event.id;
   }
 
   checkIfHaveToGet() {
@@ -158,6 +177,7 @@ export class DashboardComponent implements OnInit {
   activeDayIsOpen: boolean = false;
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+    console.log(events);
     if (isSameMonth(date, this.viewDate)) {
       if (
         (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||

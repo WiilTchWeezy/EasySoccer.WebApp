@@ -52,6 +52,7 @@ export class ReservationModalComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.modalSoccerPitchReservation = new SoccerPitchReservation();
     if (
       this.modalSoccerPitchReservation &&
       this.modalSoccerPitchReservation.soccerPitchId
@@ -217,6 +218,7 @@ export class ReservationModalComponent implements OnInit {
       res => {
         this.modalSoccerPitchReservation = res;
         this.reservationInfo = res;
+        this.modalSoccerPitchReservation.selectedUser = {};
         this.fitDataToFront();
         this.getPlansBySoccerPitchId(
           this.modalSoccerPitchReservation.soccerPitchId
