@@ -3,6 +3,7 @@ import { CompanyService } from '../../service/company.service';
 import { CompanyUserService } from '../../service/company-user.service';
 import { FinancialService } from '../../service/financial.service';
 import { ToastserviceService } from '../../service/toastservice.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-payment',
@@ -15,7 +16,8 @@ export class PaymentComponent implements OnInit {
     private financialService: FinancialService, 
     private toastService: ToastserviceService, 
     private companyUserService: CompanyUserService,
-    private companyService: CompanyService) { }
+    private companyService: CompanyService,
+    private router: Router) { }
   plans: any[];
   installments: any[];
   cities: any[];
@@ -100,7 +102,7 @@ export class PaymentComponent implements OnInit {
       SecurityCode: this.securityCode,
       CardExpiration: this.cardExpiration,
       SelectedPlan: this.plan.PlanId,
-      SelectedInstallments: this.installment.id,
+      SelectedInstallments: this.installment,
       StateId: this.state,
       CityId: this.city,
       Neighborhood: this.neighborhood,
@@ -111,7 +113,10 @@ export class PaymentComponent implements OnInit {
     };
     this.companyUserService.payment(request).subscribe((res)=>
     {
-      this.plans = res;
+      this.toastService.showSuccess(
+        "Pagamento realizado com sucesso! Muito obrigado."
+      );
+      this.router.navigate(["/"]);
     }, (error)=>
     {
       this.toastService.showError(

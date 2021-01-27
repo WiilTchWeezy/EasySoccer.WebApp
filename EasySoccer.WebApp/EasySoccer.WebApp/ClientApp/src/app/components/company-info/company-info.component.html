@@ -185,6 +185,36 @@
             </div>
           </div>
         </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="card">
+              <div class="card-header">
+                <h5>Informações Financeiras</h5>
+              </div>
+              <div class="card-body">
+                <div class="col-sm-12">
+                  <div [ngSwitch]="financialInfo.financialPlan">
+                    <p *ngSwitchCase="'0'">Plano Selecionado : Grátis</p>
+                    <p *ngSwitchCase="'1'">Plano Selecionado : Mensal</p>
+                    <p *ngSwitchCase="'2'">Plano Selecionado : Semestral</p>
+                    <p *ngSwitchCase="'3'">Plano Selecionado : Anual</p>
+                    <div *ngSwitchDefault>
+                      {{ financialInfo.financialPlan }}
+                    </div>
+                  </div>
+                  <p>
+                    Criado em :
+                    {{ financialInfo.createdDate | date: "dd/MM/yyyy" }}
+                  </p>
+                  <p>
+                    Válido até :
+                    {{ financialInfo.expiresDate | date: "dd/MM/yyyy" }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="card-division">
           <h5>Agenda do complexo esportivo</h5>
         </div>
