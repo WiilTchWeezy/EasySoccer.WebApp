@@ -35,6 +35,7 @@ export class CompanyInfoComponent implements OnInit {
   selectedState: any;
   selectedCity: any;
   financialInfo: any;
+  active: boolean;
 
   constructor(
     private companyService: CompanyService,
@@ -68,6 +69,7 @@ export class CompanyInfoComponent implements OnInit {
           "company"
         );
         this.financialInfo = res.financialInfo;
+        this.active = res.active;
       },
       (error) => {
         this.toastService.showError(error.error);
