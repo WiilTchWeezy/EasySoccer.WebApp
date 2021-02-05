@@ -31,6 +31,7 @@ export class SoccerpitchComponent implements OnInit {
   selectedImage: any;
   selectedImageBase64: any;
   selectedImageUrl: any;
+  defaultPlanId: any;
   hideSaveImage: boolean;
   @ViewChild("input", null) inputEl;
   currentColor: any = { name: "Laranja", value: "#ff591f" };
@@ -130,6 +131,11 @@ export class SoccerpitchComponent implements OnInit {
       this.modalTitle = "Editar quadra";
       console.log(selectedSoccerPitch);
       this.modalSoccerPitch = selectedSoccerPitch;
+      this.modalSoccerPitch.plans.map((x) => {
+        if (x.isDefault) {
+          this.defaultPlanId = x.id;
+        }
+      });
       var selectedColor;
       if (selectedSoccerPitch.color != null) {
         this.colorsOptions.map(function (item) {
@@ -158,6 +164,11 @@ export class SoccerpitchComponent implements OnInit {
       .open(content, { ariaLabelledBy: "modal-basic-title" })
       .result.then(
         (result) => {
+          this.modalSoccerPitch.plans.map((x) => {
+            if (x.id == this.defaultPlanId) {
+              x.isDefault = true;
+            }
+          });
           if (selectedSoccerPitch != null && selectedSoccerPitch.id > 0) {
             this.modalSoccerPitch.color = this.currentColor.value;
             this.soccerPitchService

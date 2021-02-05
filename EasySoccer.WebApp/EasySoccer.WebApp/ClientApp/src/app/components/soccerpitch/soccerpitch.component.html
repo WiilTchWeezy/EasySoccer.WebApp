@@ -19,7 +19,7 @@
       <div class="row">
         <div class="col-sm-12">
           <input
-            style="display: none;"
+            style="display: none"
             (change)="onFileChanged($event)"
             type="file"
             accept="image/png, image/jpeg"
@@ -40,7 +40,7 @@
         <div
           class="col-sm-12 text-center"
           [hidden]="hideSaveImage"
-          style="margin-top: 10px;"
+          style="margin-top: 10px"
         >
           <button
             class="btn btn-primary"
@@ -131,8 +131,9 @@
                       ? true
                       : null
                   "
-                  >{{ sportType.name }}</option
                 >
+                  {{ sportType.name }}
+                </option>
               </select>
             </div>
           </div>
@@ -191,6 +192,27 @@
             </div>
           </div>
         </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="defaultPlan">Plano padrão:</label>
+              <select
+                class="form-control"
+                [(ngModel)]="defaultPlanId"
+                name="defaultPlanId"
+                id="defaultPlan"
+              >
+                <option
+                  *ngFor="let p of modalSoccerPitch.plans"
+                  value="{{ p.id }}"
+                  [attr.selected]="defaultPlanId === p.id"
+                >
+                  {{ p.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
       </div>
     </form>
   </div>
@@ -200,12 +222,12 @@
       class="btn btn-outline-dark"
       (click)="modal.close('Save click')"
     >
-      Save
+      Salvar
     </button>
   </div>
 </ng-template>
 <div class="container">
-  <div class="card" style="margin-top: 10px;">
+  <div class="card" style="margin-top: 10px">
     <div class="card-header">
       <div class="row">
         <div class="col-8"><h4>Quadras</h4></div>
@@ -214,7 +236,7 @@
             type="button"
             class="btn btn-primary"
             (click)="openModal(content, null)"
-            style="float: right;"
+            style="float: right"
           >
             Adicionar nova quadra
           </button>
