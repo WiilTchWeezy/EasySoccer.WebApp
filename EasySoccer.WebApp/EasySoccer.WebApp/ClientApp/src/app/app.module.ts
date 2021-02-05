@@ -36,7 +36,10 @@ import { AgmCoreModule } from "@agm/core";
 import { NgxMaskModule, IConfig } from "ngx-mask";
 import { ConfirmModalComponent } from "./components/modal/confirm-modal/confirm-modal.component";
 import { ReservationModalComponent } from "./components/modal/reservation-modal/reservation-modal.component";
-import { PaymentComponent } from './components/payment/payment.component';
+import { PaymentComponent } from "./components/payment/payment.component";
+import { LoaderComponent } from "./components/loader/loader.component";
+import { LoaderModule } from "./components/loader/loader.module";
+import { NgxLoadingModule } from "ngx-loading";
 
 registerLocaleData(ptBr);
 
@@ -61,6 +64,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     ConfirmModalComponent,
     ReservationModalComponent,
     PaymentComponent,
+    LoaderComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -69,6 +73,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     FormsModule,
     NgbModule,
     BrowserAnimationsModule,
+    LoaderModule,
     RouterModule.forRoot([
       {
         path: "",
@@ -128,6 +133,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
       apiKey: "AIzaSyCi2hnhPwsHYMqTe-CNnAZOaw9Grtt3ESQ",
     }),
     NgxMaskModule.forRoot(),
+    NgxLoadingModule.forRoot({ fullScreenBackdrop: true }),
   ],
   providers: [
     AuthService,

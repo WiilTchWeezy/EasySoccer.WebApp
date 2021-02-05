@@ -180,6 +180,7 @@ export class SoccerpitchComponent implements OnInit {
                   );
                   this.getSoccerpitchs();
                   this.modalSoccerPitch = new Soccerpitch();
+                  this.defaultPlanId = null;
                 },
                 (error) => {
                   this.toastService.showError(
@@ -196,6 +197,7 @@ export class SoccerpitchComponent implements OnInit {
                   this.getSoccerpitchs();
                   this.modalSoccerPitch = new Soccerpitch();
                   this.sendImageBase64(data.id);
+                  this.defaultPlanId = null;
                 },
                 (error) => {
                   this.toastService.showError(
