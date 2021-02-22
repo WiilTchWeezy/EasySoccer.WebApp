@@ -167,6 +167,8 @@ export class SoccerpitchComponent implements OnInit {
           this.modalSoccerPitch.plans.map((x) => {
             if (x.id == this.defaultPlanId) {
               x.isDefault = true;
+            } else {
+              x.isDefault = false;
             }
           });
           if (selectedSoccerPitch != null && selectedSoccerPitch.id > 0) {

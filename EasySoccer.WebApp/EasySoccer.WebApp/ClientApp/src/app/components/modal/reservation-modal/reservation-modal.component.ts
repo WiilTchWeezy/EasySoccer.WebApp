@@ -62,9 +62,9 @@ export class ReservationModalComponent implements OnInit {
       );
     }
     this.getSoccerPitchs();
-    if(this.isEditting){
+    if (this.isEditting) {
     }
-    if(this.reservationId){
+    if (this.reservationId) {
       this.isEditting = true;
       this.getReservationInfo();
     }
@@ -213,9 +213,9 @@ export class ReservationModalComponent implements OnInit {
     }
   }
 
-  getReservationInfo(){
-    this.scheduleService.getReservationInfo(this.reservationId).subscribe(      
-      res => {
+  getReservationInfo() {
+    this.scheduleService.getReservationInfo(this.reservationId).subscribe(
+      (res) => {
         this.modalSoccerPitchReservation = res;
         this.reservationInfo = res;
         this.modalSoccerPitchReservation.selectedUser = {};
@@ -224,8 +224,25 @@ export class ReservationModalComponent implements OnInit {
           this.modalSoccerPitchReservation.soccerPitchId
         );
       },
-      error => {
-      this.toastService.showError("Erro ao consultar dados. " + error.message);
-      });
+      (error) => {
+        this.toastService.showError(
+          "Erro ao consultar dados. " + error.message
+        );
+      }
+    );
+  }
+
+  changeStatus(status) {
+    this.scheduleService.changeStatus(this.reservationId, status).subscribe(
+      (res) => {
+        this.toastService.showSuccess("Status atualizado com sucesso.");
+        this.activeModal.close();
+      },
+      (error) => {
+        this.toastService.showError(
+          "Erro ao consultar dados. " + error.message
+        );
+      }
+    );
   }
 }

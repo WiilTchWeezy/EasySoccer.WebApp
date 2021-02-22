@@ -27,17 +27,17 @@ export class CompanyService {
       .pipe(map(this.extractData));
   }
 
-  public getStates():Observable<any>{
+  public getStates(): Observable<any> {
     return this.http
-    .get(environment.urlApi + "company/getstates")
-    .pipe(map(this.extractData));
+      .get(environment.urlApi + "company/getstates")
+      .pipe(map(this.extractData));
   }
 
-  public getCitiesByState(idState: number):Observable<any>{
+  public getCitiesByState(idState: number): Observable<any> {
     return this.http
-    .get(environment.urlApi + "company/getcitiesbystate?IdState=" + idState)
-    .pipe(map(this.extractData));
-  } 
+      .get(environment.urlApi + "company/getcitiesbystate?IdState=" + idState)
+      .pipe(map(this.extractData));
+  }
 
   public updateCompanyInfo(
     name,
@@ -47,7 +47,8 @@ export class CompanyService {
     companySchedules,
     longitude,
     latitude,
-    idCity
+    idCity,
+    insertReservationConfirmed
   ): Observable<any> {
     return this.http
       .patch(environment.urlApi + "company/patchcompanyinfo", {
@@ -58,7 +59,8 @@ export class CompanyService {
         companySchedules,
         longitude,
         latitude,
-        idCity
+        idCity,
+        insertReservationConfirmed,
       })
       .pipe(map(this.extractData));
   }

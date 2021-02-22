@@ -176,15 +176,45 @@
           </div>
         </div>
       </div>
+      <div class="row">
+        <div class="col-sm-12" style="padding: 15px">
+          Status :
+          <span
+            [ngClass]="{
+              'back-warning': modalSoccerPitchReservation.status == 1,
+              'back-canceled': modalSoccerPitchReservation.status == 2,
+              'back-confirmed': modalSoccerPitchReservation.status == 3,
+              'back-concluded': modalSoccerPitchReservation.status == 4
+            }"
+          >
+            {{ modalSoccerPitchReservation.statusDescription }}
+          </span>
+        </div>
+      </div>
     </div>
   </form>
 </div>
 <div class="modal-footer">
   <button
     type="button"
-    class="btn btn-outline-dark"
-    (click)="activeModal.close('Save click')"
+    *ngIf="
+      modalSoccerPitchReservation.status != 2 &&
+      modalSoccerPitchReservation.status != 4
+    "
+    class="btn btn-danger"
+    (click)="changeStatus(2)"
   >
+    Cancelar Agendamento
+  </button>
+  <button
+    type="button"
+    class="btn btn-success"
+    *ngIf="modalSoccerPitchReservation.status == 1"
+    (click)="changeStatus(3)"
+  >
+    Confirmar Agendamento
+  </button>
+  <button type="button" class="btn btn-primary" (click)="sendRequest()">
     Salvar
   </button>
 </div>

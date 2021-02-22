@@ -4,9 +4,9 @@ import { Router } from "@angular/router";
 import { ToastserviceService } from "../../service/toastservice.service";
 import { ImageService } from "../../service/image.service";
 import { Address } from "ngx-google-places-autocomplete/objects/address";
-import { Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Observable } from "rxjs";
+import { debounceTime, distinctUntilChanged, map } from "rxjs/operators";
+import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
 
 @Component({
   selector: "app-company-info",
@@ -36,7 +36,7 @@ export class CompanyInfoComponent implements OnInit {
   selectedCity: any;
   financialInfo: any;
   active: boolean;
-
+  insertReservationConfirmed: boolean;
   constructor(
     private companyService: CompanyService,
     private router: Router,
@@ -49,8 +49,6 @@ export class CompanyInfoComponent implements OnInit {
     this.getStates();
   }
 
-  
-
   getCompanyInfo() {
     this.companyService.getCompanyInfo().subscribe(
       (res) => {
@@ -62,14 +60,15 @@ export class CompanyInfoComponent implements OnInit {
         this.companySchedules = res.companySchedules;
         this.longitude = res.longitude;
         this.latitude = res.latitude;
-        this.selectedCity = { id :res.idCity, name: res.city };
-        this.selectedState = { id:res.idState, name: res.state }; 
+        this.selectedCity = { id: res.idCity, name: res.city };
+        this.selectedState = { id: res.idState, name: res.state };
         this.companyImageUrl = this.imageService.getImageUrlByImageName(
           res.logo,
           "company"
         );
         this.financialInfo = res.financialInfo;
         this.active = res.active;
+        this.insertReservationConfirmed = res.insertReservationConfirmed;
       },
       (error) => {
         this.toastService.showError(error.error);
@@ -88,7 +87,7 @@ export class CompanyInfoComponent implements OnInit {
     );
   }
 
-  getCities(){
+  getCities() {
     this.companyService.getCitiesByState(this.selectedState.id).subscribe(
       (res) => {
         this.cities = res;
@@ -110,7 +109,8 @@ export class CompanyInfoComponent implements OnInit {
         this.companySchedules,
         this.longitude,
         this.latitude,
-        this.selectedCity.id
+        this.selectedCity.id,
+        this.insertReservationConfirmed
       )
       .subscribe(
         (res) => {
@@ -169,20 +169,28 @@ export class CompanyInfoComponent implements OnInit {
     text$.pipe(
       debounceTime(200),
       distinctUntilChanged(),
-      map(term => this.states.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
-    )
+      map((term) =>
+        this.states
+          .filter((v) => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1)
+          .slice(0, 10)
+      )
+    );
 
-    searchCity = (text$: Observable<string>) =>
+  searchCity = (text$: Observable<string>) =>
     text$.pipe(
       debounceTime(200),
       distinctUntilChanged(),
-      map(term => this.cities.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
-    )
+      map((term) =>
+        this.cities
+          .filter((v) => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1)
+          .slice(0, 10)
+      )
+    );
 
-    formatter = (result: any) => result.name;
+  formatter = (result: any) => result.name;
 
-    changeSelectedState(){
-      this.getCities();
-      this.selectedCity = {};
-    }
+  changeSelectedState() {
+    this.getCities();
+    this.selectedCity = {};
+  }
 }

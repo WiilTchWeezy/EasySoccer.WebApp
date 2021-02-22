@@ -33,7 +33,8 @@ export class ScheduleService {
     finalDate,
     soccerPitchId,
     SoccerPitchPlanId,
-    userName
+    userName,
+    status
   ): Observable<any> {
     let formattedInitialDate = "";
     if (initialDate) {
@@ -47,6 +48,9 @@ export class ScheduleService {
     }
     if (!soccerPitchId || soccerPitchId == 0) {
       soccerPitchId = "";
+    }
+    if (!status || status == 0) {
+      status = "";
     }
     if (!SoccerPitchPlanId || SoccerPitchPlanId == 0) {
       SoccerPitchPlanId = "";
@@ -71,7 +75,9 @@ export class ScheduleService {
           "&SoccerPitchPlanId=" +
           SoccerPitchPlanId +
           "&UserName=" +
-          userName
+          userName +
+          "&status=" +
+          status
       )
       .pipe(map(this.extractData));
   }
@@ -90,9 +96,29 @@ export class ScheduleService {
     );
   }
 
-  public getReservationInfo(reservationId): Observable<any>{
+  public getReservationInfo(reservationId): Observable<any> {
     return this.http
-    .get(environment.urlApi + "SoccerPitchReservation/getInfo?reservationId=" + reservationId)
-    .pipe(map(this.extractData));
+      .get(
+        environment.urlApi +
+          "SoccerPitchReservation/getInfo?reservationId=" +
+          reservationId
+      )
+      .pipe(map(this.extractData));
+  }
+
+  public changeStatus(reservationId: any, status): any {
+    return this.http.post<SoccerPitchReservation>(
+      environment.urlApi + "soccerpitchreservation/changeStatus",
+      {
+        reservationId,
+        status,
+      }
+    );
+  }
+
+  public getReservationStatus(): Observable<any> {
+    return this.http
+      .get(environment.urlApi + "SoccerPitchReservation/getReservationStatus")
+      .pipe(map(this.extractData));
   }
 }

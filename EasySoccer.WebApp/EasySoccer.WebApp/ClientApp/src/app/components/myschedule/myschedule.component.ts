@@ -40,6 +40,7 @@ export class MyscheduleComponent implements OnInit {
   soccerPitchReservations: SoccerPitchReservation[];
   soccerPitchs: Soccerpitch[];
   soccerPitchsPlans: Soccerpitchplan[];
+  status: any[];
   collectionSize = 0;
   selectedSoccerPitch: Soccerpitch;
   modalTitle: String;
@@ -50,6 +51,7 @@ export class MyscheduleComponent implements OnInit {
   filter: any = {
     soccerPitchId: 0,
     soccerPitchPlanId: 0,
+    status: 0,
   };
   loading = false;
   constructor(
@@ -65,6 +67,7 @@ export class MyscheduleComponent implements OnInit {
     this.getReservations();
     this.getSoccerPitchs();
     this.getSoccerPitchsPlans();
+    this.getStatus();
   }
 
   getReservations() {
@@ -77,7 +80,8 @@ export class MyscheduleComponent implements OnInit {
         this.filter.finalDate,
         this.filter.soccerPitchId,
         this.filter.soccerPitchPlanId,
-        this.filter.userName
+        this.filter.userName,
+        this.filter.status
       )
       .subscribe(
         (res) => {
@@ -111,12 +115,12 @@ export class MyscheduleComponent implements OnInit {
         this.soccerPitchsPlans = res;
       },
       (error) => {
-        this.toastService.showError("Erro ao consultar dados. " + error.message);
+        this.toastService.showError(
+          "Erro ao consultar dados. " + error.message
+        );
       }
     );
   }
-
-
 
   openModal(selectedSoccerPitch: SoccerPitchReservation) {
     let isEditting = false;
@@ -154,14 +158,23 @@ export class MyscheduleComponent implements OnInit {
         isSaved = true;
         this.getReservations();
       },
-      (reason) => {
-
-      }
+      (reason) => {}
     );
     modalRef.componentInstance.modalSoccerPitchReservation = this.modalSoccerPitchReservation;
-    modalRef.componentInstance.reservationId = this.modalSoccerPitchReservation.id;    
+    modalRef.componentInstance.reservationId = this.modalSoccerPitchReservation.id;
     modalRef.componentInstance.isEditting = isEditting;
   }
 
-
+  getStatus() {
+    this.scheduleService.getReservationStatus().subscribe(
+      (res) => {
+        this.status = res;
+      },
+      (error) => {
+        this.toastService.showError(
+          "Erro ao consultar dados. " + error.message
+        );
+      }
+    );
+  }
 }

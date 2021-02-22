@@ -246,6 +246,41 @@
             </div>
           </div>
         </div>
+        <div class="card">
+          <div class="card-header">
+            <h5>Configurações de Reserva</h5>
+          </div>
+
+          <div class="row card-body">
+            <div class="col-sm-3" style="display: flex; align-items: center">
+              <div>
+                <label>
+                  Inserir reservas já confirmadas : <br />
+                  {{ insertReservationConfirmed ? "Sim" : "Não" }}
+                </label>
+              </div>
+            </div>
+            <div
+              class="col-sm-4"
+              style="display: flex; align-items: center; padding-top: 20px"
+            >
+              <div class="form-group">
+                <div class="input-group">
+                  <label class="switch">
+                    <input
+                      id="insertReservationConfirmed"
+                      type="checkbox"
+                      class="form-control"
+                      name="insertReservationConfirmed"
+                      [(ngModel)]="insertReservationConfirmed"
+                    />
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="card-division">
           <h5>Agenda do complexo esportivo</h5>
         </div>

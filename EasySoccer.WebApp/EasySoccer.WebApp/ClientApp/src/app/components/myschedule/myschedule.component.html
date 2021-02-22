@@ -7,7 +7,7 @@
     </div>
     <div class="card-body">
       <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-6">
           <label for="status">Data inicial agendamento</label>
           <div class="input-group">
             <input
@@ -29,7 +29,7 @@
             </div>
           </div>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-6">
           <label for="status">Data final agendamento</label>
           <div class="input-group">
             <input
@@ -51,7 +51,9 @@
             </div>
           </div>
         </div>
-        <div class="col-sm-2">
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
           <label for="soccerPicht">Quadra</label>
           <div class="input-group">
             <select
@@ -67,7 +69,7 @@
             </select>
           </div>
         </div>
-        <div class="col-sm-2">
+        <div class="col-sm-3">
           <label for="soccerPichtPlanId">Plano</label>
           <div class="input-group">
             <select
@@ -83,7 +85,23 @@
             </select>
           </div>
         </div>
-        <div class="col-sm-2">
+        <div class="col-sm-3">
+          <label for="status">Status</label>
+          <div class="input-group">
+            <select
+              id="status"
+              [(ngModel)]="filter.status"
+              class="form-control"
+              name="status"
+            >
+              <option value="0" selected>Selecione</option>
+              <option *ngFor="let sp of status" [ngValue]="sp.key">
+                {{ sp.text }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-3">
           <label for="soccerPichtPlanId">Responsável</label>
           <div class="input-group">
             <input
@@ -116,7 +134,7 @@
     <div class="card-header">
       <div class="row">
         <div class="col-8">
-          <h4>Horários</h4>
+          <h4>Reservas</h4>
         </div>
         <div class="col-4">
           <button
@@ -139,6 +157,7 @@
             <th scope="col" class="backg-gray">Quadra</th>
             <th scope="col" class="backg-gray">Data selecionada</th>
             <th scope="col" class="backg-gray">Horário</th>
+            <th scope="col" class="backg-gray">Status</th>
             <th scope="col" class="backg-gray">#</th>
           </tr>
         </thead>
@@ -163,6 +182,17 @@
               {{ soccerPitchReservation.selectedHourEnd.minute }}
             </td>
             <td>
+              <span
+                [ngClass]="{
+                  'back-warning': soccerPitchReservation.status == 1,
+                  'back-canceled': soccerPitchReservation.status == 2,
+                  'back-confirmed': soccerPitchReservation.status == 3,
+                  'back-concluded': soccerPitchReservation.status == 4
+                }"
+                >{{ soccerPitchReservation.statusDescription }}</span
+              >
+            </td>
+            <td>
               <a
                 title="Editar"
                 class="gridItem"
@@ -178,7 +208,7 @@
 
   <div class="d-flex justify-content-between p-2">
     <ngb-pagination
-      [collectionSize]="collectionSize"
+      [(collectionSize)]="collectionSize"
       [(page)]="page"
       [pageSize]="pageSize"
       (pageChange)="getReservations()"
