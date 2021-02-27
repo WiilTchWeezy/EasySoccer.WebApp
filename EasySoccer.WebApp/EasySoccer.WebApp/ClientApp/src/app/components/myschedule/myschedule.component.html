@@ -69,7 +69,7 @@
             </select>
           </div>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-2">
           <label for="soccerPichtPlanId">Plano</label>
           <div class="input-group">
             <select
@@ -85,20 +85,17 @@
             </select>
           </div>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-4">
           <label for="status">Status</label>
-          <div class="input-group">
-            <select
-              id="status"
-              [(ngModel)]="filter.status"
-              class="form-control"
+          <div class="form-group">
+            <ng-multiselect-dropdown
+              [placeholder]="'Selecione os status'"
+              [data]="status"
+              [(ngModel)]="selectedStatus"
+              [settings]="dropdownSettings"
               name="status"
             >
-              <option value="0" selected>Selecione</option>
-              <option *ngFor="let sp of status" [ngValue]="sp.key">
-                {{ sp.text }}
-              </option>
-            </select>
+            </ng-multiselect-dropdown>
           </div>
         </div>
         <div class="col-sm-3">

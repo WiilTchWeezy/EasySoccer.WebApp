@@ -199,7 +199,8 @@
     type="button"
     *ngIf="
       modalSoccerPitchReservation.status != 2 &&
-      modalSoccerPitchReservation.status != 4
+      modalSoccerPitchReservation.status != 4 &&
+      isEditting
     "
     class="btn btn-danger"
     (click)="changeStatus(2)"
@@ -209,7 +210,7 @@
   <button
     type="button"
     class="btn btn-success"
-    *ngIf="modalSoccerPitchReservation.status == 1"
+    *ngIf="modalSoccerPitchReservation.status == 1 && isEditting"
     (click)="changeStatus(3)"
   >
     Confirmar Agendamento

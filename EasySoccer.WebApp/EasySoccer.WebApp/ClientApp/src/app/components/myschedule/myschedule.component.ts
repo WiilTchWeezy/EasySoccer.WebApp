@@ -25,6 +25,7 @@ import { AddUserModalComponent } from "../modal/add-user-modal/add-user-modal.co
 import { ToastserviceService } from "../../service/toastservice.service";
 import { CustomDateParserFormatter } from "../../service/adapter/CustomDateParseAdapter";
 import { ReservationModalComponent } from "../modal/reservation-modal/reservation-modal.component";
+import { IDropdownSettings } from "ng-multiselect-dropdown";
 
 @Component({
   selector: "app-myschedule",
@@ -54,6 +55,8 @@ export class MyscheduleComponent implements OnInit {
     status: 0,
   };
   loading = false;
+  dropdownSettings: IDropdownSettings = {};
+  selectedStatus: any[];
   constructor(
     public scheduleService: ScheduleService,
     private modalService: NgbModal,
@@ -64,14 +67,46 @@ export class MyscheduleComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getReservations();
     this.getSoccerPitchs();
     this.getSoccerPitchsPlans();
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: "key",
+      textField: "text",
+      selectAllText: "Selecione todos",
+      unSelectAllText: "Remove todos",
+      itemsShowLimit: 6,
+      allowSearchFilter: true,
+      searchPlaceholderText: "Pesquise",
+    };
+    this.selectedStatus = [
+      { key: 1, text: "Aguardando confirmação" },
+      { key: 3, text: "Confirmado" },
+      { key: 4, text: "Finalizado" },
+    ];
+    this.filter.finalDate = {
+      year: new Date().getFullYear(),
+      month: new Date().getMonth() + 1,
+      day: new Date().getDate(),
+    };
+    this.filter.initialDate = {
+      year: new Date().getFullYear(),
+      month: new Date().getMonth() + 1,
+      day: 1,
+    };
     this.getStatus();
+    this.getReservations();
   }
 
   getReservations() {
     this.loading = true;
+    var statusSrt = "";
+    if (this.selectedStatus) {
+      this.selectedStatus.map((x) => {
+        statusSrt += x.key + ";";
+      });
+    }
+    console.log(this.filter);
     this.scheduleService
       .getSchedules(
         this.page,
@@ -81,7 +116,7 @@ export class MyscheduleComponent implements OnInit {
         this.filter.soccerPitchId,
         this.filter.soccerPitchPlanId,
         this.filter.userName,
-        this.filter.status
+        statusSrt
       )
       .subscribe(
         (res) => {

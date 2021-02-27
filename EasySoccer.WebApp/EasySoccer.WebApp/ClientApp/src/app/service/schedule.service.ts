@@ -49,7 +49,7 @@ export class ScheduleService {
     if (!soccerPitchId || soccerPitchId == 0) {
       soccerPitchId = "";
     }
-    if (!status || status == 0) {
+    if (!status) {
       status = "";
     }
     if (!SoccerPitchPlanId || SoccerPitchPlanId == 0) {
@@ -83,7 +83,7 @@ export class ScheduleService {
   }
 
   public postSoccerPitchReservation(plan: SoccerPitchReservation): any {
-    return this.http.post<SoccerPitchReservation>(
+    return this.http.post<any>(
       environment.urlApi + "soccerpitchreservation/post",
       plan
     );

@@ -185,16 +185,16 @@ export class ReservationModalComponent implements OnInit {
             this.toastService.showSuccess(
               "Agendamento atualizado com sucesso."
             );
-            this.modalSoccerPitchReservation = new SoccerPitchReservation();
             this.activeModal.close();
           },
           (error) => {
             this.toastService.showError(
-              "Erro ao atualizar dados. " + error.error
+              "Erro ao cadastrar agendamento. " + error.message
             );
           }
         );
     } else {
+      debugger;
       this.scheduleService
         .postSoccerPitchReservation(this.modalSoccerPitchReservation)
         .subscribe(
@@ -206,7 +206,7 @@ export class ReservationModalComponent implements OnInit {
           (error) => {
             console.log(error);
             this.toastService.showError(
-              "Erro ao inserir dados. " + error.error
+              "Erro ao cadastrar agendamento. " + error.error.message
             );
           }
         );
