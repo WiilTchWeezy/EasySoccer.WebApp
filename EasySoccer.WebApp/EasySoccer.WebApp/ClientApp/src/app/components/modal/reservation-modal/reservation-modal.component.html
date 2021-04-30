@@ -182,7 +182,15 @@
   >
     Confirmar Agendamento
   </button>
-  <button type="button" class="btn btn-primary" (click)="sendRequest()">
+  <button
+    type="button"
+    class="btn btn-primary"
+    *ngIf="
+      modalSoccerPitchReservation.status != 2 &&
+      modalSoccerPitchReservation.status != 4
+    "
+    (click)="sendRequest()"
+  >
     Salvar
   </button>
 </div>
