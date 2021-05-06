@@ -9,13 +9,14 @@ import { ToastserviceService } from "./service/toastservice.service";
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.css"]
+  styleUrls: ["./app.component.css"],
 })
 export class AppComponent implements OnInit {
   userName: string = "Usuário";
   notifications: any[];
+  showNotifications: boolean;
   ngOnInit(): void {
-    this.authService.menuEmitter.subscribe(show => {
+    this.authService.menuEmitter.subscribe((show) => {
       this.showMenu = show;
       if (this.authService.isAuth) {
         this.GetUserInfo();
@@ -41,46 +42,55 @@ export class AppComponent implements OnInit {
 
   private GetUserInfo() {
     this.companyUserService.getUserInfo().subscribe(
-      res => {
+      (res) => {
         this.userName = res.name;
       },
-      error => {
-        this.toastService.showError("Erro ao consultar dados. " + error.message);
+      (error) => {
+        this.toastService.showError(
+          "Erro ao consultar dados. " + error.message
+        );
       }
     );
   }
 
-  private GetUserNotification(){
+  private GetUserNotification() {
     this.companyUserService.getUserNotification().subscribe(
-      res => {
+      (res) => {
         this.notifications = res;
+        if (this.notifications != undefined && this.notifications.length > 0) {
+          this.showNotifications = true;
+        } else {
+          this.showNotifications = false;
+        }
       },
-      error => {
-        this.toastService.showError("Erro ao consultar dados. " + error.message);
+      (error) => {
+        this.toastService.showError(
+          "Erro ao consultar dados. " + error.message
+        );
       }
     );
+    console.log(this.notifications);
   }
 
-  openScheduleInfo(notificationInfo){
-    if(notificationInfo){
-      if(notificationInfo.data){
+  openScheduleInfo(notificationInfo) {
+    if (notificationInfo) {
+      if (notificationInfo.data) {
         let notificationData = JSON.parse(notificationInfo.data);
-          let modalOption : NgbModalOptions = {};
-          modalOption.backdrop = "static";
-          modalOption.keyboard = false;
-          modalOption.ariaLabelledBy = "modal-basic-title";
-          const modalRef = this.modalService.open(
-            ReservationModalComponent,
-            modalOption
-          );
-          modalRef.result.then(
-            (result) => {
-            },
-            (reason) => {}
-          );
-          modalRef.componentInstance.reservationId = notificationData.reservationId;
+        let modalOption: NgbModalOptions = {};
+        modalOption.backdrop = "static";
+        modalOption.keyboard = false;
+        modalOption.ariaLabelledBy = "modal-basic-title";
+        const modalRef = this.modalService.open(
+          ReservationModalComponent,
+          modalOption
+        );
+        modalRef.result.then(
+          (result) => {},
+          (reason) => {}
+        );
+        modalRef.componentInstance.reservationId =
+          notificationData.reservationId;
       }
     }
-    
   }
 }

@@ -31,18 +31,46 @@
       <a class="nav-link" href="#" routerLink="/soccerpitchplan">Planos</a>
     </li>
   </ul>
-  <a
-    class="nav navbar-nav nav-item nav-link ml-auto"
-    href="https://api.whatsapp.com/send?phone=5516993470508"
-    target="_blank"
-  >
-    <i
-      class="nav-icon cui-chat-bubble"
-      style="font-size: 20px; text-align: center; vertical-align: middle"
-    ></i>
-    Ajuda
-  </a>
-  <ul class="nav navbar-nav ml-auto" style="margin-left: 0px !important">
+  <ul class="nav navbar-nav ml-auto">
+    <li class="nav-item dropdown dropleft">
+      <a
+        class="nav-link dropdown-toggle"
+        href="#"
+        id="navbarDropdown"
+        role="button"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        <i
+          class="nav-icon cui-chat-bubble"
+          style="font-size: 20px; text-align: center; vertical-align: middle"
+        ></i>
+        Ajuda
+      </a>
+      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a
+          class="dropdown-item"
+          href="https://api.whatsapp.com/send?phone=5516993470508"
+          target="_blank"
+        >
+          <i
+            class="nav-icon cui-chat-bubble"
+            style="font-size: 20px; text-align: center; vertical-align: middle"
+          ></i>
+          Fale conosco!</a
+        >
+        <a class="dropdown-item" href="#">
+          <i
+            class="nav-icon cui-paperclip"
+            style="font-size: 20px; text-align: center; vertical-align: middle"
+          ></i>
+          Manual da Plataforma</a
+        >
+      </div>
+    </li>
+  </ul>
+  <ul class="nav navbar-nav" style="margin-left: 0px !important">
     <li class="nav-item dropdown dropleft">
       <a
         class="nav-link dropdown-toggle"
@@ -59,7 +87,20 @@
         ></i>
         Notificações
       </a>
-      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+      <div
+        class="dropdown-menu"
+        *ngIf="!showNotifications"
+        aria-labelledby="navbarDropdown"
+      >
+        <a class="dropdown-item">
+          <p>Nenhuma Notificação para o usuário</p>
+        </a>
+      </div>
+      <div
+        class="dropdown-menu"
+        *ngIf="showNotifications"
+        aria-labelledby="navbarDropdown"
+      >
         <div
           *ngFor="let item of notifications"
           class="notific"
