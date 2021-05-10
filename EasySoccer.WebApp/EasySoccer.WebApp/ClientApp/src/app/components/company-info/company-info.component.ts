@@ -193,4 +193,18 @@ export class CompanyInfoComponent implements OnInit {
     this.getCities();
     this.selectedCity = {};
   }
+
+  activeCompany() {
+    this.companyService.postActiveCompany(this.active).subscribe(
+      (res) => {
+        this.toastService.showSuccess("Status atualizado com sucesso. ");
+        this.getCompanyInfo();
+      },
+      (error) => {
+        this.toastService.showError(
+          "Erro ao consultar dados. " + error.Message
+        );
+      }
+    );
+  }
 }

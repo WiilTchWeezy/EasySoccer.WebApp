@@ -97,6 +97,7 @@
                         class="form-control"
                         name="active"
                         [(ngModel)]="active"
+                        (ngModelChange)="activeCompany()"
                       />
                       <span class="slider round"></span>
                     </label>

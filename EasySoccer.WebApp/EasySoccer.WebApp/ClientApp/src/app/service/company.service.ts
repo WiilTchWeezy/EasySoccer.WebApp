@@ -70,4 +70,10 @@ export class CompanyService {
       ImageBase64: imageBase64,
     });
   }
+
+  public postActiveCompany(active: boolean): any {
+    return this.http.post<any>(environment.urlApi + "company/active", {
+      Active: active,
+    });
+  }
 }
