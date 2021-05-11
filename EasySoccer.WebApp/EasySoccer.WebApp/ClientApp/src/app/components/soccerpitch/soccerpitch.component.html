@@ -112,7 +112,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <div class="form-group">
               <label for="sportType">Tipo de Esporte:</label>
               <select
@@ -137,7 +137,7 @@
               </select>
             </div>
           </div>
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <label for="description">Intervalo padrão</label>
             <div class="input-group">
               <input
@@ -149,10 +149,22 @@
               />
             </div>
           </div>
+          <div class="col-sm-4">
+            <label for="active">Quadra Ativa:</label>
+            <div class="input-group">
+              <input
+                id="active"
+                type="checkbox"
+                class="form-control"
+                name="active"
+                [(ngModel)]="modalSoccerPitch.active"
+              />
+            </div>
+          </div>
         </div>
         <div class="row">
           <div class="col-sm-6">
-            <label for="hasRoof">Possui cobertura</label>
+            <label for="hasRoof">Possui cobertura:</label>
             <div class="input-group">
               <input
                 id="hasRoof"

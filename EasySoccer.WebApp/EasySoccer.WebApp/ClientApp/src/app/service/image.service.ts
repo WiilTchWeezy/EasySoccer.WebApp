@@ -22,7 +22,7 @@ export class ImageService {
   getImageUrlByImageName(imageName: string, container: string) {
     let selectedImageUrl = "";
     selectedImageUrl =
-      "https://easysoccer.blob.core.windows.net/soccerpitch/default.png";
+      "https://easysoccer.blob.core.windows.net/" + container + "/default.png";
     if (imageName != null) {
       selectedImageUrl =
         "https://easysoccer.blob.core.windows.net/" +
