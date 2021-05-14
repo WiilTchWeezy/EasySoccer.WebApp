@@ -114,7 +114,7 @@
             class="dropdown-item"
             href="#"
             routerLink="/payment"
-            *ngIf="item.notificationType == 2"
+            *ngIf="item.notificationType == 1"
           >
             <div>
               <p class="gilroy-bold">
@@ -151,7 +151,7 @@
           </a>
           <a
             class="dropdown-item"
-            *ngIf="item.notificationType != 3 && item.notificationType != 2"
+            *ngIf="item.notificationType != 3 && item.notificationType != 1"
           >
             <div>
               <p class="gilroy-bold">
