@@ -14,4 +14,5 @@ export class Soccerpitch {
   interval: any;
   imageName: string;
   color: string;
+  application: number;
 }
