@@ -155,6 +155,7 @@ export class SoccerpitchComponent implements OnInit {
       this.hideSaveImage = false;
     } else {
       this.modalSoccerPitch = new Soccerpitch();
+      this.modalSoccerPitch.application = 3;
       this.modalTitle = "Adicionar nova quadra";
       this.hideSaveImage = true;
     }
