@@ -71,9 +71,11 @@ export class ReservationModalComponent implements OnInit {
   }
 
   fitDataToFront() {
-    this.modalSoccerPitchReservation.selectedDate = this.reservationInfo.selectedDateStart;
+    this.modalSoccerPitchReservation.selectedDate =
+      this.reservationInfo.selectedDateStart;
     this.modalSoccerPitchReservation.userName = this.reservationInfo.personName;
-    this.modalSoccerPitchReservation.userPhone = this.reservationInfo.personPhone;
+    this.modalSoccerPitchReservation.userPhone =
+      this.reservationInfo.personPhone;
     this.modalSoccerPitchReservation.userSelectDate = {
       year: new Date(
         this.modalSoccerPitchReservation.selectedDate
@@ -177,6 +179,7 @@ export class ReservationModalComponent implements OnInit {
   }
   sendRequest() {
     this.transformData();
+    this.modalSoccerPitchReservation.application = 3;
     if (this.isEditting) {
       this.scheduleService
         .patchSoccerPitchReservation(this.modalSoccerPitchReservation)

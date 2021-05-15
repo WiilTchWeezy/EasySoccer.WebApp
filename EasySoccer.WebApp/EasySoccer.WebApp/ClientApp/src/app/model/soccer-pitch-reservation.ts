@@ -20,4 +20,5 @@ export class SoccerPitchReservation {
   status: number;
   statusDescription: string;
   currentTimeOffset: number;
+  application: number;
 }

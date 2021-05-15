@@ -131,7 +131,6 @@ export class SoccerpitchComponent implements OnInit {
       this.modalTitle = "Editar quadra";
       console.log(selectedSoccerPitch);
       this.modalSoccerPitch = selectedSoccerPitch;
-      this.modalSoccerPitch.application = 3;
       this.modalSoccerPitch.plans.map((x) => {
         if (x.isDefault) {
           this.defaultPlanId = x.id;
@@ -155,7 +154,6 @@ export class SoccerpitchComponent implements OnInit {
       this.hideSaveImage = false;
     } else {
       this.modalSoccerPitch = new Soccerpitch();
-      this.modalSoccerPitch.application = 3;
       this.modalTitle = "Adicionar nova quadra";
       this.hideSaveImage = true;
     }
