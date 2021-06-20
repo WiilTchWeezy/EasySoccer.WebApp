@@ -1,97 +1,215 @@
-<ng-template #content let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Informações Agendamento</h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-12">Filtros</div>
+      </div>
     </div>
-    <div class="modal-body">
-      <form>
-        <h5>Usuário </h5>
-        <div class="form-group">
-          <div class="row">
-            <div class="col-sm-6">
-              <label for="name">Nome</label>
-              <div class="input-group">
-                <input id="name" class="form-control" placeholder="Nome" name="selectedUsername" [(ngModel)]="selectedUser.name" disabled>
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <label for="phone">Telefone</label>
-              <div class="input-group">
-                <input id="phone" class="form-control" placeholder="Telefone" name="phone" [(ngModel)]="selectedUser.phoneNumber" disabled>
-              </div>
-            </div>
-         </div>
-         <div class="row">
-            <div class="col-sm-12">
-                <label for="email">Email</label>
-                <div class="input-group">
-                  <input id="email" class="form-control" placeholder="Email" name="selectedEmail" [(ngModel)]="selectedUser.email" disabled>
-                </div>
-              </div>
-         </div>
-        <h5>Agendamento </h5>
-          <div class="row">
-            <div class="col-sm-6">
-              <label for="soccerPicht">Quadra</label>
-              <div class="input-group">
-                <input id="soccerPicht" class="form-control" placeholder="Quadra" name="soccerPicht" value="Pacaembu" disabled>
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <label for="phone">Horário</label>
-              <div class="input-group">
-                <input id="schedule" class="form-control" placeholder="Telefone" name="schedule" value="20:00 - 21:00" disabled>
-              </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-6">
+          <label for="status">Data inicial agendamento</label>
+          <div class="input-group">
+            <input
+              class="form-control"
+              placeholder="dd/mm/yyyy"
+              name="initialDate"
+              [(ngModel)]="filter.initialDate"
+              ngbDatepicker
+              #d="ngbDatepicker"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-outline-secondary calendar"
+                (click)="d.toggle()"
+                type="button"
+              >
+                <i class="cui-calendar"></i>
+              </button>
             </div>
           </div>
-          <div class="row">
-              <div class="col-sm-12">
-                  <label for="status">Status</label>
-                  <div class="input-group">
-                    <input id="status" class="form-control" placeholder="Status" name="status" value="Confirmado" disabled>
-                  </div>
-                </div>
-           </div>
         </div>
-      </form>
+        <div class="col-sm-6">
+          <label for="status">Data final agendamento</label>
+          <div class="input-group">
+            <input
+              class="form-control"
+              placeholder="dd/mm/yyyy"
+              name="finalDate"
+              [(ngModel)]="filter.finalDate"
+              ngbDatepicker
+              #dfinal="ngbDatepicker"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-outline-secondary calendar"
+                (click)="dfinal.toggle()"
+                type="button"
+              >
+                <i class="cui-calendar"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <label for="soccerPicht">Quadra</label>
+          <div class="input-group">
+            <select
+              id="soccerPicht"
+              class="form-control"
+              name="soccerPichtId"
+              [(ngModel)]="filter.soccerPitchId"
+            >
+              <option value="0" selected>Selecione</option>
+              <option *ngFor="let sp of soccerPitchs" [ngValue]="sp.id">
+                {{ sp.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <label for="soccerPichtPlanId">Plano</label>
+          <div class="input-group">
+            <select
+              id="soccerPichtPlanId"
+              [(ngModel)]="filter.soccerPitchPlanId"
+              class="form-control"
+              name="soccerPichtPlanId"
+            >
+              <option value="0" selected>Selecione</option>
+              <option *ngFor="let sp of soccerPitchsPlans" [ngValue]="sp.id">
+                {{ sp.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <label for="status">Status</label>
+          <div class="form-group">
+            <ng-multiselect-dropdown
+              [placeholder]="'Selecione os status'"
+              [data]="status"
+              [(ngModel)]="selectedStatus"
+              [settings]="dropdownSettings"
+              name="status"
+            >
+            </ng-multiselect-dropdown>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <label for="soccerPichtPlanId">Responsável</label>
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="filter.userName"
+              id="userName"
+              name="userName"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <button
+            type="button"
+            class="btn btn-primary btnLogin"
+            [ngClass]="{ spinner: loading }"
+            [disabled]="loading"
+            (click)="getReservations()"
+            style="float: right; margin-bottom: 5px; margin-top: 10px"
+          >
+            Filtrar
+          </button>
+        </div>
+      </div>
     </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+  </div>
+  <div class="card" style="margin-top: 10px">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-8">
+          <h4>Reservas</h4>
+        </div>
+        <div class="col-4">
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="openModal(null)"
+            value="Click Me"
+            style="float: right; margin-bottom: 5px"
+          >
+            Adicionar novo agendamento
+          </button>
+        </div>
+      </div>
     </div>
-  </ng-template>
-<div class="container">
-    <div style="padding:5px;">
-        <button type="button" class="btn btn-primary" (click)="openModal(content, 0);" value="Click Me" style="float: right; margin-bottom: 5px;"> Adicionar novo agendamento </button>
+    <div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col" class="backg-gray">Responsável</th>
+            <th scope="col" class="backg-gray">Quadra</th>
+            <th scope="col" class="backg-gray">Data selecionada</th>
+            <th scope="col" class="backg-gray">Horário</th>
+            <th scope="col" class="backg-gray">Status</th>
+            <th scope="col" class="backg-gray">#</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="
+              let soccerPitchReservation of soccerPitchReservations;
+              index as i
+            "
+          >
+            <td>
+              {{ soccerPitchReservation.userName }}
+            </td>
+            <td>{{ soccerPitchReservation.soccerPitchName }}</td>
+            <td>
+              {{ soccerPitchReservation.selectedDate | date: "dd/MM/yyyy" }}
+            </td>
+            <td>
+              {{ soccerPitchReservation.selectedHourStart.hour }} :
+              {{ soccerPitchReservation.selectedHourStart.minute }} -
+              {{ soccerPitchReservation.selectedHourEnd.hour }} :
+              {{ soccerPitchReservation.selectedHourEnd.minute }}
+            </td>
+            <td>
+              <span
+                [ngClass]="{
+                  'back-warning': soccerPitchReservation.status == 1,
+                  'back-canceled': soccerPitchReservation.status == 2,
+                  'back-confirmed': soccerPitchReservation.status == 3,
+                  'back-concluded': soccerPitchReservation.status == 4
+                }"
+                >{{ soccerPitchReservation.statusDescription }}</span
+              >
+            </td>
+            <td>
+              <a
+                title="Editar"
+                class="gridItem"
+                (click)="openModal(soccerPitchReservation)"
+                ><i class="nav-icon cui-pencil"></i
+              ></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th scope="col">Responsável</th>
-      <th scope="col">Quadra</th>
-      <th scope="col">Data selecionada</th>
-      <th scope="col">Horário</th>
-      <th scope="col">Status</th>
-      <th scope="col">#</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let soccerPitchReservation of soccerPitchReservations; index as i">
-      <td>
-        {{ soccerPitchReservation.userName }}
-      </td>
-      <td>{{ soccerPitchReservation.soccerPitchName }}</td>
-      <td>{{ soccerPitchReservation.selectedDate | date:'dd/MM/yyyy' }}</td>
-      <td>{{ soccerPitchReservation.selectedHourStart }} - {{ soccerPitchReservation.selectedHourEnd }}</td>
-      <td>{{ soccerPitchReservation.status }}</td>
-      <td><a title="Editar" href="#"><i class="nav-icon cui-pencil"></i></a></td>
-    </tr>
-    </tbody>
-  </table>
+  </div>
 
   <div class="d-flex justify-content-between p-2">
-      <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
-      </ngb-pagination>
-    </div>
+    <ngb-pagination
+      [(collectionSize)]="collectionSize"
+      [(page)]="page"
+      [pageSize]="pageSize"
+      (pageChange)="getReservations()"
+    >
+    </ngb-pagination>
+  </div>
 </div>

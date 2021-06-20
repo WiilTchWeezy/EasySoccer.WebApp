@@ -1,100 +1,172 @@
 <ng-template #content let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Informações Agendamento</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <form>
-      <h5>Usuário </h5>
+      <h5>Usuário</h5>
       <div class="form-group">
         <div class="row">
           <div class="col-sm-6">
             <label for="name">Nome</label>
             <div class="input-group">
-              <input id="name" class="form-control" placeholder="Nome" name="selectedUsername" [(ngModel)]="selectedUser.name" disabled>
+              <input
+                id="name"
+                class="form-control"
+                placeholder="Nome"
+                name="selectedUsername"
+                [(ngModel)]="selectedUser.name"
+                disabled
+              />
             </div>
           </div>
           <div class="col-sm-6">
             <label for="phone">Telefone</label>
             <div class="input-group">
-              <input id="phone" class="form-control" placeholder="Telefone" name="phone" [(ngModel)]="selectedUser.phoneNumber" disabled>
+              <input
+                id="phone"
+                class="form-control"
+                placeholder="Telefone"
+                name="phone"
+                [(ngModel)]="selectedUser.phoneNumber"
+                disabled
+              />
             </div>
           </div>
-       </div>
-       <div class="row">
+        </div>
+        <div class="row">
           <div class="col-sm-12">
-              <label for="email">Email</label>
-              <div class="input-group">
-                <input id="email" class="form-control" placeholder="Email" name="selectedEmail" [(ngModel)]="selectedUser.email" disabled>
-              </div>
+            <label for="email">Email</label>
+            <div class="input-group">
+              <input
+                id="email"
+                class="form-control"
+                placeholder="Email"
+                name="selectedEmail"
+                [(ngModel)]="selectedUser.email"
+                disabled
+              />
             </div>
-       </div>
-      <h5>Agendamento </h5>
+          </div>
+        </div>
+        <h5>Agendamento</h5>
         <div class="row">
           <div class="col-sm-6">
             <label for="soccerPicht">Quadra</label>
             <div class="input-group">
-              <input id="soccerPicht" class="form-control" placeholder="Quadra" name="soccerPicht" value="Pacaembu" disabled>
+              <input
+                id="soccerPicht"
+                class="form-control"
+                placeholder="Quadra"
+                name="soccerPicht"
+                value="Pacaembu"
+                disabled
+              />
             </div>
           </div>
           <div class="col-sm-6">
             <label for="phone">Horário</label>
             <div class="input-group">
-              <input id="schedule" class="form-control" placeholder="Telefone" name="schedule" value="20:00 - 21:00" disabled>
+              <input
+                id="schedule"
+                class="form-control"
+                placeholder="Telefone"
+                name="schedule"
+                value="20:00 - 21:00"
+                disabled
+              />
             </div>
           </div>
         </div>
         <div class="row">
-            <div class="col-sm-12">
-                <label for="status">Status</label>
-                <div class="input-group">
-                  <input id="status" class="form-control" placeholder="Status" name="status" value="Confirmado" disabled>
-                </div>
-              </div>
-         </div>
+          <div class="col-sm-12">
+            <label for="status">Status</label>
+            <div class="input-group">
+              <input
+                id="status"
+                class="form-control"
+                placeholder="Status"
+                name="status"
+                value="Confirmado"
+                disabled
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      (click)="modal.close('Save click')"
+    >
+      Salvar
+    </button>
   </div>
 </ng-template>
 <div>
-    <table>
-      <tbody *ngFor="let currentUser of users">
-        <th>
-          <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20%289%29.jpg" height="35" width="40" class="img-circle center-vertical"/>
-        </th>
-        <th>
-            <p class="center-vertical">
-              <a>{{currentUser.name}}</a>
-            </p>
-        </th>
-        <th>
-          <p class="center-vertical">{{currentUser.phoneNumber}}</p>
-        </th>
-        <th>
-          <div style="background-color:purple; padding-left: 3px; padding-right: 3px;" class="center-vertical">
-            <p style="color:white;">Pacaembu</p>
-          </div>
-        </th>
-        <th>
-            <div style="background-color:#ff591f; padding-left: 3px; padding-right: 3px;" class="center-vertical">
-              <p style="color:white;">19:00 - 20:00</p>
-            </div>
-          </th>
-          <th>
-              <div style="padding-left: 3px; padding-right: 3px;" class="center-vertical">
-                <a (click)="openModal(content, currentUser);">Ver mais</a>
-              </div>
-            </th>
-      </tbody>
-    </table>
+  <table>
+    <tbody *ngFor="let reservation of reservations">
+      <th>
+        <img
+          src="https://mdbootstrap.com/img/Photos/Avatars/img%20%289%29.jpg"
+          height="35"
+          width="40"
+          class="img-circle center-vertical"
+        />
+      </th>
+      <th>
+        <p class="center-vertical breaktext">
+          <a>{{ reservation.userName }}</a>
+        </p>
+      </th>
+      <th>
+        <p class="center-vertical">{{ reservation.userPhone }}</p>
+      </th>
+      <th>
+        <div
+          style="
+            background-color: purple;
+            padding-left: 3px;
+            padding-right: 3px;
+          "
+          class="center-vertical"
+        >
+          <p class="breaktext" style="color: white">
+            {{ reservation.soccerPitchName }}
+          </p>
+        </div>
+      </th>
+      <th>
+        <div
+          style="
+            background-color: #ff591f;
+            padding-left: 3px;
+            padding-right: 3px;
+          "
+          class="center-vertical"
+        >
+          <p style="color: white">{{ reservation.selectedHour }}</p>
+        </div>
+      </th>
+      <th>
+        <div
+          style="padding-left: 3px; padding-right: 3px"
+          class="center-vertical"
+        >
+          <a (click)="openModal(content, currentUser)">Ver mais</a>
+        </div>
+      </th>
+    </tbody>
+  </table>
 </div>
-
-
-
-
-

@@ -1,0 +1,45 @@
+.backg-gray {
+  background-color: #dcdcdc;
+}
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner:before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  border-top-color: #000000;
+  animation: spinner 0.8s linear infinite;
+  margin-left: 10px;
+}
+
+.btnLogin {
+  background-color: #161e53;
+}
+
+.back-warning {
+  padding: 3px;
+  background-color: #f0ad4e;
+}
+
+.back-canceled {
+  padding: 3px;
+  background-color: #d9534f;
+}
+
+.back-confirmed {
+  padding: 3px;
+  background-color: #5cb85c;
+}
+
+.back-concluded {
+  padding: 3px;
+  background-color: #0275d8;
+}

@@ -4,3 +4,21 @@
     padding-top: 50px;
   }
 }
+
+/*.background {
+	background-image: url('../assets/img/login-back.jpg');
+	margin-top: 0px;
+}*/
+
+.background {
+  background: url("../assets/img/login-back.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  margin-top: 0px;
+}
+
+.notific {
+  border-bottom: solid 1px #dcdcdc;
+}

@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/eab2f784-005f-4fc9-857c-86950cce5101/resourceGroups/appsvc_windows_centralus/providers/Microsoft.Web/sites/easysocceradmin",
+    "appService.deploySubpath": ""
+}

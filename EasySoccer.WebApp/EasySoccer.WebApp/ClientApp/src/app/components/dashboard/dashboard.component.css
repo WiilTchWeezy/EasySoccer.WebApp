@@ -1,0 +1,18 @@
+.welcomeContainer {
+  text-align: center;
+  height: 100vh;
+  display: grid;
+}
+.welcomeTitle {
+  align-self: center;
+}
+
+.card {
+  background-color: #d7d7d7;
+  margin-top: 20px;
+  padding: 8px;
+}
+
+.cal-month-view .cal-day-badge {
+  background-color: #161e53 !important;
+}

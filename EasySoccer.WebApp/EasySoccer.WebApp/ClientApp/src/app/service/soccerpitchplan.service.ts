@@ -26,6 +26,12 @@ export class SoccerpitchplanService {
 		return this.http.get(environment.urlApi + 'soccerpitchplan/get').pipe(map(this.extractData));
 	}
 
+	public getSoccerPitchPlanBySoccerPitchId(soccerPitchId: number): Observable<any> {
+		return this.http
+			.get(environment.urlApi + 'soccerpitchplan/getbysoccerpitch?soccerPitchId=' + soccerPitchId)
+			.pipe(map(this.extractData));
+	}
+
 	public postSoccerPitchPlan(plan: Soccerpitchplan): any {
 		return this.http.post<Soccerpitchplan>(environment.urlApi + 'soccerpitchplan/post', plan);
 	}

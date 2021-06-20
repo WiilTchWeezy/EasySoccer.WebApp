@@ -1,83 +1,290 @@
+<ng-template #rt let-r="result" let-t="term">
+  <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
+</ng-template>
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">{{modalTitle}}</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <h4 class="modal-title" id="modal-basic-title">{{ modalTitle }}</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <form>
-      <h5>Plano </h5>
+      <h5>Quadra</h5>
+      <div class="row">
+        <div class="col-sm-12">
+          <input
+            style="display: none"
+            (change)="onFileChanged($event)"
+            type="file"
+            accept="image/png, image/jpeg"
+            #fileInput
+          />
+          <div class="text-center">
+            <img
+              class="img-thumbnail img-size"
+              [src]="
+                selectedImageUrl ||
+                'https://easysoccer.blob.core.windows.net/soccerpitch/default.png'
+              "
+              alt="your image"
+              (click)="fileInput.click()"
+            />
+          </div>
+        </div>
+        <div
+          class="col-sm-12 text-center"
+          [hidden]="hideSaveImage"
+          style="margin-top: 10px"
+        >
+          <button
+            class="btn btn-primary"
+            (click)="sendImageBase64(modalSoccerPitch.id)"
+          >
+            <i class="cui-arrow-thick-from-bottom"></i> Salvar imagem
+          </button>
+        </div>
+      </div>
       <div class="form-group">
         <div class="row">
           <div class="col-sm-12">
             <label for="name">Nome</label>
             <div class="input-group">
-              <input id="name" class="form-control" placeholder="Nome" name="name" [(ngModel)]="modalSoccerPitch.name">
+              <input
+                id="name"
+                class="form-control"
+                placeholder="Nome"
+                name="name"
+                [(ngModel)]="modalSoccerPitch.name"
+              />
             </div>
           </div>
-       </div>
-       <div class="row">
-        <div class="col-sm-12">
-          <label for="description">Descrição</label>
-          <div class="input-group">
-            <input id="description" class="form-control" placeholder="Descrição" name="description" [(ngModel)]="modalSoccerPitch.description" >
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <label for="description">Descrição</label>
+            <div class="input-group">
+              <input
+                id="description"
+                class="form-control"
+                placeholder="Descrição"
+                name="description"
+                [(ngModel)]="modalSoccerPitch.description"
+              />
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="sportType">Cor no calendário:</label>
+              <div
+                class="btn-group w-100p"
+                ngbDropdown
+                role="group"
+                aria-label="Button group with nested dropdown"
+              >
+                <button class="btn btn-outline-primary" ngbDropdownToggle>
+                  {{ currentColor.name }}
+                  <span
+                    class="item-preview"
+                    [style.background-color]="currentColor.value"
+                  ></span>
+                </button>
+                <div class="dropdown-menu w-100p" ngbDropdownMenu>
+                  <button
+                    *ngFor="let item of colorsOptions"
+                    ngbDropdownItem
+                    (click)="updateColorDropDown(item)"
+                  >
+                    {{ item.name }}
+                    <span
+                      class="item-preview right"
+                      [style.background-color]="item.value"
+                    ></span>
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-     </div>
-     <div class="row">
-      <div class="col-sm-6">
-        <label for="hasRoof">Possui cobertura</label>
-        <div class="input-group">
-          <input id="hasRoof" type="checkbox" class="form-control" name="hasRoof" [(ngModel)]="modalSoccerPitch.hasRoof" >
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="sportType">Tipo de Esporte:</label>
+              <select
+                class="form-control"
+                [(ngModel)]="modalSoccerPitch.sportTypeId"
+                name="modalSoccerPitch.sportTypeId"
+              >
+                <option
+                  *ngFor="let sportType of sportTypes"
+                  value="{{ sportType.id }}"
+                  [attr.selected]="
+                    modalSoccerPitch &&
+                    modalSoccerPitch.sportTypeId &&
+                    sportType &&
+                    modalSoccerPitch.sportTypeId == sportType.id
+                      ? true
+                      : null
+                  "
+                >
+                  {{ sportType.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <label for="description">Intervalo padrão</label>
+            <div class="input-group">
+              <input
+                id="interval"
+                class="form-control"
+                placeholder="Intervalo padrão (minutos)"
+                name="interval"
+                [(ngModel)]="modalSoccerPitch.interval"
+              />
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <label for="active">Quadra Ativa:</label>
+            <div class="input-group">
+              <input
+                id="active"
+                type="checkbox"
+                class="form-control"
+                name="active"
+                [(ngModel)]="modalSoccerPitch.active"
+              />
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="col-sm-6">
-        <label for="numberOfPlayers">Número de jogadores</label>
-        <div class="input-group">
-          <input id="numberOfPlayers" class="form-control" placeholder="Número de jogadores" name="nOfPlayers" [(ngModel)]="modalSoccerPitch.numberOfPlayers" [ngModelOptions]="{standalone: true}" >
+        <div class="row">
+          <div class="col-sm-6">
+            <label for="hasRoof">Possui cobertura:</label>
+            <div class="input-group">
+              <input
+                id="hasRoof"
+                type="checkbox"
+                class="form-control"
+                name="hasRoof"
+                [(ngModel)]="modalSoccerPitch.hasRoof"
+              />
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label for="numberOfPlayers">Número de jogadores</label>
+            <div class="input-group">
+              <input
+                id="numberOfPlayers"
+                class="form-control"
+                placeholder="Número de jogadores"
+                name="nOfPlayers"
+                [(ngModel)]="modalSoccerPitch.numberOfPlayers"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+          </div>
         </div>
-      </div>
-     </div> 
-     <div class="row">
-      <div class="col-sm-12">
-        <label for="planId">Plano</label>
-        <select id="planId" class="form-control" name="planId" [(ngModel)]="soccerPitchsplan" (ngModelChange)="selectChange($event)">                                                                
-          <option *ngFor="let sp of soccerPitchsplans;" [ngValue]="sp">{{sp.name}}</option>
-        </select>
-      </div>
-     </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="sportType">Planos:</label>
+              <ng-multiselect-dropdown
+                [placeholder]="'Selecione os planos'"
+                [data]="soccerPitchsplans"
+                [(ngModel)]="modalSoccerPitch.plans"
+                [settings]="dropdownSettings"
+                name="plans"
+              >
+              </ng-multiselect-dropdown>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="defaultPlan">Plano padrão:</label>
+              <select
+                class="form-control"
+                [(ngModel)]="defaultPlanId"
+                name="defaultPlanId"
+                id="defaultPlan"
+              >
+                <option
+                  *ngFor="let p of modalSoccerPitch.plans"
+                  value="{{ p.id }}"
+                  [attr.selected]="defaultPlanId === p.id"
+                >
+                  {{ p.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
       </div>
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      (click)="modal.close('Save click')"
+    >
+      Salvar
+    </button>
   </div>
 </ng-template>
 <div class="container">
-    <div style="padding:5px;">
-        <button type="button" class="btn btn-primary" (click)="openModal(content, 0);" value="Click Me" style="float: right; margin-bottom: 5px;"> Adicionar nova quadra </button>
+  <div class="card" style="margin-top: 10px">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-8"><h4>Quadras</h4></div>
+        <div class="col-4">
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="openModal(content, null)"
+            style="float: right"
+          >
+            Adicionar nova quadra
+          </button>
+        </div>
+      </div>
     </div>
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th scope="col">Nome</th>
-      <th scope="col">Descrição</th>
-      <th scope="col">Numero de Jogadores</th>
-      <th scope="col">Possui cobertura</th>
-      <th scope="col">#</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let soccerPitch of soccerPitchs; index as i">
-      <td>
-        {{ soccerPitch.name }}
-      </td>
-      <td>{{ soccerPitch.description }}</td>
-      <td>{{ soccerPitch.numberOfPlayers }}</td>
-      <td>{{ soccerPitch.hasRoof }}</td>
-      <td><a title="Editar" (click)="openModal(content,soccerPitch);" ><i class="nav-icon cui-pencil"></i></a></td>
-    </tr>
-    </tbody>
-  </table>
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Nome</th>
+            <th scope="col">Descrição</th>
+            <th scope="col">Numero de Jogadores</th>
+            <th scope="col">Possui cobertura</th>
+            <th scope="col">#</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let soccerPitch of soccerPitchs; index as i">
+            <td>
+              {{ soccerPitch.name }}
+            </td>
+            <td>{{ soccerPitch.description }}</td>
+            <td>{{ soccerPitch.numberOfPlayers }}</td>
+            <td>{{ soccerPitch.hasRoof ? "Sim" : "Não" }}</td>
+            <td>
+              <a
+                title="Editar"
+                class="gridItem"
+                (click)="openModal(content, soccerPitch)"
+                ><i class="nav-icon cui-pencil"></i
+              ></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
