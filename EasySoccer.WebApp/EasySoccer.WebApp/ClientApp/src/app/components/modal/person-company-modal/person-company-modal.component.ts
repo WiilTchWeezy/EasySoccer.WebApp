@@ -16,7 +16,7 @@ export class PersonCompanyModalComponent implements OnInit {
   reservations: any[] = [];
   isEditting: boolean;
   constructor(
-    private activeModal: NgbActiveModal,
+    public activeModal: NgbActiveModal,
     private personCompanyService: PersonCompanyService,
     private toastService: ToastserviceService
   ) {}
