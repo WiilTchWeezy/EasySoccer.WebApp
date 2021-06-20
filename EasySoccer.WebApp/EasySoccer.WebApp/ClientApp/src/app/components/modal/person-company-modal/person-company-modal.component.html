@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h4 class="modal-title" id="modal-basic-title">Novo Responsável</h4>
+  <h4 class="modal-title" id="modal-basic-title">Novo Cliente</h4>
   <button
     type="button"
     class="close"
@@ -11,7 +11,7 @@
 </div>
 <div class="modal-body">
   <form>
-    <h5>Responsável</h5>
+    <h5>Cliente</h5>
     <div class="form-group">
       <div class="row">
         <div class="col-sm-6">
@@ -21,7 +21,7 @@
               id="user"
               class="form-control"
               placeholder="Nome"
-              [(ngModel)]="user.name"
+              [(ngModel)]="name"
               name="name"
               type="text"
             />
@@ -34,7 +34,7 @@
               id="phone"
               class="form-control"
               placeholder="Telefone"
-              [(ngModel)]="user.phone"
+              [(ngModel)]="phone"
               name="phone"
               type="text"
               mask="(00) 00000-0000"
@@ -48,11 +48,41 @@
               id="email"
               class="form-control"
               placeholder="Email"
-              [(ngModel)]="user.email"
+              [(ngModel)]="email"
               name="email"
               type="text"
             />
           </div>
+        </div>
+        <div class="col-sm-12" *ngIf="reservations && reservations.length > 0">
+          <h4
+            class="modal-title"
+            id="modal-basic-title"
+            style="margin-top: 15px"
+          >
+            Ultimas Reservas
+          </h4>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col" class="backg-gray">Quadra</th>
+                <th scope="col" class="backg-gray">Data Selecionada</th>
+                <th scope="col" class="backg-gray">Horário</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let rsv of reservations; index as i">
+                <td>
+                  {{ rsv.soccerPitchName }}
+                </td>
+                <td>{{ rsv.selectedDateStart | date: "dd/MM/yyyy" }}</td>
+                <td>
+                  {{ rsv.selectedDateStart | date: "HH:mm" }} -
+                  {{ rsv.selectedDateEnd | date: "HH:mm" }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

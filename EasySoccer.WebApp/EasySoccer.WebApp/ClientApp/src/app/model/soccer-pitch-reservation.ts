@@ -11,7 +11,7 @@ export class SoccerPitchReservation {
   soccerPitchName: string;
   userName: string;
   userPhone: string;
-  personId: string;
+  personCompanyId: string;
   soccerPitchId: string;
   soccerPitchSoccerPitchPlanId: number;
   selectedUser: any = {};
@@ -21,4 +21,5 @@ export class SoccerPitchReservation {
   statusDescription: string;
   currentTimeOffset: number;
   application: number;
+  applicationDescription: string;
 }

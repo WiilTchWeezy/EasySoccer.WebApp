@@ -139,7 +139,9 @@ export class MyscheduleComponent implements OnInit {
         this.soccerPitchs = res;
       },
       (error) => {
-        this.toastService.showError("Erro ao consultar dados. " + error.error);
+        this.toastService.showError(
+          "Erro ao consultar dados. " + error.error.message
+        );
       }
     );
   }
@@ -195,8 +197,10 @@ export class MyscheduleComponent implements OnInit {
       },
       (reason) => {}
     );
-    modalRef.componentInstance.modalSoccerPitchReservation = this.modalSoccerPitchReservation;
-    modalRef.componentInstance.reservationId = this.modalSoccerPitchReservation.id;
+    modalRef.componentInstance.modalSoccerPitchReservation =
+      this.modalSoccerPitchReservation;
+    modalRef.componentInstance.reservationId =
+      this.modalSoccerPitchReservation.id;
     modalRef.componentInstance.isEditting = isEditting;
   }
 

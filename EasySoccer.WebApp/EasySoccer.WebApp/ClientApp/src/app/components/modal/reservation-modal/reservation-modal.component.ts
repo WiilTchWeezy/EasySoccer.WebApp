@@ -15,7 +15,6 @@ import {
   tap,
   switchMap,
 } from "rxjs/operators";
-import { UserService } from "../../../service/user.service";
 import { SoccerpitchService } from "../../../service/soccerpitch.service";
 import { SoccerpitchplanService } from "../../../service/soccerpitchplan.service";
 import { ToastserviceService } from "../../../service/toastservice.service";
@@ -23,6 +22,7 @@ import { Soccerpitch } from "../../../model/soccerpitch";
 import { Soccerpitchplan } from "../../../model/soccerpitchplan";
 import { CustomDateParserFormatter } from "../../../service/adapter/CustomDateParseAdapter";
 import { ScheduleService } from "../../../service/schedule.service";
+import { PersonCompanyService } from "../../../service/person-company.service";
 
 @Component({
   selector: "app-reservation-modal",
@@ -43,7 +43,7 @@ export class ReservationModalComponent implements OnInit {
   reservationInfo;
   constructor(
     private modalService: NgbModal,
-    public userService: UserService,
+    public personCompanyService: PersonCompanyService,
     public activeModal: NgbActiveModal,
     public soccerpitchService: SoccerpitchService,
     public soccerpitchplanService: SoccerpitchplanService,
@@ -73,9 +73,10 @@ export class ReservationModalComponent implements OnInit {
   fitDataToFront() {
     this.modalSoccerPitchReservation.selectedDate =
       this.reservationInfo.selectedDateStart;
-    this.modalSoccerPitchReservation.userName = this.reservationInfo.personName;
+    this.modalSoccerPitchReservation.userName =
+      this.reservationInfo.personCompanyName;
     this.modalSoccerPitchReservation.userPhone =
-      this.reservationInfo.personPhone;
+      this.reservationInfo.personCompanyPhone;
     this.modalSoccerPitchReservation.userSelectDate = {
       year: new Date(
         this.modalSoccerPitchReservation.selectedDate
@@ -87,7 +88,7 @@ export class ReservationModalComponent implements OnInit {
 
     this.modalSoccerPitchReservation.selectedUser = {
       name: this.modalSoccerPitchReservation.userName,
-      id: this.modalSoccerPitchReservation.personId,
+      id: this.reservationInfo.personCompanyId,
     };
     if (this.modalSoccerPitchReservation.userPhone) {
       this.modalSoccerPitchReservation.selectedUser.name +=
@@ -98,10 +99,10 @@ export class ReservationModalComponent implements OnInit {
   openUserModal() {
     this.modalService.open(AddUserModalComponent).result.then(
       (result) => {
-        this.modalSoccerPitchReservation.personId = result.personId;
+        this.modalSoccerPitchReservation.personCompanyId = result.id;
         this.modalSoccerPitchReservation.selectedUser = {
           name: result.name + " (" + result.phone + ")",
-          personId: result.personId,
+          personCompanyId: result.id,
         };
       },
       (reason) => {}
@@ -109,16 +110,16 @@ export class ReservationModalComponent implements OnInit {
   }
 
   selectUser($event: any) {
-    this.modalSoccerPitchReservation.personId = $event.id;
+    this.modalSoccerPitchReservation.personCompanyId = $event.id;
   }
 
-  search = (text$: Observable<string>) =>
+  searchPersonCompany = (text$: Observable<string>) =>
     text$.pipe(
       debounceTime(300),
       distinctUntilChanged(),
       tap(() => (this.searching = true)),
       switchMap((term) =>
-        this.userService.filterAsync(term).pipe(
+        this.personCompanyService.filterAsync(term).pipe(
           tap(() => (this.searchFailed = false)),
           catchError(() => {
             this.searchFailed = true;

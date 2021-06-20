@@ -1,0 +1,117 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-12">Filtros</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-4">
+          <label for="status">Nome</label>
+          <div class="input-group">
+            <input
+              class="form-control"
+              placeholder="Nome"
+              name="name"
+              [(ngModel)]="name"
+            />
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <label for="status">Email</label>
+          <div class="input-group">
+            <input
+              class="form-control"
+              placeholder="Email"
+              name="email"
+              [(ngModel)]="email"
+            />
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <label for="status">Telefone</label>
+          <div class="input-group">
+            <input
+              class="form-control"
+              placeholder="Telefone"
+              name="phone"
+              [(ngModel)]="phone"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <button
+            type="button"
+            class="btn btn-primary btnLogin"
+            [ngClass]="{ spinner: loading }"
+            [disabled]="loading"
+            (click)="getPersonCompany()"
+            style="float: right; margin-bottom: 5px; margin-top: 10px"
+          >
+            Filtrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-top: 10px">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-8">
+          <h4>Clientes</h4>
+        </div>
+        <div class="col-4">
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="openModal(null)"
+            style="float: right; margin-bottom: 5px"
+          >
+            Adicionar novo cliente
+          </button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col" class="backg-gray">Nome</th>
+            <th scope="col" class="backg-gray">Email</th>
+            <th scope="col" class="backg-gray">Telefone</th>
+            <th scope="col" class="backg-gray">#</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let person of personCompanies; index as i">
+            <td>
+              {{ person.name }}
+            </td>
+            <td>{{ person.email }}</td>
+            <td>
+              {{ person.phone }}
+            </td>
+            <td>
+              <a title="Editar" class="gridItem" (click)="openModal(person)"
+                ><i class="nav-icon cui-pencil"></i
+              ></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between p-2">
+    <ngb-pagination
+      [(collectionSize)]="collectionSize"
+      [(page)]="page"
+      [pageSize]="pageSize"
+      (pageChange)="getPersonCompany()"
+    >
+    </ngb-pagination>
+  </div>
+</div>

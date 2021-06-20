@@ -1,7 +1,7 @@
 import { Injectable, TemplateRef } from "@angular/core";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class ToastserviceService {
   constructor() {}
@@ -12,27 +12,27 @@ export class ToastserviceService {
   }
 
   remove(toast) {
-    this.toasts = this.toasts.filter(t => t !== toast);
+    this.toasts = this.toasts.filter((t) => t !== toast);
   }
 
   showSuccess(textOrTpl: string) {
     this.toasts.push({
       textOrTpl,
-      ...{ classname: "bg-success text-light", delay: 3000 }
+      ...{ classname: "bg-success text-light", delay: 5000 },
     });
   }
 
   showError(textOrTpl: string) {
     this.toasts.push({
       textOrTpl,
-      ...{ classname: "bg-danger text-light", delay: 3000 }
+      ...{ classname: "bg-danger text-light", delay: 5000 },
     });
   }
 
   showWarnig(textOrTpl: string) {
     this.toasts.push({
       textOrTpl,
-      ...{ classname: "bg-warning text-light", delay: 3000 }
+      ...{ classname: "bg-warning text-light", delay: 3000 },
     });
   }
 }

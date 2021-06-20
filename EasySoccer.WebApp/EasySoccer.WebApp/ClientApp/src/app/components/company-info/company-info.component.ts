@@ -201,9 +201,11 @@ export class CompanyInfoComponent implements OnInit {
         this.getCompanyInfo();
       },
       (error) => {
+        console.log(error);
         this.toastService.showError(
-          "Erro ao consultar dados. " + error.Message
+          "Erro ao consultar dados. " + error.error.message
         );
+        this.getCompanyInfo();
       }
     );
   }

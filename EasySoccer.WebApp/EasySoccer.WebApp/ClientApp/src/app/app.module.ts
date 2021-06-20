@@ -40,6 +40,8 @@ import { PaymentComponent } from "./components/payment/payment.component";
 import { LoaderComponent } from "./components/loader/loader.component";
 import { LoaderModule } from "./components/loader/loader.module";
 import { NgxLoadingModule } from "ngx-loading";
+import { PersonCompanyComponent } from "./components/person-company/person-company.component";
+import { PersonCompanyModalComponent } from "./components/modal/person-company-modal/person-company-modal.component";
 
 registerLocaleData(ptBr);
 
@@ -65,6 +67,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     ReservationModalComponent,
     PaymentComponent,
     LoaderComponent,
+    PersonCompanyComponent,
+    PersonCompanyModalComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -122,6 +126,11 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
         component: PaymentComponent,
         canActivate: [AuthGuardService],
       },
+      {
+        path: "persons",
+        component: PersonCompanyComponent,
+        canActivate: [AuthGuardService],
+      },
     ]),
     CalendarModule.forRoot({
       provide: DateAdapter,
@@ -155,6 +164,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     LoginModalComponent,
     ConfirmModalComponent,
     ReservationModalComponent,
+    PersonCompanyModalComponent,
   ],
 })
 export class AppModule {}

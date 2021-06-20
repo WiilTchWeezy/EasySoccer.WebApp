@@ -14,7 +14,51 @@
 </div>
 <div class="modal-body">
   <form>
+    <h5
+      *ngIf="
+        isEditting == false || modalSoccerPitchReservation.application != 1
+      "
+    >
+      Cliente Responsável
+    </h5>
     <div class="form-group">
+      <div
+        class="row"
+        *ngIf="
+          isEditting == false || modalSoccerPitchReservation.application != 1
+        "
+      >
+        <div class="col-sm-12">
+          <label for="user" style="margin-top: 7px">Cliente</label>
+          <button
+            type="button"
+            class="btn btn-primary float-right"
+            style="margin-bottom: 5px"
+            (click)="openUserModal()"
+          >
+            Adicionar Cliente
+          </button>
+          <div class="input-group">
+            <input
+              id="user"
+              type="text"
+              class="form-control"
+              [class.is-invalid]="searchFailed"
+              [ngbTypeahead]="searchPersonCompany"
+              placeholder="Digite nome ou telefone"
+              name="selectedUser"
+              [(ngModel)]="modalSoccerPitchReservation.selectedUser"
+              (ngModelChange)="selectUser($event)"
+              [inputFormatter]="formatter"
+              [resultTemplate]="rt"
+            />
+            <span *ngIf="searching">Pesquisando...</span>
+            <div class="invalid-feedback" *ngIf="searchFailed">
+              Não foi possível carregar sugestões.
+            </div>
+          </div>
+        </div>
+      </div>
       <h5>Agendamento</h5>
       <div class="row">
         <div class="col-sm-6">
@@ -156,6 +200,28 @@
           >
             {{ modalSoccerPitchReservation.statusDescription }}
           </span>
+        </div>
+      </div>
+      <div class="row">
+        <div
+          class="col-sm-12"
+          style="padding: 15px"
+          *ngIf="
+            isEditting &&
+            modalSoccerPitchReservation.personName &&
+            modalSoccerPitchReservation.application == 1
+          "
+        >
+          Responsável : {{ modalSoccerPitchReservation.personName }}
+          <span *ngIf="modalSoccerPitchReservation.personPhone">
+            - {{ modalSoccerPitchReservation.personPhone }}</span
+          >
+        </div>
+      </div>
+      <div class="row" *ngIf="isEditting">
+        <div class="col-sm-12" style="padding: 15px">
+          Criado pelo :
+          <i>{{ modalSoccerPitchReservation.applicationDescription }}</i>
         </div>
       </div>
     </div>
