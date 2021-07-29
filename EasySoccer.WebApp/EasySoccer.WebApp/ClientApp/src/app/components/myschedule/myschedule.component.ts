@@ -89,10 +89,11 @@ export class MyscheduleComponent implements OnInit {
       { key: 3, text: "Confirmado" },
       { key: 4, text: "Finalizado" },
     ];
+    var d = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0);
     this.filter.finalDate = {
       year: new Date().getFullYear(),
       month: new Date().getMonth() + 1,
-      day: new Date().getDate(),
+      day: d.getDate(),
     };
     this.filter.initialDate = {
       year: new Date().getFullYear(),
