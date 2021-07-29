@@ -4,7 +4,7 @@ import { SoccerpitchplanService } from "../../service/soccerpitchplan.service";
 import { Soccerpitch } from "../../model/soccerpitch";
 import { Soccerpitchplan } from "../../model/soccerpitchplan";
 import { Soccerpitchsoccerpitchplan } from "../../model/soccerpitchsoccerpitchplan";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgbModal, NgbModalConfig } from "@ng-bootstrap/ng-bootstrap";
 import { ToastserviceService } from "../../service/toastservice.service";
 import { Observable } from "rxjs";
 import { debounceTime, distinctUntilChanged, map } from "rxjs/operators";
@@ -33,6 +33,9 @@ export class SoccerpitchComponent implements OnInit {
   selectedImageUrl: any;
   defaultPlanId: any;
   hideSaveImage: boolean;
+  page: number = 1;
+  pageSize: number = 10;
+  collectionSize: number = 0;
   @ViewChild("input", null) inputEl;
   currentColor: any = { name: "Laranja", value: "#ff591f" };
   colorsOptions: any[] = [
@@ -63,10 +66,13 @@ export class SoccerpitchComponent implements OnInit {
     private modalService: NgbModal,
     private soccerPitchPlanService: SoccerpitchplanService,
     private toastService: ToastserviceService,
-    private imageService: ImageService
+    private imageService: ImageService,
+    config: NgbModalConfig
   ) {
     this.modalSoccerPitch = new Soccerpitch();
     this.hideSaveImage = false;
+    config.backdrop = "static";
+    config.keyboard = false;
   }
   dropdownSettings: IDropdownSettings = {};
   ngOnInit() {
@@ -87,9 +93,10 @@ export class SoccerpitchComponent implements OnInit {
   }
 
   getSoccerpitchs() {
-    this.soccerPitchService.getSoccerPitchs().subscribe(
+    this.soccerPitchService.getSoccerPitchs(this.page, this.pageSize).subscribe(
       (res) => {
-        this.soccerPitchs = res;
+        this.soccerPitchs = res.data;
+        this.collectionSize = res.total;
       },
       (error) => {
         this.toastService.showError(
@@ -100,10 +107,10 @@ export class SoccerpitchComponent implements OnInit {
   }
 
   getSoccerpitchsplans() {
-    this.soccerPitchPlanService.getSoccerPitchPlan().subscribe(
+    this.soccerPitchPlanService.getSoccerPitchPlan(1, 99).subscribe(
       (response) => {
-        this.soccerPitchsplans = response;
-        this.allSoccerPitchsplans = response;
+        this.soccerPitchsplans = response.data;
+        this.allSoccerPitchsplans = response.data;
       },
       (error) => {
         this.toastService.showError(
@@ -236,12 +243,11 @@ export class SoccerpitchComponent implements OnInit {
       .postSoccerPitchImage(this.selectedImageBase64, soccerPitchId)
       .subscribe(
         (res) => {
-          this.toastService.showSuccess("Imagem salva com sucesso. ");
           this.getSoccerpitchs();
         },
         (error) => {
           this.toastService.showError(
-            "Erro ao consultar dados. " + error.Message
+            "Erro ao consultar dados. " + error.error.Message
           );
         }
       );

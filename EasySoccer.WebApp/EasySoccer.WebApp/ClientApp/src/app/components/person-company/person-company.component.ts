@@ -1,7 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { PersonCompanyService } from "../../service/person-company.service";
 import { ToastserviceService } from "../../service/toastservice.service";
-import { NgbModal, NgbModalOptions } from "@ng-bootstrap/ng-bootstrap";
+import {
+  NgbModal,
+  NgbModalConfig,
+  NgbModalOptions,
+} from "@ng-bootstrap/ng-bootstrap";
 import { PersonCompanyModalComponent } from "../modal/person-company-modal/person-company-modal.component";
 
 @Component({
@@ -23,8 +27,12 @@ export class PersonCompanyComponent implements OnInit {
   constructor(
     private personCompanyService: PersonCompanyService,
     private toastService: ToastserviceService,
-    private modalService: NgbModal
-  ) {}
+    private modalService: NgbModal,
+    config: NgbModalConfig
+  ) {
+    config.backdrop = "static";
+    config.keyboard = false;
+  }
 
   ngOnInit() {
     this.getPersonCompany();

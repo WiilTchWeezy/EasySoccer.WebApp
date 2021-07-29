@@ -8,6 +8,7 @@ import {
   NgbDateParserFormatter,
   NgbDateStruct,
   NgbModalOptions,
+  NgbModalConfig,
 } from "@ng-bootstrap/ng-bootstrap";
 import { Soccerpitch } from "../../model/soccerpitch";
 import { SoccerpitchplanService } from "../../service/soccerpitchplan.service";
@@ -63,8 +64,12 @@ export class MyscheduleComponent implements OnInit {
     public soccerpitchService: SoccerpitchService,
     public soccerpitchplanService: SoccerpitchplanService,
     public userService: UserService,
-    private toastService: ToastserviceService
-  ) {}
+    private toastService: ToastserviceService,
+    config: NgbModalConfig
+  ) {
+    config.backdrop = "static";
+    config.keyboard = false;
+  }
 
   ngOnInit() {
     this.getSoccerPitchs();
@@ -134,9 +139,9 @@ export class MyscheduleComponent implements OnInit {
   }
 
   getSoccerPitchs() {
-    this.soccerpitchService.getSoccerPitchs().subscribe(
+    this.soccerpitchService.getSoccerPitchs(1, 99).subscribe(
       (res) => {
-        this.soccerPitchs = res;
+        this.soccerPitchs = res.data;
       },
       (error) => {
         this.toastService.showError(
@@ -147,9 +152,9 @@ export class MyscheduleComponent implements OnInit {
   }
 
   getSoccerPitchsPlans() {
-    this.soccerpitchplanService.getSoccerPitchPlan().subscribe(
+    this.soccerpitchplanService.getSoccerPitchPlan(1, 99).subscribe(
       (res) => {
-        this.soccerPitchsPlans = res;
+        this.soccerPitchsPlans = res.data;
       },
       (error) => {
         this.toastService.showError(

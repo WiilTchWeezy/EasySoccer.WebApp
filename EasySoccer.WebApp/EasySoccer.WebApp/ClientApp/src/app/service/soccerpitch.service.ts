@@ -22,9 +22,15 @@ export class SoccerpitchService {
     return body || {};
   }
 
-  public getSoccerPitchs(): Observable<any> {
+  public getSoccerPitchs(page, pageSize): Observable<any> {
     return this.http
-      .get(environment.urlApi + "soccerpitch/get")
+      .get(
+        environment.urlApi +
+          "soccerpitch/get?page=" +
+          page +
+          "&pageSize=" +
+          pageSize
+      )
       .pipe(map(this.extractData));
   }
 

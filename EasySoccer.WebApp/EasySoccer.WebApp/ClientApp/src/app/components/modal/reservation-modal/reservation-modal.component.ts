@@ -133,9 +133,9 @@ export class ReservationModalComponent implements OnInit {
   formatter = (x: { name: string }) => x.name;
 
   getSoccerPitchs() {
-    this.soccerpitchService.getSoccerPitchs().subscribe(
+    this.soccerpitchService.getSoccerPitchs(1, 99).subscribe(
       (res) => {
-        this.soccerPitchs = res;
+        this.soccerPitchs = res.data;
       },
       (error) => {
         this.toastService.showError(
@@ -198,7 +198,6 @@ export class ReservationModalComponent implements OnInit {
           }
         );
     } else {
-      debugger;
       this.scheduleService
         .postSoccerPitchReservation(this.modalSoccerPitchReservation)
         .subscribe(
