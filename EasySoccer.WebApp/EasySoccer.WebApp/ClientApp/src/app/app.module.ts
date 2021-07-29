@@ -155,7 +155,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     },
     {
       provide: LOCALE_ID,
-      useValue: "pt",
+      useValue: "pt-BR",
     },
   ],
   bootstrap: [AppComponent],
