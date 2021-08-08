@@ -37,7 +37,8 @@ export class DashboardService {
   public getReservationCalendar(
     year: number,
     month: number,
-    day: any
+    day: any,
+    soccerPitch: string
   ): Observable<any> {
     return this.http
       .get(
@@ -47,7 +48,9 @@ export class DashboardService {
           "&day=" +
           day +
           "&year=" +
-          year
+          year +
+          "&soccerPitchIds=" +
+          soccerPitch
       )
       .pipe(map(this.extractData));
   }

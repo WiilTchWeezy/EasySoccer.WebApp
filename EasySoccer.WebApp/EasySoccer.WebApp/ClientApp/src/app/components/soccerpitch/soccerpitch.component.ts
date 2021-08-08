@@ -136,7 +136,6 @@ export class SoccerpitchComponent implements OnInit {
   openModal(content: any, selectedSoccerPitch: Soccerpitch) {
     if (selectedSoccerPitch != null && selectedSoccerPitch.id > 0) {
       this.modalTitle = "Editar quadra";
-      console.log(selectedSoccerPitch);
       this.modalSoccerPitch = selectedSoccerPitch;
       this.modalSoccerPitch.plans.map((x) => {
         if (x.isDefault) {

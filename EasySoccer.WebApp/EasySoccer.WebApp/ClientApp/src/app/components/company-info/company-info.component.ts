@@ -119,7 +119,6 @@ export class CompanyInfoComponent implements OnInit {
           this.loading = false;
         },
         (error) => {
-          console.log(error);
           this.toastService.showError(error.error);
           this.loading = false;
         }
@@ -201,7 +200,6 @@ export class CompanyInfoComponent implements OnInit {
         this.getCompanyInfo();
       },
       (error) => {
-        console.log(error);
         this.toastService.showError(
           "Erro ao consultar dados. " + error.error.message
         );

@@ -112,7 +112,6 @@ export class MyscheduleComponent implements OnInit {
         statusSrt += x.key + ";";
       });
     }
-    console.log(this.filter);
     this.scheduleService
       .getSchedules(
         this.page,

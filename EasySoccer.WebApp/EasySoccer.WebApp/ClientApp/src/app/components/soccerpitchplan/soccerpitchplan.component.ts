@@ -63,7 +63,6 @@ export class SoccerpitchplanComponent implements OnInit {
         (result) => {
           if (this.planId > 0) {
             this.modalSelectedPlan.id = this.planId;
-            console.log(this.modalSelectedPlan);
             this.soccerPitchPlanService
               .patchSoccerPitchPlan(this.modalSelectedPlan)
               .subscribe(
@@ -81,7 +80,6 @@ export class SoccerpitchplanComponent implements OnInit {
                 }
               );
           } else {
-            console.log(this.modalSelectedPlan);
             this.soccerPitchPlanService
               .postSoccerPitchPlan(this.modalSelectedPlan)
               .subscribe(

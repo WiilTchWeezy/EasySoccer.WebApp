@@ -36,7 +36,19 @@
       </div>
     </div>
   </div> -->
-  <div class="row card" *ngIf="calendarEvents.length > 0">
+  <div class="row card">
+    <div style="margin-bottom: 15px; margin-left: 15px; margin-right: 15px">
+      <label for="sportType">Quadra:</label>
+      <ng-multiselect-dropdown
+        [placeholder]="'Todas'"
+        [data]="soccerPitchs"
+        [settings]="dropdownSettings"
+        name="plans"
+        [(ngModel)]="soccerPitchsIds"
+        (ngModelChange)="getReservationCalendar()"
+      >
+      </ng-multiselect-dropdown>
+    </div>
     <div class="col-sm-12">
       <div class="row text-center">
         <div class="col-md-4">
@@ -143,8 +155,5 @@
         </mwl-calendar-day-view>
       </div>
     </div>
-  </div>
-  <div class="welcomeContainer" *ngIf="calendarEvents.length == 0">
-    <h1 class="welcomeTitle">Bem-vindo ao EasySoccer.</h1>
   </div>
 </div>

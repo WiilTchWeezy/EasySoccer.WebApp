@@ -1,12 +1,22 @@
 import { Component, OnInit } from "@angular/core";
 import { User } from "../../model/user";
-import { CalendarEvent, CalendarEventAction, CalendarView } from "angular-calendar";
-import { NgbModal, ModalDismissReasons, NgbModalOptions } from "@ng-bootstrap/ng-bootstrap";
+import {
+  CalendarEvent,
+  CalendarEventAction,
+  CalendarView,
+} from "angular-calendar";
+import {
+  NgbModal,
+  ModalDismissReasons,
+  NgbModalOptions,
+} from "@ng-bootstrap/ng-bootstrap";
 import { DashboardService } from "../../service/dashboard.service";
 import { ToastserviceService } from "../../service/toastservice.service";
 import { Subject } from "rxjs";
 import { isSameDay, isSameMonth } from "date-fns";
 import { ReservationModalComponent } from "../modal/reservation-modal/reservation-modal.component";
+import { SoccerpitchService } from "../../service/soccerpitch.service";
+import { IDropdownSettings } from "ng-multiselect-dropdown";
 @Component({
   selector: "app-dashboard",
   templateUrl: "./dashboard.component.html",
@@ -35,11 +45,14 @@ export class DashboardComponent implements OnInit {
   locale: string = "pt-PT";
   monthsAlreadyGet: Array<any> = new Array<any>();
   refresh: Subject<any> = new Subject();
-
+  soccerPitchs: any[] = [];
+  soccerPitchsIds: any[] = [];
+  dropdownSettings: IDropdownSettings = {};
   constructor(
     private modalService: NgbModal,
     private dashboardService: DashboardService,
-    private tostService: ToastserviceService
+    private tostService: ToastserviceService,
+    private soccerPitchService: SoccerpitchService
   ) {
     let datesDescription = new Array<string>();
     this.calendarEvents = new Array<CalendarEvent>();
@@ -52,6 +65,16 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: "id",
+      textField: "name",
+      selectAllText: "Todas",
+      unSelectAllText: "Remove todas",
+      itemsShowLimit: 3,
+      allowSearchFilter: true,
+      searchPlaceholderText: "Pesquise",
+    };
     this.dashboardService.getReservationChart().subscribe(
       (res) => {
         this.chartData = res;
@@ -64,6 +87,7 @@ export class DashboardComponent implements OnInit {
         this.tostService.showError("Erro ao consultar dados. " + error.Message);
       }
     );
+    this.getSoccerPitchs();
   }
   users: Array<User>;
   pendingUsers: Array<User>;
@@ -109,18 +133,17 @@ export class DashboardComponent implements OnInit {
   }
 
   getReservationCalendar() {
-    this.monthsAlreadyGet.push({
-      month: this.viewDate.getMonth() + 1,
-      year: this.viewDate.getFullYear(),
-    });
+    let soccerPitchesIds = this.soccerPitchsIds.map((x) => x.id).toString();
     this.dashboardService
       .getReservationCalendar(
         this.viewDate.getFullYear(),
         this.viewDate.getMonth() + 1,
-        0
+        0,
+        soccerPitchesIds
       )
       .subscribe(
         (res) => {
+          this.calendarEvents = [];
           res.forEach((element) => {
             this.calendarEvents.push({
               start: new Date(element.startDate),
@@ -132,7 +155,7 @@ export class DashboardComponent implements OnInit {
               },
               allDay: false,
               draggable: false,
-              id : element.id
+              id: element.id,
             });
             this.refresh.next();
           });
@@ -145,39 +168,29 @@ export class DashboardComponent implements OnInit {
       );
   }
 
-  openModalReservation(event){
-    let modalOption : NgbModalOptions = {};
+  openModalReservation(event) {
+    let modalOption: NgbModalOptions = {};
     modalOption.backdrop = "static";
-          modalOption.keyboard = false;
-          modalOption.ariaLabelledBy = "modal-basic-title";
-          const modalRef = this.modalService.open(
-            ReservationModalComponent,
-            modalOption
-          );
-          modalRef.result.then(
-            (result) => {
-            },
-            (reason) => {}
-          );
-          modalRef.componentInstance.reservationId = event.id;
+    modalOption.keyboard = false;
+    modalOption.ariaLabelledBy = "modal-basic-title";
+    const modalRef = this.modalService.open(
+      ReservationModalComponent,
+      modalOption
+    );
+    modalRef.result.then(
+      (result) => {},
+      (reason) => {}
+    );
+    modalRef.componentInstance.reservationId = event.id;
   }
 
   checkIfHaveToGet() {
-    let currentMonth = this.viewDate.getMonth() + 1;
-    let currentYear = this.viewDate.getFullYear();
-    if (
-      this.monthsAlreadyGet.some(
-        (n) => n.month == currentMonth && n.year == currentYear
-      ) == false
-    ) {
-      this.getReservationCalendar();
-    }
+    this.getReservationCalendar();
   }
 
   activeDayIsOpen: boolean = false;
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    console.log(events);
     if (isSameMonth(date, this.viewDate)) {
       if (
         (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
@@ -193,5 +206,14 @@ export class DashboardComponent implements OnInit {
 
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
+  }
+
+  getSoccerPitchs() {
+    this.soccerPitchService.getSoccerPitchs(1, 99).subscribe(
+      (response) => {
+        this.soccerPitchs = response.data;
+      },
+      (error) => {}
+    );
   }
 }

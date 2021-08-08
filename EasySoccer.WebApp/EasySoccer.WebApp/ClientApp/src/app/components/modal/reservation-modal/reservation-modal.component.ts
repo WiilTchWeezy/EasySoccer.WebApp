@@ -207,7 +207,6 @@ export class ReservationModalComponent implements OnInit {
             this.activeModal.close();
           },
           (error) => {
-            console.log(error);
             this.toastService.showError(
               "Erro ao cadastrar agendamento. " + error.error.message
             );
