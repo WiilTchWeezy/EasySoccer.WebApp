@@ -1,0 +1,79 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">{{ modalTitle }}</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form>
+    <h5>Plano</h5>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-sm-6">
+          <label for="name">Nome</label>
+          <div class="input-group">
+            <input
+              id="name"
+              class="form-control"
+              placeholder="Nome"
+              name="name"
+              [(ngModel)]="currentPlanConfig.name"
+            />
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <label for="intervalBetweenReservations"
+            >Intervalo entre reservas:</label
+          >
+          <div class="input-group">
+            <input
+              id="intervalBetweenReservations"
+              type="number"
+              class="form-control"
+              placeholder="Intervalo entre as reservas"
+              name="intervalBetweenReservations"
+              [(ngModel)]="currentPlanConfig.intervalBetweenReservations"
+            />
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <label for="limitQuantity">Limite:</label>
+          <div class="input-group">
+            <input
+              id="limitQuantity"
+              type="number"
+              class="form-control"
+              placeholder="Limite"
+              name="limitQuantity"
+              [(ngModel)]="currentPlanConfig.limitQuantity"
+            />
+          </div>
+        </div>
+        <div class="col-sm-8">
+          <label for="limitType">Tipo de limitação:</label>
+          <div class="input-group">
+            <select
+              class="form-control"
+              [(ngModel)]="currentPlanConfig.limitType"
+              name="limitType"
+              id="limitType"
+            >
+              <option value="1">Dias após primeira reserva</option>
+              <option value="2">Total de reservas</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="save()">
+    Salvar
+  </button>
+</div>

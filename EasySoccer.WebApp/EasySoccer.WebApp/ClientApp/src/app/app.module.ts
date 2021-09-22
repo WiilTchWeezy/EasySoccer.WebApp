@@ -42,6 +42,9 @@ import { LoaderModule } from "./components/loader/loader.module";
 import { NgxLoadingModule } from "ngx-loading";
 import { PersonCompanyComponent } from "./components/person-company/person-company.component";
 import { PersonCompanyModalComponent } from "./components/modal/person-company-modal/person-company-modal.component";
+import { SoccerpitchplanModalComponent } from "./components/modal/soccerpitchplan-modal/soccerpitchplan-modal.component";
+import { PlanGenerationConfigComponent } from "./components/plan-generation-config/plan-generation-config.component";
+import { PlanGenerationConfigModalComponent } from "./components/modal/plan-generation-config-modal/plan-generation-config-modal.component";
 
 registerLocaleData(ptBr);
 
@@ -69,6 +72,9 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     LoaderComponent,
     PersonCompanyComponent,
     PersonCompanyModalComponent,
+    SoccerpitchplanModalComponent,
+    PlanGenerationConfigComponent,
+    PlanGenerationConfigModalComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -131,6 +137,11 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
         component: PersonCompanyComponent,
         canActivate: [AuthGuardService],
       },
+      {
+        path: "plangenerationconfig",
+        component: PlanGenerationConfigComponent,
+        canActivate: [AuthGuardService],
+      },
     ]),
     CalendarModule.forRoot({
       provide: DateAdapter,
@@ -165,6 +176,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     ConfirmModalComponent,
     ReservationModalComponent,
     PersonCompanyModalComponent,
+    SoccerpitchplanModalComponent,
+    PlanGenerationConfigModalComponent,
   ],
 })
 export class AppModule {}

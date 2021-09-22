@@ -3,6 +3,7 @@ import { SoccerpitchplanService } from "../../service/soccerpitchplan.service";
 import { Soccerpitchplan } from "../../model/soccerpitchplan";
 import { NgbModal, NgbModalConfig } from "@ng-bootstrap/ng-bootstrap";
 import { ToastserviceService } from "../../service/toastservice.service";
+import { SoccerpitchplanModalComponent } from "../modal/soccerpitchplan-modal/soccerpitchplan-modal.component";
 
 @Component({
   selector: "app-soccerpitchplan",
@@ -49,54 +50,9 @@ export class SoccerpitchplanComponent implements OnInit {
   }
 
   openModal(content: any, selectedPlan: Soccerpitchplan) {
-    this.planId = selectedPlan != null ? selectedPlan.id : 0;
-    if (this.planId > 0) {
-      this.modalTitle = "Editar plano";
-      this.modalSelectedPlan = selectedPlan;
-    } else {
-      this.modalTitle = "Adicionar novo plano";
-      this.modalSelectedPlan = new Soccerpitchplan();
+    let modalRef = this.modalService.open(SoccerpitchplanModalComponent);
+    if (selectedPlan) {
+      modalRef.componentInstance.modalSelectedPlan = selectedPlan;
     }
-    this.modalService
-      .open(content, { ariaLabelledBy: "modal-basic-title" })
-      .result.then(
-        (result) => {
-          if (this.planId > 0) {
-            this.modalSelectedPlan.id = this.planId;
-            this.soccerPitchPlanService
-              .patchSoccerPitchPlan(this.modalSelectedPlan)
-              .subscribe(
-                (data) => {
-                  this.toastService.showSuccess(
-                    "Plano atualizado com sucesso!"
-                  );
-                  this.getPlans();
-                  this.modalSelectedPlan = new Soccerpitchplan();
-                },
-                (error) => {
-                  this.toastService.showError(
-                    "Erro ao consultar dados. " + error.Message
-                  );
-                }
-              );
-          } else {
-            this.soccerPitchPlanService
-              .postSoccerPitchPlan(this.modalSelectedPlan)
-              .subscribe(
-                (data) => {
-                  this.toastService.showSuccess("Plano inserido com sucesso!");
-                  this.getPlans();
-                  this.modalSelectedPlan = new Soccerpitchplan();
-                },
-                (error) => {
-                  this.toastService.showError(
-                    "Erro ao consultar dados. " + error.Message
-                  );
-                }
-              );
-          }
-        },
-        (reason) => {}
-      );
   }
 }
