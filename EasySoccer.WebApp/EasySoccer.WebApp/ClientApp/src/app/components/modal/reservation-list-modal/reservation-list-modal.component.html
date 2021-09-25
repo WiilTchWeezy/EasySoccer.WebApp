@@ -1,0 +1,59 @@
+<ng-template #rt let-r="result" let-t="term">
+  <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
+</ng-template>
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">
+    Horários gerados automaticamente
+  </h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Quadra</th>
+        <th scope="col">Data Selecionada</th>
+        <th scope="col">Horário</th>
+        <th scope="col">Plano</th>
+        <th scope="col">Inserido</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of childReservation.reservations; index as i">
+        <td>
+          {{ item.soccerPitchName }}
+        </td>
+        <td>
+          {{ item.selectedDateStart | date: "dd/MM/yyyy" }}
+        </td>
+        <td>
+          {{ item.selectedDateStart | date: "HH:mm" }} -
+          {{ item.selectedDateEnd | date: "HH:mm" }}
+        </td>
+        <td>
+          {{ item.soccerPitchPlanName }}
+        </td>
+        <td>
+          <span *ngIf="item.insertedSucess" class="alert alert-success"
+            >Inserido</span
+          >
+          <span *ngIf="item.insertedSucess == false" class="alert alert-danger"
+            >Ocupado</span
+          >
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" (click)="activeModal.close()">
+    OK
+  </button>
+</div>

@@ -45,6 +45,7 @@ import { PersonCompanyModalComponent } from "./components/modal/person-company-m
 import { SoccerpitchplanModalComponent } from "./components/modal/soccerpitchplan-modal/soccerpitchplan-modal.component";
 import { PlanGenerationConfigComponent } from "./components/plan-generation-config/plan-generation-config.component";
 import { PlanGenerationConfigModalComponent } from "./components/modal/plan-generation-config-modal/plan-generation-config-modal.component";
+import { ReservationListModalComponent } from "./components/modal/reservation-list-modal/reservation-list-modal.component";
 
 registerLocaleData(ptBr);
 
@@ -75,6 +76,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     SoccerpitchplanModalComponent,
     PlanGenerationConfigComponent,
     PlanGenerationConfigModalComponent,
+    ReservationListModalComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -178,6 +180,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     PersonCompanyModalComponent,
     SoccerpitchplanModalComponent,
     PlanGenerationConfigModalComponent,
+    ReservationListModalComponent,
   ],
 })
 export class AppModule {}

@@ -4,4 +4,5 @@ export class Soccerpitchplan {
   value: number;
   isDefault: boolean;
   showToUser: boolean;
+  idPlanGenerationConfig: number;
 }

@@ -11,6 +11,7 @@ import { ToastserviceService } from "../../../service/toastservice.service";
 export class PlanGenerationConfigModalComponent implements OnInit {
   modalTitle: string;
   currentPlanConfig: any = {};
+  limitOptions: Array<any> = new Array<any>();
   constructor(
     public activeModal: NgbActiveModal,
     private toastService: ToastserviceService,
@@ -27,6 +28,20 @@ export class PlanGenerationConfigModalComponent implements OnInit {
     } else {
       this.modalTitle = "Adicionar nova config. de plano";
     }
+    this.getLimitOptions();
+  }
+
+  getLimitOptions() {
+    this.planConfigService.getLimitOptions().subscribe(
+      (res) => {
+        this.limitOptions = res;
+      },
+      (error) => {
+        this.toastService.showError(
+          "Erro ao atualizar configuração de plano. " + error.error.Message
+        );
+      }
+    );
   }
 
   save() {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { PlanGenerationConfigService } from "../../../service/plan-generation-config.service";
 import { Soccerpitchplan } from "../../../model/soccerpitchplan";
 import { SoccerpitchplanService } from "../../../service/soccerpitchplan.service";
 import { ToastserviceService } from "../../../service/toastservice.service";
@@ -12,10 +13,13 @@ import { ToastserviceService } from "../../../service/toastservice.service";
 export class SoccerpitchplanModalComponent implements OnInit {
   modalSelectedPlan: Soccerpitchplan = new Soccerpitchplan();
   modalTitle: string;
+  plansConfig: Array<any> = new Array<any>();
+  selectedConfigId: number;
   constructor(
     public activeModal: NgbActiveModal,
     private soccerPitchPlanService: SoccerpitchplanService,
-    private toastService: ToastserviceService
+    private toastService: ToastserviceService,
+    private planConfigService: PlanGenerationConfigService
   ) {}
 
   ngOnInit() {
@@ -28,6 +32,20 @@ export class SoccerpitchplanModalComponent implements OnInit {
     } else {
       this.modalTitle = "Adicionar novo plano";
     }
+    this.getplansConfig();
+  }
+
+  getplansConfig() {
+    this.planConfigService.getPlanGenerationConfig(1, 99).subscribe(
+      (res) => {
+        this.plansConfig = res.data;
+      },
+      (error) => {
+        this.toastService.showError(
+          "Erro ao consultar dados. " + error.error.Message
+        );
+      }
+    );
   }
 
   save() {

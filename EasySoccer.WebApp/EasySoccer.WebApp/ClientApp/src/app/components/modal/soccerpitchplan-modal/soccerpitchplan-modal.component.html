@@ -54,9 +54,16 @@
         <div class="col-sm-8">
           <label for="active">Configuração de geração automática:</label>
           <div class="input-group">
-            <select class="form-control" name="defaultPlanId" id="defaultPlan">
-              <option>Mensal 4X</option>
-              <option>Anual 52X</option>
+            <select
+              class="form-control"
+              name="defaultPlanId"
+              id="defaultPlan"
+              [(ngModel)]="modalSelectedPlan.idPlanGenerationConfig"
+            >
+              <option value="0">Selecione...</option>
+              <option *ngFor="let item of plansConfig" [value]="item.id">
+                {{ item.name }}
+              </option>
             </select>
           </div>
         </div>

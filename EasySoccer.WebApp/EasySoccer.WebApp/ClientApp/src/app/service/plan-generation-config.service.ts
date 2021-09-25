@@ -43,4 +43,13 @@ export class PlanGenerationConfigService {
       .patch(environment.urlApi + "PlanGenerationConfig/patch", planConfig)
       .pipe(map(this.extractData));
   }
+
+  public getLimitOptions(): Observable<any> {
+    return this.http
+      .get(
+        environment.urlApi + "PlanGenerationConfig/getLimitOptions",
+        this.httpOptions
+      )
+      .pipe(map(this.extractData));
+  }
 }

@@ -41,11 +41,7 @@
               {{ planConfig.limitQuantity }}
             </td>
             <td>
-              {{
-                planConfig.limitType == 1
-                  ? "Dias após primeira reserva"
-                  : "Total de reservas"
-              }}
+              {{ planConfig.limitTypeDescription }}
             </td>
             <td>
               <a title="Editar" class="gridItem" (click)="openModal(planConfig)"

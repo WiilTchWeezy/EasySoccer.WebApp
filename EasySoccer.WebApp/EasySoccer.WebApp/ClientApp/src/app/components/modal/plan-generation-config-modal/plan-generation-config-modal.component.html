@@ -28,14 +28,14 @@
         </div>
         <div class="col-sm-6">
           <label for="intervalBetweenReservations"
-            >Intervalo entre reservas:</label
+            >Intervalo entre reservas (Dias):</label
           >
           <div class="input-group">
             <input
               id="intervalBetweenReservations"
               type="number"
               class="form-control"
-              placeholder="Intervalo entre as reservas"
+              placeholder="Intervalo entre as reservas (Dias)"
               name="intervalBetweenReservations"
               [(ngModel)]="currentPlanConfig.intervalBetweenReservations"
             />
@@ -63,8 +63,9 @@
               name="limitType"
               id="limitType"
             >
-              <option value="1">Dias após primeira reserva</option>
-              <option value="2">Total de reservas</option>
+              <option *ngFor="let item of limitOptions" [value]="item.key">
+                {{ item.value }}
+              </option>
             </select>
           </div>
         </div>
