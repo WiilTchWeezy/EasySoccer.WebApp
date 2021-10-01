@@ -38,7 +38,8 @@ export class DashboardService {
     year: number,
     month: number,
     day: any,
-    soccerPitch: string
+    soccerPitch: string,
+    status: string
   ): Observable<any> {
     return this.http
       .get(
@@ -50,7 +51,9 @@ export class DashboardService {
           "&year=" +
           year +
           "&soccerPitchIds=" +
-          soccerPitch
+          soccerPitch +
+          "&status=" +
+          status
       )
       .pipe(map(this.extractData));
   }

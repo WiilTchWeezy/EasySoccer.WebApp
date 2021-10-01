@@ -37,17 +37,31 @@
     </div>
   </div> -->
   <div class="row card">
-    <div style="margin-bottom: 15px; margin-left: 15px; margin-right: 15px">
-      <label for="sportType">Quadra:</label>
-      <ng-multiselect-dropdown
-        [placeholder]="'Todas'"
-        [data]="soccerPitchs"
-        [settings]="dropdownSettings"
-        name="plans"
-        [(ngModel)]="soccerPitchsIds"
-        (ngModelChange)="getReservationCalendar()"
-      >
-      </ng-multiselect-dropdown>
+    <div class="row">
+      <div class="col-6">
+        <label for="sportType">Quadra:</label>
+        <ng-multiselect-dropdown
+          [placeholder]="'Todas'"
+          [data]="soccerPitchs"
+          [settings]="dropdownSettings"
+          name="plans"
+          [(ngModel)]="soccerPitchsIds"
+          (ngModelChange)="getReservationCalendar()"
+        >
+        </ng-multiselect-dropdown>
+      </div>
+      <div class="col-6">
+        <label for="sportType">Status:</label>
+        <ng-multiselect-dropdown
+          [placeholder]="'Todos'"
+          [data]="status"
+          [settings]="dropdownSettingsStatus"
+          name="status"
+          [(ngModel)]="selectedStatus"
+          (ngModelChange)="getReservationCalendar()"
+        >
+        </ng-multiselect-dropdown>
+      </div>
     </div>
     <div class="col-sm-12">
       <div class="row text-center">

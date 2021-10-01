@@ -24,6 +24,7 @@ import { CustomDateParserFormatter } from "../../../service/adapter/CustomDatePa
 import { ScheduleService } from "../../../service/schedule.service";
 import { PersonCompanyService } from "../../../service/person-company.service";
 import { ReservationListModalComponent } from "../reservation-list-modal/reservation-list-modal.component";
+import { ReservationsByPlanConfigComponent } from "../reservations-by-plan-config/reservations-by-plan-config.component";
 
 @Component({
   selector: "app-reservation-modal",
@@ -255,5 +256,12 @@ export class ReservationModalComponent implements OnInit {
         );
       }
     );
+  }
+
+  openChildrenReservations() {
+    let modalRef = this.modalService.open(ReservationsByPlanConfigComponent, {
+      size: "lg",
+    });
+    modalRef.componentInstance.reservationId = this.reservationId;
   }
 }

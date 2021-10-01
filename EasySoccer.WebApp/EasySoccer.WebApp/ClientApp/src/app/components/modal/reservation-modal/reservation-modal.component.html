@@ -224,6 +224,17 @@
           <i>{{ modalSoccerPitchReservation.applicationDescription }}</i>
         </div>
       </div>
+      <div class="row" *ngIf="isEditting">
+        <div class="col-sm-6" style="padding: 15px">
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="openChildrenReservations()"
+          >
+            Horários Gerados Aut.
+          </button>
+        </div>
+      </div>
     </div>
   </form>
 </div>
