@@ -47,6 +47,7 @@ import { PlanGenerationConfigComponent } from "./components/plan-generation-conf
 import { PlanGenerationConfigModalComponent } from "./components/modal/plan-generation-config-modal/plan-generation-config-modal.component";
 import { ReservationListModalComponent } from "./components/modal/reservation-list-modal/reservation-list-modal.component";
 import { ReservationsByPlanConfigComponent } from "./components/modal/reservations-by-plan-config/reservations-by-plan-config.component";
+import { ReservationPaymentsModalComponent } from "./components/modal/reservation-payments-modal/reservation-payments-modal.component";
 
 registerLocaleData(ptBr);
 
@@ -79,6 +80,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     PlanGenerationConfigModalComponent,
     ReservationListModalComponent,
     ReservationsByPlanConfigComponent,
+    ReservationPaymentsModalComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -184,6 +186,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     PlanGenerationConfigModalComponent,
     ReservationListModalComponent,
     ReservationsByPlanConfigComponent,
+    ReservationPaymentsModalComponent,
   ],
 })
 export class AppModule {}
