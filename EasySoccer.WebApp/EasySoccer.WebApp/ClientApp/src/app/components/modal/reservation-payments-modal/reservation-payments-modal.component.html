@@ -1,1 +1,58 @@
-<p>reservation-payments-modal works!</p>
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Pagamentos</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-8"></div>
+    <div class="col-4">
+      <button
+        type="button"
+        class="btn btn-primary"
+        style="float: right; margin-bottom: 10px"
+        (click)="openAddPaymentModal()"
+      >
+        Adicionar pagamentos
+      </button>
+    </div>
+  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Quadra</th>
+        <th scope="col">Data Selecionada</th>
+        <th scope="col">Horário</th>
+        <th scope="col">Plano</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of payments; index as i">
+        <td>
+          {{ item.soccerPitchName }}
+        </td>
+        <td>
+          {{ item.selectedDateStart | date: "dd/MM/yyyy" }}
+        </td>
+        <td>
+          {{ item.selectedDateStart | date: "HH:mm" }} -
+          {{ item.selectedDateEnd | date: "HH:mm" }}
+        </td>
+        <td>
+          {{ item.soccerPitchPlanName }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" (click)="activeModal.close()">
+    OK
+  </button>
+</div>

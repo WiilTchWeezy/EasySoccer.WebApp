@@ -48,6 +48,9 @@ import { PlanGenerationConfigModalComponent } from "./components/modal/plan-gene
 import { ReservationListModalComponent } from "./components/modal/reservation-list-modal/reservation-list-modal.component";
 import { ReservationsByPlanConfigComponent } from "./components/modal/reservations-by-plan-config/reservations-by-plan-config.component";
 import { ReservationPaymentsModalComponent } from "./components/modal/reservation-payments-modal/reservation-payments-modal.component";
+import { AddReservationPaymentComponent } from "./components/modal/add-reservation-payment/add-reservation-payment.component";
+import { FormOfPaymentComponent } from "./components/form-of-payment/form-of-payment.component";
+import { AddFormOfPaymentComponent } from "./components/modal/add-form-of-payment/add-form-of-payment.component";
 
 registerLocaleData(ptBr);
 
@@ -81,6 +84,9 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     ReservationListModalComponent,
     ReservationsByPlanConfigComponent,
     ReservationPaymentsModalComponent,
+    AddReservationPaymentComponent,
+    FormOfPaymentComponent,
+    AddFormOfPaymentComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -148,6 +154,11 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
         component: PlanGenerationConfigComponent,
         canActivate: [AuthGuardService],
       },
+      {
+        path: "formofPayment",
+        component: FormOfPaymentComponent,
+        canActivate: [AuthGuardService],
+      },
     ]),
     CalendarModule.forRoot({
       provide: DateAdapter,
@@ -187,6 +198,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     ReservationListModalComponent,
     ReservationsByPlanConfigComponent,
     ReservationPaymentsModalComponent,
+    AddReservationPaymentComponent,
+    AddFormOfPaymentComponent,
   ],
 })
 export class AppModule {}
