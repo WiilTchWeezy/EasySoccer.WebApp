@@ -43,5 +43,13 @@ export class FormOfPaymentComponent implements OnInit {
   openModal(formOfPayment: any) {
     let modalRef = this.modalService.open(AddFormOfPaymentComponent);
     modalRef.componentInstance.selectedFormOfPayment = formOfPayment;
+    modalRef.result.then(
+      (data) => {
+        this.getFormOfPayments();
+      },
+      (close) => {
+        this.getFormOfPayments();
+      }
+    );
   }
 }

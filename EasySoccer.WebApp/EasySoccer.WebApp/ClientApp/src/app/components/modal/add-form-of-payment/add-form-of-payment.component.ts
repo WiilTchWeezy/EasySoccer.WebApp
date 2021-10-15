@@ -28,7 +28,7 @@ export class AddFormOfPaymentComponent implements OnInit {
   save() {
     if (this.selectedFormOfPayment) {
       this.formOfPaymentService
-        .patchSoccerPitchPlan(
+        .patchFormOfPayment(
           this.name,
           this.active,
           this.selectedFormOfPayment.id
@@ -48,7 +48,7 @@ export class AddFormOfPaymentComponent implements OnInit {
         );
     } else {
       this.formOfPaymentService
-        .postSoccerPitchPlan(this.name, this.active)
+        .postFormOfPayment(this.name, this.active)
         .subscribe(
           (res) => {
             this.toastService.showSuccess(

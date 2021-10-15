@@ -26,26 +26,29 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th scope="col">Quadra</th>
-        <th scope="col">Data Selecionada</th>
-        <th scope="col">Horário</th>
-        <th scope="col">Plano</th>
+        <th scope="col">Valor</th>
+        <th scope="col">Data do Pagamento</th>
+        <th scope="col">Forma de pagamento</th>
+        <th scope="col">Cliente</th>
+        <th scope="col">Obs.</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let item of payments; index as i">
         <td>
-          {{ item.soccerPitchName }}
+          {{ item.value | currency: "BRL":"symbol":"2.2" }}
         </td>
         <td>
-          {{ item.selectedDateStart | date: "dd/MM/yyyy" }}
+          {{ item.createdDate | date: "dd/MM/yyyy HH:mm" }}
         </td>
         <td>
-          {{ item.selectedDateStart | date: "HH:mm" }} -
-          {{ item.selectedDateEnd | date: "HH:mm" }}
+          {{ item.formOfPaymentName }}
         </td>
         <td>
-          {{ item.soccerPitchPlanName }}
+          {{ item.personCompanyName }}
+        </td>
+        <td>
+          {{ item.note }}
         </td>
       </tr>
     </tbody>

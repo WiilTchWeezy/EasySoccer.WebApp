@@ -17,7 +17,43 @@ export class ReservationsPaymentService {
 
   public getReservationPayments(reservationId): Observable<any> {
     return this.http
-      .get(environment.urlApi + "Payment/get?reservationId=" + reservationId)
+      .get(
+        environment.urlApi +
+          "Payment/get?soccerPitchReservationId=" +
+          reservationId
+      )
       .pipe(map(this.extractData));
+  }
+
+  public patchReservationPayment(
+    paymentId,
+    value,
+    personCompanyId,
+    note,
+    formOfPaymentId
+  ): any {
+    return this.http.patch(environment.urlApi + "Payment/patch", {
+      PaymentId: paymentId,
+      Value: value,
+      PersonCompanyId: personCompanyId,
+      Note: note,
+      FormOfPaymentId: formOfPaymentId,
+    });
+  }
+
+  public postReservationPayment(
+    value,
+    personCompanyId,
+    note,
+    formOfPaymentId,
+    soccerPitchReservationId
+  ): any {
+    return this.http.post(environment.urlApi + "Payment/post", {
+      Value: value,
+      PersonCompanyId: personCompanyId,
+      Note: note,
+      FormOfPaymentId: formOfPaymentId,
+      SoccerPitchReservationId: soccerPitchReservationId,
+    });
   }
 }

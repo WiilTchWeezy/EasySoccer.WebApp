@@ -24,6 +24,7 @@ export class ReservationPaymentsModalComponent implements OnInit {
   }
 
   getPayments() {
+    debugger;
     this.reservationPaymentService
       .getReservationPayments(this.reservationId)
       .subscribe(

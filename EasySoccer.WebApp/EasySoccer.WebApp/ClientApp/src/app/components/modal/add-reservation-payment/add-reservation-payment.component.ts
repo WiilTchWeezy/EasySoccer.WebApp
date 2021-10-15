@@ -36,6 +36,9 @@ export class AddReservationPaymentComponent implements OnInit {
   selectPersonCompany: any = {};
   personCompanyId: any = {};
   value: number = 0;
+  note: string;
+  formOfPaymentId: number;
+  reservationId: any;
   ngOnInit() {
     this.getFormOfPayments();
   }
@@ -87,5 +90,27 @@ export class AddReservationPaymentComponent implements OnInit {
       },
       (reason) => {}
     );
+  }
+
+  save() {
+    this.reservationPaymentService
+      .postReservationPayment(
+        this.value,
+        this.selectPersonCompany.id,
+        this.note,
+        this.formOfPaymentId,
+        this.reservationId
+      )
+      .subscribe(
+        (res) => {
+          this.toastService.showSuccess("Pagamento inserido com sucesso.");
+          this.activeModal.close();
+        },
+        (error) => {
+          this.toastService.showError(
+            "Erro ao cadastrar usuário. " + error.error.Message
+          );
+        }
+      );
   }
 }

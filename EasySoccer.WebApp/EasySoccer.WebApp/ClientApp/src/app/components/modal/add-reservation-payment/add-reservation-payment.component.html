@@ -48,7 +48,12 @@
         </div>
         <div class="col-sm-6">
           <label for="name">Forma de Pagamento</label>
-          <select class="form-control" name="defaultPlanId" id="defaultPlan">
+          <select
+            class="form-control"
+            name="defaultPlanId"
+            id="defaultPlan"
+            [(ngModel)]="formOfPaymentId"
+          >
             <option *ngFor="let item of formOfPayment" [value]="item.id">
               {{ item.name }}
             </option>
@@ -78,6 +83,7 @@
               class="form-control"
               placeholder="Insira aqui uma observação"
               name="note"
+              [(ngModel)]="note"
             ></textarea>
           </div>
         </div>

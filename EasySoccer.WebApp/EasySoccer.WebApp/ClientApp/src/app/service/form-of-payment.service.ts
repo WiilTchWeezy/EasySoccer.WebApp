@@ -33,13 +33,13 @@ export class FormOfPaymentService {
       .pipe(map(this.extractData));
   }
 
-  public postSoccerPitchPlan(name, active): any {
+  public postFormOfPayment(name, active): any {
     return this.http.post(environment.urlApi + "FormOfPayment/post", {
       Name: name,
       Active: active,
     });
   }
-  public patchSoccerPitchPlan(name, active, formOfPaymentId): any {
+  public patchFormOfPayment(name, active, formOfPaymentId): any {
     return this.http.patch(environment.urlApi + "FormOfPayment/patch", {
       Name: name,
       Active: active,
