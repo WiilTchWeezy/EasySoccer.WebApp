@@ -75,9 +75,7 @@ export class AddReservationPaymentComponent implements OnInit {
 
   formatter = (x: { name: string }) => x.name;
 
-  selectUser($event: any) {
-    this.selectPersonCompany = $event.id;
-  }
+  selectUser($event: any) {}
 
   openUserModal() {
     this.modalService.open(AddUserModalComponent).result.then(
@@ -85,7 +83,7 @@ export class AddReservationPaymentComponent implements OnInit {
         this.personCompanyId = result.id;
         this.selectPersonCompany = {
           name: result.name + " (" + result.phone + ")",
-          personCompanyId: result.id,
+          id: result.id,
         };
       },
       (reason) => {}
@@ -93,6 +91,7 @@ export class AddReservationPaymentComponent implements OnInit {
   }
 
   save() {
+    debugger;
     this.reservationPaymentService
       .postReservationPayment(
         this.value,

@@ -34,7 +34,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of payments; index as i">
+      <tr *ngFor="let item of payments.data; index as i">
         <td>
           {{ item.value | currency: "BRL":"symbol":"2.2" }}
         </td>
@@ -49,6 +49,11 @@
         </td>
         <td>
           {{ item.note }}
+        </td>
+      </tr>
+      <tr>
+        <td class="bg-success">
+          <b>Total: {{ payments.total | currency: "BRL":"symbol":"2.2" }}</b>
         </td>
       </tr>
     </tbody>

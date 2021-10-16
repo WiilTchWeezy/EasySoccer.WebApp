@@ -24,7 +24,6 @@ export class ReservationPaymentsModalComponent implements OnInit {
   }
 
   getPayments() {
-    debugger;
     this.reservationPaymentService
       .getReservationPayments(this.reservationId)
       .subscribe(
@@ -40,5 +39,13 @@ export class ReservationPaymentsModalComponent implements OnInit {
   openAddPaymentModal() {
     let modalRef = this.modalService.open(AddReservationPaymentComponent);
     modalRef.componentInstance.reservationId = this.reservationId;
+    modalRef.result.then(
+      (res) => {
+        this.getPayments();
+      },
+      (error) => {
+        this.getPayments();
+      }
+    );
   }
 }
