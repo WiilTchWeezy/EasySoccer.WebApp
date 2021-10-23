@@ -51,6 +51,8 @@ import { ReservationPaymentsModalComponent } from "./components/modal/reservatio
 import { AddReservationPaymentComponent } from "./components/modal/add-reservation-payment/add-reservation-payment.component";
 import { FormOfPaymentComponent } from "./components/form-of-payment/form-of-payment.component";
 import { AddFormOfPaymentComponent } from "./components/modal/add-form-of-payment/add-form-of-payment.component";
+import { ReservationPaymentsComponent } from "./components/reservation-payments/reservation-payments.component";
+import { ReservationPaymentInfoModalComponent } from "./components/modal/reservation-payment-info-modal/reservation-payment-info-modal.component";
 
 registerLocaleData(ptBr);
 
@@ -87,6 +89,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     AddReservationPaymentComponent,
     FormOfPaymentComponent,
     AddFormOfPaymentComponent,
+    ReservationPaymentsComponent,
+    ReservationPaymentInfoModalComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -159,6 +163,11 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
         component: FormOfPaymentComponent,
         canActivate: [AuthGuardService],
       },
+      {
+        path: "reservationPayments",
+        component: ReservationPaymentsComponent,
+        canActivate: [AuthGuardService],
+      },
     ]),
     CalendarModule.forRoot({
       provide: DateAdapter,
@@ -200,6 +209,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     ReservationPaymentsModalComponent,
     AddReservationPaymentComponent,
     AddFormOfPaymentComponent,
+    ReservationPaymentInfoModalComponent,
   ],
 })
 export class AppModule {}

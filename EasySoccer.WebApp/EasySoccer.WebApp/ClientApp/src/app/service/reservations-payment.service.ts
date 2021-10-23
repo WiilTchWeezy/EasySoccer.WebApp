@@ -56,4 +56,37 @@ export class ReservationsPaymentService {
       SoccerPitchReservationId: soccerPitchReservationId,
     });
   }
+
+  public getPaymentsByFilter(
+    startDate,
+    endDate,
+    formOfPayment,
+    page,
+    pageSize
+  ): Observable<any> {
+    if (!startDate) {
+      startDate = "";
+    }
+    if (!endDate) {
+      endDate = "";
+    }
+    if (!formOfPayment) {
+      formOfPayment = "";
+    }
+    return this.http
+      .get(
+        environment.urlApi +
+          "Payment/getByFilter?StartDate=" +
+          startDate +
+          "&EndDate=" +
+          endDate +
+          "&FormOfPayment=" +
+          formOfPayment +
+          "&Page=" +
+          page +
+          "&PageSize=" +
+          pageSize
+      )
+      .pipe(map(this.extractData));
+  }
 }
