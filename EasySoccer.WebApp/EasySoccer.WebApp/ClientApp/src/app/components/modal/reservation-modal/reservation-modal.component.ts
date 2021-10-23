@@ -268,7 +268,7 @@ export class ReservationModalComponent implements OnInit {
 
   openReservationPayments() {
     let modalRef = this.modalService.open(ReservationPaymentsModalComponent, {
-      size: "lg",
+      size: "xl",
     });
     modalRef.componentInstance.reservationId = this.reservationId;
   }

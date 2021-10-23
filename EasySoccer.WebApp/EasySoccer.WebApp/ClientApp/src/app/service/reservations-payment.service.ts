@@ -89,4 +89,11 @@ export class ReservationsPaymentService {
       )
       .pipe(map(this.extractData));
   }
+
+  public cancelPayment(idPayment): any {
+    return this.http.post(
+      environment.urlApi + "Payment/cancel?idPayment=" + idPayment,
+      {}
+    );
+  }
 }

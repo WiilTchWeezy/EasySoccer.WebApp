@@ -31,6 +31,7 @@
         <th scope="col">Forma de pagamento</th>
         <th scope="col">Cliente</th>
         <th scope="col">Obs.</th>
+        <th scope="col">Status</th>
       </tr>
     </thead>
     <tbody>
@@ -49,6 +50,15 @@
         </td>
         <td>
           {{ item.note }}
+        </td>
+        <td>
+          <span
+            [ngClass]="{
+              'back-confirmed': item.status == 1,
+              'back-canceled': item.status == 2
+            }"
+            >{{ item.statusDescription }}</span
+          >
         </td>
       </tr>
       <tr>

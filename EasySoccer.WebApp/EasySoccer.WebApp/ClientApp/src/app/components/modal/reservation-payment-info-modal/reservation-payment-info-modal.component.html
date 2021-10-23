@@ -1,1 +1,120 @@
-<p>reservation-payment-info-modal works!</p>
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Pagamento</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-6">
+      <p class="gilroy-bold">Data do Pagamento</p>
+      <p>{{ payment.createdDate | date: "dd/MM/yyyy HH:mm" }}</p>
+    </div>
+    <div class="col-6">
+      <p class="gilroy-bold">Valor</p>
+      <p>{{ payment.value | currency: "BRL":"symbol":"2.2" }}</p>
+    </div>
+    <div class="col-6">
+      <p class="gilroy-bold">Forma de Pagamento</p>
+      <p>{{ payment.formOfPaymentName }}</p>
+    </div>
+    <div class="col-6">
+      <p class="gilroy-bold">Cliente</p>
+      <p>{{ payment.personCompanyName }}</p>
+    </div>
+    <div class="col-6">
+      <p class="gilroy-bold">Status do pagamento</p>
+      <p>
+        <span
+          [ngClass]="{
+            'back-confirmed': payment.status == 1,
+            'back-canceled': payment.status == 2
+          }"
+        >
+          {{ payment.statusDescription }}
+        </span>
+      </p>
+    </div>
+    <div class="col-6">
+      <p class="gilroy-bold">Observação</p>
+      <p>{{ payment.note }}</p>
+    </div>
+    <div class="col-6"></div>
+    <div class="col-sm-6" style="padding: 15px">
+      <button
+        type="button"
+        class="btn btn-danger gilroy-bold"
+        (click)="cancelPayment()"
+        *ngIf="payment.status == 1"
+      >
+        <i class="cui cui-ban" style="padding-right: 5px"></i>Cancelar Pagamento
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <h5
+        class="gilroy-bold"
+        style="background-color: #dcdcdc; padding-top: 5px; padding-bottom: 5px"
+      >
+        Dados da reserva
+      </h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <p class="gilroy-bold">Data da reserva</p>
+      <p>{{ reservationInfo.selectedDateStart | date: "dd/MM/yyyy" }}</p>
+    </div>
+    <div class="col-6">
+      <p class="gilroy-bold">Horário da reserva</p>
+      <p>
+        {{ reservationInfo.selectedDateStart | date: "HH:mm" }} -
+        {{ reservationInfo.selectedDateEnd | date: "HH:mm" }}
+      </p>
+    </div>
+    <div class="col-6">
+      <p class="gilroy-bold">Quadra</p>
+      <p>{{ reservationInfo.soccerPitchName }}</p>
+    </div>
+    <div class="col-6">
+      <p class="gilroy-bold">Plano</p>
+      <p>{{ reservationInfo.soccerPitchPlanName }}</p>
+    </div>
+    <div class="col-6">
+      <p class="gilroy-bold">Status da reserva</p>
+      <p>
+        <span
+          [ngClass]="{
+            'back-warning': reservationInfo.status == 1,
+            'back-canceled': reservationInfo.status == 2,
+            'back-confirmed': reservationInfo.status == 3,
+            'back-concluded': reservationInfo.status == 4
+          }"
+        >
+          {{ reservationInfo.statusDescription }}
+        </span>
+      </p>
+    </div>
+    <div class="col-sm-6" style="padding: 15px">
+      <button
+        type="button"
+        class="btn btn-success gilroy-bold"
+        (click)="openReservationPayments()"
+      >
+        <i class="cui cui-money" style="padding-right: 5px"></i>Pagamentos da
+        Reserva
+      </button>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="activeModal.close()">
+      OK
+    </button>
+  </div>
+</div>

@@ -52,5 +52,13 @@ export class ReservationPaymentsComponent implements OnInit {
   openModal(payment) {
     let modalRef = this.modalService.open(ReservationPaymentInfoModalComponent);
     modalRef.componentInstance.payment = payment;
+    modalRef.result.then(
+      (ok) => {
+        this.getPayments();
+      },
+      (reject) => {
+        this.getPayments();
+      }
+    );
   }
 }

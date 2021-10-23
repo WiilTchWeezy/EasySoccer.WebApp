@@ -16,6 +16,7 @@
             <th scope="col">Forma de Pag.</th>
             <th scope="col">Cliente</th>
             <th scope="col">Obs.</th>
+            <th scope="col">Status</th>
             <th scope="col">#</th>
           </tr>
         </thead>
@@ -29,7 +30,18 @@
             </td>
             <td>{{ payment.formOfPaymentName }}</td>
             <td>{{ payment.personCompanyName }}</td>
-            <td>{{ payment.note }}</td>
+            <td style="max-width: 150px" class="text-break">
+              {{ payment.note }}
+            </td>
+            <td>
+              <span
+                [ngClass]="{
+                  'back-confirmed': payment.status == 1,
+                  'back-canceled': payment.status == 2
+                }"
+                >{{ payment.statusDescription }}</span
+              >
+            </td>
             <td>
               <a title="Editar" class="gridItem" (click)="openModal(payment)">
                 <i class="nav-icon cui-info"></i>
