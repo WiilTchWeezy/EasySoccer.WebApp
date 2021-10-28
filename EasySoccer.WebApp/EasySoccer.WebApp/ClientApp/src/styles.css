@@ -101,3 +101,15 @@ body {
   padding: 3px;
   background-color: #0275d8;
 }
+.sidebar .nav-link.active {
+  background: transparent !important;
+}
+
+.sidebar .nav-link.active .nav-icon {
+  color: #73818f !important;
+}
+
+.sidebar .nav-link.active:hover {
+  background: #ff591f !important;
+  color: #fff;
+}

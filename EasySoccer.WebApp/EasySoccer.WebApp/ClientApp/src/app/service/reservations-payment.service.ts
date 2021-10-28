@@ -15,12 +15,17 @@ export class ReservationsPaymentService {
     return body || {};
   }
 
-  public getReservationPayments(reservationId): Observable<any> {
+  public getReservationPayments(reservationId, status): Observable<any> {
+    if (!status || status == 0) {
+      status = "";
+    }
     return this.http
       .get(
         environment.urlApi +
           "Payment/get?soccerPitchReservationId=" +
-          reservationId
+          reservationId +
+          "&status=" +
+          status
       )
       .pipe(map(this.extractData));
   }

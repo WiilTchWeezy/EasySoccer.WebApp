@@ -3,6 +3,7 @@ import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ReservationsPaymentService } from "../../../service/reservations-payment.service";
 import { ScheduleService } from "../../../service/schedule.service";
 import { ToastserviceService } from "../../../service/toastservice.service";
+import { ConfirmModalComponent } from "../confirm-modal/confirm-modal.component";
 import { ReservationPaymentsModalComponent } from "../reservation-payments-modal/reservation-payments-modal.component";
 
 @Component({
@@ -51,18 +52,33 @@ export class ReservationPaymentInfoModalComponent implements OnInit {
   }
 
   cancelPayment() {
-    if (this.payment) {
-      this.paymentService.cancelPayment(this.payment.id).subscribe(
-        (res) => {
-          this.toastService.showSuccess("Pagamento cancelado com sucesso. ");
-          this.activeModal.close();
-        },
-        (error) => {
-          this.toastService.showError(
-            "Erro ao consultar dados. " + error.message
+    let modalRef = this.modalService.open(ConfirmModalComponent);
+    modalRef.componentInstance.text =
+      "Tem certeza que deseja cancelar este pagamento?";
+    modalRef.componentInstance.yesText = "Sim";
+    modalRef.componentInstance.noText = "Não";
+    modalRef.result.then(
+      (res) => {
+        if (this.payment) {
+          this.paymentService.cancelPayment(this.payment.id).subscribe(
+            (res) => {
+              this.toastService.showSuccess(
+                "Pagamento cancelado com sucesso. "
+              );
+              this.activeModal.close();
+              modalRef.close();
+            },
+            (error) => {
+              this.toastService.showError(
+                "Erro ao consultar dados. " + error.message
+              );
+            }
           );
         }
-      );
-    }
+      },
+      (error) => {
+        modalRef.close();
+      }
+    );
   }
 }

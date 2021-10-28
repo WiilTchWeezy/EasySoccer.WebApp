@@ -11,12 +11,26 @@
 </div>
 <div class="modal-body">
   <div class="row">
-    <div class="col-8"></div>
-    <div class="col-4">
+    <div class="col-6"></div>
+    <div class="col-3" style="margin-bottom: 15px">
+      <label for="name">Status</label>
+      <select
+        class="form-control"
+        name="status"
+        id="status"
+        [(ngModel)]="status"
+        (change)="getPayments()"
+      >
+        <option value="0">Todos</option>
+        <option value="1">Confirmados</option>
+        <option value="2">Cancelados</option>
+      </select>
+    </div>
+    <div class="col-3">
       <button
         type="button"
         class="btn btn-primary"
-        style="float: right; margin-bottom: 10px"
+        style="float: right; margin-top: 28px; margin-bottom: 10px"
         (click)="openAddPaymentModal()"
       >
         Adicionar pagamentos
@@ -32,26 +46,27 @@
         <th scope="col">Cliente</th>
         <th scope="col">Obs.</th>
         <th scope="col">Status</th>
+        <th scope="col">#</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let item of payments.data; index as i">
-        <td>
+        <td style="vertical-align: middle">
           {{ item.value | currency: "BRL":"symbol":"2.2" }}
         </td>
-        <td>
+        <td style="vertical-align: middle">
           {{ item.createdDate | date: "dd/MM/yyyy HH:mm" }}
         </td>
-        <td>
+        <td style="vertical-align: middle">
           {{ item.formOfPaymentName }}
         </td>
-        <td>
+        <td style="vertical-align: middle">
           {{ item.personCompanyName }}
         </td>
-        <td>
+        <td style="vertical-align: middle">
           {{ item.note }}
         </td>
-        <td>
+        <td style="vertical-align: middle">
           <span
             [ngClass]="{
               'back-confirmed': item.status == 1,
@@ -60,14 +75,37 @@
             >{{ item.statusDescription }}</span
           >
         </td>
-      </tr>
-      <tr>
-        <td class="bg-success">
-          <b>Total: {{ payments.total | currency: "BRL":"symbol":"2.2" }}</b>
+        <td style="vertical-align: middle">
+          <a
+            title="Editar"
+            *ngIf="item.status == 1"
+            class="gridItem"
+            (click)="cancelPayment(item)"
+            ><i class="nav-icon cui-x"></i
+          ></a>
         </td>
       </tr>
     </tbody>
   </table>
+  <div class="row">
+    <div class="col-3">
+      <p class="gilroy-bold">Total de pagamento confirmados:</p>
+      <p class="gilroy-bold">
+        <span class="bg-success p-3 text-white">{{
+          payments.total | currency: "BRL":"symbol":"2.2"
+        }}</span>
+      </p>
+    </div>
+    <div class="col-3">
+      <p class="gilroy-bold">Valor total da reserva:</p>
+      <p class="gilroy-bold">
+        <span class="bg-primary p-3 text-white">{{
+          payments.totalReservation | currency: "BRL":"symbol":"2.2"
+        }}</span>
+      </p>
+    </div>
+    <div class="col-6"></div>
+  </div>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-primary" (click)="activeModal.close()">

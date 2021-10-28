@@ -271,5 +271,6 @@ export class ReservationModalComponent implements OnInit {
       size: "xl",
     });
     modalRef.componentInstance.reservationId = this.reservationId;
+    modalRef.componentInstance.status = 1;
   }
 }

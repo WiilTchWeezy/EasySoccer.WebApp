@@ -1,4 +1,121 @@
 <div class="container">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-12">Filtros</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-6">
+          <label for="status">Data inicial</label>
+          <div class="input-group">
+            <input
+              class="form-control"
+              placeholder="dd/mm/yyyy"
+              name="initialDate"
+              [(ngModel)]="initialDate"
+              ngbDatepicker
+              #d="ngbDatepicker"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-outline-secondary calendar"
+                (click)="d.toggle()"
+                type="button"
+              >
+                <i class="cui-calendar"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <label for="status">Data final</label>
+          <div class="input-group">
+            <input
+              class="form-control"
+              placeholder="dd/mm/yyyy"
+              name="finalDate"
+              [(ngModel)]="finalDate"
+              ngbDatepicker
+              #dfinal="ngbDatepicker"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-outline-secondary calendar"
+                (click)="dfinal.toggle()"
+                type="button"
+              >
+                <i class="cui-calendar"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <label for="soccerPichtPlanId">Forma de pagamento</label>
+          <div class="input-group">
+            <select
+              id="soccerPichtPlanId"
+              [(ngModel)]="soccerPitchPlanId"
+              class="form-control"
+              name="soccerPichtPlanId"
+            >
+              <option value="0" selected>Selecione</option>
+              <option *ngFor="let sp of soccerPitchsPlans" [ngValue]="sp.id">
+                {{ sp.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <label for="soccerPichtPlanId">Status</label>
+          <div class="input-group">
+            <select
+              id="soccerPichtPlanId"
+              [(ngModel)]="soccerPitchPlanId"
+              class="form-control"
+              name="soccerPichtPlanId"
+            >
+              <option value="0" selected>Selecione</option>
+              <option *ngFor="let sp of soccerPitchsPlans" [ngValue]="sp.id">
+                {{ sp.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <label for="soccerPichtPlanId">Cliente</label>
+          <div class="input-group">
+            <select
+              id="soccerPichtPlanId"
+              [(ngModel)]="soccerPitchPlanId"
+              class="form-control"
+              name="soccerPichtPlanId"
+            >
+              <option value="0" selected>Selecione</option>
+              <option *ngFor="let sp of soccerPitchsPlans" [ngValue]="sp.id">
+                {{ sp.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <button
+            type="button"
+            class="btn btn-primary btnLogin"
+            [ngClass]="{ spinner: loading }"
+            [disabled]="loading"
+            (click)="getPayments()"
+            style="float: right; margin-bottom: 5px; margin-top: 10px"
+          >
+            Filtrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="card" style="margin-top: 10px">
     <div class="card-header">
       <div class="row">
