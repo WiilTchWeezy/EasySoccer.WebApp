@@ -66,17 +66,29 @@ export class ReservationsPaymentService {
     startDate,
     endDate,
     formOfPayment,
+    status,
+    personCompanyName,
     page,
     pageSize
   ): Observable<any> {
     if (!startDate) {
       startDate = "";
+    } else {
+      startDate = startDate.year + "-" + startDate.month + "-" + startDate.day;
     }
     if (!endDate) {
       endDate = "";
+    } else {
+      endDate = endDate.year + "-" + endDate.month + "-" + endDate.day;
     }
-    if (!formOfPayment) {
+    if (!formOfPayment || formOfPayment == 0) {
       formOfPayment = "";
+    }
+    if (!status || status == 0) {
+      status = "";
+    }
+    if (!personCompanyName) {
+      personCompanyName = "";
     }
     return this.http
       .get(
@@ -87,6 +99,10 @@ export class ReservationsPaymentService {
           endDate +
           "&FormOfPayment=" +
           formOfPayment +
+          "&Status=" +
+          status +
+          "&PersonCompanyName=" +
+          personCompanyName +
           "&Page=" +
           page +
           "&PageSize=" +

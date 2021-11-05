@@ -13,8 +13,8 @@
             <input
               class="form-control"
               placeholder="dd/mm/yyyy"
-              name="initialDate"
-              [(ngModel)]="initialDate"
+              name="startDate"
+              [(ngModel)]="startDate"
               ngbDatepicker
               #d="ngbDatepicker"
             />
@@ -35,8 +35,8 @@
             <input
               class="form-control"
               placeholder="dd/mm/yyyy"
-              name="finalDate"
-              [(ngModel)]="finalDate"
+              name="endDate"
+              [(ngModel)]="endDate"
               ngbDatepicker
               #dfinal="ngbDatepicker"
             />
@@ -52,51 +52,46 @@
           </div>
         </div>
         <div class="col-sm-4">
-          <label for="soccerPichtPlanId">Forma de pagamento</label>
+          <label for="formOfPayment">Forma de pagamento</label>
           <div class="input-group">
             <select
-              id="soccerPichtPlanId"
-              [(ngModel)]="soccerPitchPlanId"
+              id="formOfPayment"
+              [(ngModel)]="formOfPayment"
               class="form-control"
-              name="soccerPichtPlanId"
+              name="formOfPayment"
             >
               <option value="0" selected>Selecione</option>
-              <option *ngFor="let sp of soccerPitchsPlans" [ngValue]="sp.id">
-                {{ sp.name }}
+              <option *ngFor="let fOP of formOfPayments" [ngValue]="fOP.id">
+                {{ fOP.name }}
               </option>
             </select>
           </div>
         </div>
         <div class="col-sm-4">
-          <label for="soccerPichtPlanId">Status</label>
+          <label for="status">Status</label>
           <div class="input-group">
             <select
-              id="soccerPichtPlanId"
-              [(ngModel)]="soccerPitchPlanId"
+              id="status"
+              [(ngModel)]="status"
               class="form-control"
-              name="soccerPichtPlanId"
+              name="status"
             >
-              <option value="0" selected>Selecione</option>
-              <option *ngFor="let sp of soccerPitchsPlans" [ngValue]="sp.id">
-                {{ sp.name }}
-              </option>
+              <option value="0" selected>Todos</option>
+              <option value="1" selected>Confirmados</option>
+              <option value="2" selected>Cancelados</option>
             </select>
           </div>
         </div>
         <div class="col-sm-4">
-          <label for="soccerPichtPlanId">Cliente</label>
+          <label for="personCompanyName">Cliente</label>
           <div class="input-group">
-            <select
-              id="soccerPichtPlanId"
-              [(ngModel)]="soccerPitchPlanId"
+            <input
+              type="text"
+              id="personCompanyName"
+              [(ngModel)]="personCompanyName"
               class="form-control"
-              name="soccerPichtPlanId"
-            >
-              <option value="0" selected>Selecione</option>
-              <option *ngFor="let sp of soccerPitchsPlans" [ngValue]="sp.id">
-                {{ sp.name }}
-              </option>
-            </select>
+              name="personCompanyName"
+            />
           </div>
         </div>
       </div>
