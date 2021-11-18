@@ -66,11 +66,14 @@
               id="value"
               type="text"
               class="form-control"
-              placeholder="Valor"
+              placeholder="R$ 0.000,00"
               name="value"
               [ngModel]="value | currency: 'BRL':'symbol':'2.2'"
               [ngModelOptions]="{ updateOn: 'blur' }"
               (ngModelChange)="value = $event"
+              mask="separator.2"
+              thousandSeparator="."
+              prefix="R$ "
             />
           </div>
         </div>

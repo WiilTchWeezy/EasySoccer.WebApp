@@ -53,6 +53,7 @@ import { FormOfPaymentComponent } from "./components/form-of-payment/form-of-pay
 import { AddFormOfPaymentComponent } from "./components/modal/add-form-of-payment/add-form-of-payment.component";
 import { ReservationPaymentsComponent } from "./components/reservation-payments/reservation-payments.component";
 import { ReservationPaymentInfoModalComponent } from "./components/modal/reservation-payment-info-modal/reservation-payment-info-modal.component";
+import { ReactiveFormsModule } from "@angular/forms";
 
 registerLocaleData(ptBr);
 
@@ -99,6 +100,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     FormsModule,
     NgbModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
     LoaderModule,
     RouterModule.forRoot([
       {

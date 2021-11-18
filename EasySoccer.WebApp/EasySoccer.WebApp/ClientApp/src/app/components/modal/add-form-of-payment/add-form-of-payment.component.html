@@ -13,7 +13,7 @@
   </button>
 </div>
 <div class="modal-body">
-  <form>
+  <form [formGroup]="heroForm">
     <div class="form-group">
       <div class="row">
         <div class="col-sm-9">
@@ -23,9 +23,20 @@
             name="name"
             type="text"
             class="form-control"
-            [(ngModel)]="name"
             placeholder="Nome"
+            required
+            minlength="2"
+            formControlName="name"
           />
+          <small
+            class="text-danger"
+            *ngIf="
+              (heroForm?.get('name').dirty || heroForm?.get('name').touched) &&
+              heroForm?.get('name').errors &&
+              heroForm?.get('name').hasError('required')
+            "
+            >O nome é obrigatório.</small
+          >
         </div>
         <div class="col-sm-3">
           <label for="active">Ativa</label>
@@ -34,7 +45,7 @@
             type="checkbox"
             class="form-control"
             name="active"
-            [(ngModel)]="active"
+            formControlName="active"
           />
         </div>
       </div>

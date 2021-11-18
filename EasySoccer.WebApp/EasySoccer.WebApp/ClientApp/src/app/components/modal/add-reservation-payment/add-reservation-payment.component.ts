@@ -35,7 +35,7 @@ export class AddReservationPaymentComponent implements OnInit {
   searching = false;
   selectPersonCompany: any = {};
   personCompanyId: any = {};
-  value: number = 0;
+  value: number;
   note: string;
   formOfPaymentId: number;
   reservationId: any;
