@@ -1,0 +1,91 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">{{ modalTitle }}</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form>
+    <h5>Plano</h5>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-sm-8">
+          <label for="name">Nome</label>
+          <div class="input-group">
+            <input
+              id="name"
+              class="form-control"
+              placeholder="Nome"
+              name="selectedUsername"
+              [(ngModel)]="modalSelectedPlan.name"
+            />
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <label for="value">Valor</label>
+          <div class="input-group">
+            <input
+              id="value"
+              type="number"
+              class="form-control"
+              placeholder="Valor"
+              name="value"
+              [(ngModel)]="modalSelectedPlan.value"
+            />
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <label for="active">Mostrar aos clientes:</label>
+          <div class="input-group">
+            <input
+              id="active"
+              type="checkbox"
+              class="form-control"
+              name="active"
+              [(ngModel)]="modalSelectedPlan.showToUser"
+            />
+          </div>
+        </div>
+        <div class="col-sm-8">
+          <label for="active">Configuração de geração automática:</label>
+          <div class="input-group">
+            <select
+              class="form-control"
+              name="defaultPlanId"
+              id="defaultPlan"
+              [(ngModel)]="modalSelectedPlan.idPlanGenerationConfig"
+            >
+              <option value="0">Selecione...</option>
+              <option *ngFor="let item of plansConfig" [value]="item.id">
+                {{ item.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <label for="description">Descrição</label>
+          <div class="input-group">
+            <textarea
+              id="description"
+              type="text"
+              class="form-control"
+              placeholder="Insira aqui a descrição"
+              name="description"
+              [(ngModel)]="modalSelectedPlan.description"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="save()">
+    Salvar
+  </button>
+</div>

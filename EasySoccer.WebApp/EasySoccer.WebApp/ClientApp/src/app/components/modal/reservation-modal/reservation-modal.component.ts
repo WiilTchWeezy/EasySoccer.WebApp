@@ -23,6 +23,9 @@ import { Soccerpitchplan } from "../../../model/soccerpitchplan";
 import { CustomDateParserFormatter } from "../../../service/adapter/CustomDateParseAdapter";
 import { ScheduleService } from "../../../service/schedule.service";
 import { PersonCompanyService } from "../../../service/person-company.service";
+import { ReservationListModalComponent } from "../reservation-list-modal/reservation-list-modal.component";
+import { ReservationsByPlanConfigComponent } from "../reservations-by-plan-config/reservations-by-plan-config.component";
+import { ReservationPaymentsModalComponent } from "../reservation-payments-modal/reservation-payments-modal.component";
 
 @Component({
   selector: "app-reservation-modal",
@@ -202,6 +205,14 @@ export class ReservationModalComponent implements OnInit {
         .postSoccerPitchReservation(this.modalSoccerPitchReservation)
         .subscribe(
           (data) => {
+            if (data && data.childReservations) {
+              let modalRef = this.modalService.open(
+                ReservationListModalComponent,
+                { size: "lg" }
+              );
+              modalRef.componentInstance.childReservation =
+                data.childReservations;
+            }
             this.toastService.showSuccess("Agendamento inserido com sucesso.");
             this.modalSoccerPitchReservation = new SoccerPitchReservation();
             this.activeModal.close();
@@ -246,5 +257,20 @@ export class ReservationModalComponent implements OnInit {
         );
       }
     );
+  }
+
+  openChildrenReservations() {
+    let modalRef = this.modalService.open(ReservationsByPlanConfigComponent, {
+      size: "lg",
+    });
+    modalRef.componentInstance.reservationId = this.reservationId;
+  }
+
+  openReservationPayments() {
+    let modalRef = this.modalService.open(ReservationPaymentsModalComponent, {
+      size: "xl",
+    });
+    modalRef.componentInstance.reservationId = this.reservationId;
+    modalRef.componentInstance.status = 1;
   }
 }

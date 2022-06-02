@@ -1,0 +1,176 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-12">Filtros</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-6">
+          <label for="status">Data inicial</label>
+          <div class="input-group">
+            <input
+              class="form-control"
+              placeholder="dd/mm/yyyy"
+              name="startDate"
+              [(ngModel)]="startDate"
+              ngbDatepicker
+              #d="ngbDatepicker"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-outline-secondary calendar"
+                (click)="d.toggle()"
+                type="button"
+              >
+                <i class="cui-calendar"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <label for="status">Data final</label>
+          <div class="input-group">
+            <input
+              class="form-control"
+              placeholder="dd/mm/yyyy"
+              name="endDate"
+              [(ngModel)]="endDate"
+              ngbDatepicker
+              #dfinal="ngbDatepicker"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-outline-secondary calendar"
+                (click)="dfinal.toggle()"
+                type="button"
+              >
+                <i class="cui-calendar"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <label for="formOfPayment">Forma de pagamento</label>
+          <div class="input-group">
+            <select
+              id="formOfPayment"
+              [(ngModel)]="formOfPayment"
+              class="form-control"
+              name="formOfPayment"
+            >
+              <option value="0" selected>Selecione</option>
+              <option *ngFor="let fOP of formOfPayments" [ngValue]="fOP.id">
+                {{ fOP.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <label for="status">Status</label>
+          <div class="input-group">
+            <select
+              id="status"
+              [(ngModel)]="status"
+              class="form-control"
+              name="status"
+            >
+              <option value="0" selected>Todos</option>
+              <option value="1" selected>Confirmados</option>
+              <option value="2" selected>Cancelados</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <label for="personCompanyName">Cliente</label>
+          <div class="input-group">
+            <input
+              type="text"
+              id="personCompanyName"
+              [(ngModel)]="personCompanyName"
+              class="form-control"
+              name="personCompanyName"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <button
+            type="button"
+            class="btn btn-primary btnLogin"
+            [ngClass]="{ spinner: loading }"
+            [disabled]="loading"
+            (click)="getPayments()"
+            style="float: right; margin-bottom: 5px; margin-top: 10px"
+          >
+            Filtrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-top: 10px">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-8">
+          <h4>Pagamentos</h4>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Data do Pagamento</th>
+            <th scope="col">Value</th>
+            <th scope="col">Forma de Pag.</th>
+            <th scope="col">Cliente</th>
+            <th scope="col">Obs.</th>
+            <th scope="col">Status</th>
+            <th scope="col">#</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let payment of payments; index as i">
+            <td>
+              {{ payment.createdDate | date: "dd/MM/yyyy HH:mm" }}
+            </td>
+            <td>
+              {{ payment.value | currency: "BRL":"symbol":"2.2" }}
+            </td>
+            <td>{{ payment.formOfPaymentName }}</td>
+            <td>{{ payment.personCompanyName }}</td>
+            <td style="max-width: 150px" class="text-break">
+              {{ payment.note }}
+            </td>
+            <td>
+              <span
+                [ngClass]="{
+                  'back-confirmed': payment.status == 1,
+                  'back-canceled': payment.status == 2
+                }"
+                >{{ payment.statusDescription }}</span
+              >
+            </td>
+            <td>
+              <a title="Editar" class="gridItem" (click)="openModal(payment)">
+                <i class="nav-icon cui-info"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="d-flex justify-content-between p-2">
+    <ngb-pagination
+      [(collectionSize)]="collectionSize"
+      [(page)]="page"
+      [pageSize]="pageSize"
+      (pageChange)="getPayments()"
+    >
+    </ngb-pagination>
+  </div>
+</div>

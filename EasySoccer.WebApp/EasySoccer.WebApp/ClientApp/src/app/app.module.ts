@@ -42,6 +42,18 @@ import { LoaderModule } from "./components/loader/loader.module";
 import { NgxLoadingModule } from "ngx-loading";
 import { PersonCompanyComponent } from "./components/person-company/person-company.component";
 import { PersonCompanyModalComponent } from "./components/modal/person-company-modal/person-company-modal.component";
+import { SoccerpitchplanModalComponent } from "./components/modal/soccerpitchplan-modal/soccerpitchplan-modal.component";
+import { PlanGenerationConfigComponent } from "./components/plan-generation-config/plan-generation-config.component";
+import { PlanGenerationConfigModalComponent } from "./components/modal/plan-generation-config-modal/plan-generation-config-modal.component";
+import { ReservationListModalComponent } from "./components/modal/reservation-list-modal/reservation-list-modal.component";
+import { ReservationsByPlanConfigComponent } from "./components/modal/reservations-by-plan-config/reservations-by-plan-config.component";
+import { ReservationPaymentsModalComponent } from "./components/modal/reservation-payments-modal/reservation-payments-modal.component";
+import { AddReservationPaymentComponent } from "./components/modal/add-reservation-payment/add-reservation-payment.component";
+import { FormOfPaymentComponent } from "./components/form-of-payment/form-of-payment.component";
+import { AddFormOfPaymentComponent } from "./components/modal/add-form-of-payment/add-form-of-payment.component";
+import { ReservationPaymentsComponent } from "./components/reservation-payments/reservation-payments.component";
+import { ReservationPaymentInfoModalComponent } from "./components/modal/reservation-payment-info-modal/reservation-payment-info-modal.component";
+import { ReactiveFormsModule } from "@angular/forms";
 
 registerLocaleData(ptBr);
 
@@ -69,6 +81,17 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     LoaderComponent,
     PersonCompanyComponent,
     PersonCompanyModalComponent,
+    SoccerpitchplanModalComponent,
+    PlanGenerationConfigComponent,
+    PlanGenerationConfigModalComponent,
+    ReservationListModalComponent,
+    ReservationsByPlanConfigComponent,
+    ReservationPaymentsModalComponent,
+    AddReservationPaymentComponent,
+    FormOfPaymentComponent,
+    AddFormOfPaymentComponent,
+    ReservationPaymentsComponent,
+    ReservationPaymentInfoModalComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -77,6 +100,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     FormsModule,
     NgbModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
     LoaderModule,
     RouterModule.forRoot([
       {
@@ -131,6 +155,21 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
         component: PersonCompanyComponent,
         canActivate: [AuthGuardService],
       },
+      {
+        path: "plangenerationconfig",
+        component: PlanGenerationConfigComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
+        path: "formofPayment",
+        component: FormOfPaymentComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
+        path: "reservationPayments",
+        component: ReservationPaymentsComponent,
+        canActivate: [AuthGuardService],
+      },
     ]),
     CalendarModule.forRoot({
       provide: DateAdapter,
@@ -165,6 +204,14 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     ConfirmModalComponent,
     ReservationModalComponent,
     PersonCompanyModalComponent,
+    SoccerpitchplanModalComponent,
+    PlanGenerationConfigModalComponent,
+    ReservationListModalComponent,
+    ReservationsByPlanConfigComponent,
+    ReservationPaymentsModalComponent,
+    AddReservationPaymentComponent,
+    AddFormOfPaymentComponent,
+    ReservationPaymentInfoModalComponent,
   ],
 })
 export class AppModule {}

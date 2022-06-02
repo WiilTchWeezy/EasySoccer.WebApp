@@ -18,7 +18,7 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
     </div>
     <div class="modal-body">
       <p>
-        <strong>Tem certeza que deseja sair sem salvar a alteração ? </strong>
+        <strong>{{ text }} </strong>
       </p>
     </div>
     <div class="modal-footer">
@@ -27,7 +27,7 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
         class="btn btn-secondary"
         (click)="modal.dismiss('cancel click')"
       >
-        Não Salvar
+        {{ noText }}
       </button>
       <button
         type="button"
@@ -35,11 +35,14 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
         class="btn btn-primary"
         (click)="modal.close('Ok click')"
       >
-        Salvar
+        {{ yesText }}
       </button>
     </div>
   `,
 })
 export class ConfirmModalComponent {
+  text: string;
+  yesText: string;
+  noText: string;
   constructor(public modal: NgbActiveModal) {}
 }

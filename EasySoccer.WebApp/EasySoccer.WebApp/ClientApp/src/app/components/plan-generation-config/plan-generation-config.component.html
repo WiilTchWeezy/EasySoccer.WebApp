@@ -3,16 +3,17 @@
     <div class="card-header">
       <div class="row">
         <div class="col-8">
-          <h4>Planos</h4>
+          <h4>Config. de planos</h4>
         </div>
         <div class="col-4">
           <button
             type="button"
             class="btn btn-primary"
-            (click)="openModal(content, null)"
+            (click)="openModal(null)"
+            value="Click Me"
             style="float: right; margin-bottom: 5px"
           >
-            Adicionar novo plano
+            Adicionar novo config. de plano
           </button>
         </div>
       </div>
@@ -22,21 +23,28 @@
         <thead>
           <tr>
             <th scope="col">Nome</th>
-            <th scope="col">Valor</th>
+            <th scope="col">Intervalo entre reservas</th>
+            <th scope="col">Limite</th>
+            <th scope="col">Tipo de Limitação</th>
             <th scope="col">#</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let soccerPitchPlan of soccerPitchPlans; index as i">
+          <tr *ngFor="let planConfig of plansConfig; index as i">
             <td>
-              {{ soccerPitchPlan.name }}
+              {{ planConfig.name }}
             </td>
-            <td>{{ soccerPitchPlan.value | currency: "BRL":true }}</td>
             <td>
-              <a
-                title="Editar"
-                class="gridItem"
-                (click)="openModal(content, soccerPitchPlan)"
+              {{ planConfig.intervalBetweenReservations }}
+            </td>
+            <td>
+              {{ planConfig.limitQuantity }}
+            </td>
+            <td>
+              {{ planConfig.limitTypeDescription }}
+            </td>
+            <td>
+              <a title="Editar" class="gridItem" (click)="openModal(planConfig)"
                 ><i class="nav-icon cui-pencil"></i
               ></a>
             </td>
@@ -50,7 +58,7 @@
       [(collectionSize)]="collectionSize"
       [(page)]="page"
       [pageSize]="pageSize"
-      (pageChange)="getPlans()"
+      (pageChange)="getPlanGenerationConfigService()"
     >
     </ngb-pagination>
   </div>

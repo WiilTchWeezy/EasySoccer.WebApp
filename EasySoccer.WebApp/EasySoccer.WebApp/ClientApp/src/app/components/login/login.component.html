@@ -15,7 +15,7 @@
           <input
             id="user"
             class="form-control"
-            placeholder="Usuário"
+            placeholder="Email"
             [(ngModel)]="usuario.name"
             name="name"
             type="text"
@@ -41,7 +41,7 @@
           [ngClass]="{ spinner: authService.loading }"
           [disabled]="authService.loading"
           (click)="authenticate()"
-          style="margin-top: 10px;"
+          style="margin-top: 10px"
         >
           Acessar
         </button>

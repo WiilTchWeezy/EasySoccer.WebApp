@@ -121,4 +121,14 @@ export class ScheduleService {
       .get(environment.urlApi + "SoccerPitchReservation/getReservationStatus")
       .pipe(map(this.extractData));
   }
+
+  public getChildrenReservation(reservationId): Observable<any> {
+    return this.http
+      .get(
+        environment.urlApi +
+          "SoccerPitchReservation/getreservationgenerated?reservationId=" +
+          reservationId
+      )
+      .pipe(map(this.extractData));
+  }
 }

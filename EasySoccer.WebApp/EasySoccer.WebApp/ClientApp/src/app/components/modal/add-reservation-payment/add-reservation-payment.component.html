@@ -1,0 +1,101 @@
+<ng-template #rt let-r="result" let-t="term">
+  <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
+</ng-template>
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Pagamentos</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-sm-12">
+          <label for="name">Responsável pelo pagamento:</label>
+          <button
+            type="button"
+            class="btn btn-primary float-right"
+            style="margin-bottom: 5px"
+            (click)="openUserModal()"
+          >
+            Adicionar Responsável
+          </button>
+          <div class="input-group">
+            <input
+              id="user"
+              type="text"
+              class="form-control"
+              [class.is-invalid]="searchFailed"
+              [ngbTypeahead]="searchPersonCompany"
+              placeholder="Digite nome ou telefone"
+              name="selectedUser"
+              [(ngModel)]="selectPersonCompany"
+              (ngModelChange)="selectUser($event)"
+              [inputFormatter]="formatter"
+              [resultTemplate]="rt"
+            />
+            <span *ngIf="searching">Pesquisando...</span>
+            <div class="invalid-feedback" *ngIf="searchFailed">
+              Não foi possível carregar sugestões.
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <label for="name">Forma de Pagamento</label>
+          <select
+            class="form-control"
+            name="defaultPlanId"
+            id="defaultPlan"
+            [(ngModel)]="formOfPaymentId"
+          >
+            <option *ngFor="let item of formOfPayment" [value]="item.id">
+              {{ item.name }}
+            </option>
+          </select>
+        </div>
+        <div class="col-sm-6">
+          <label for="value">Valor</label>
+          <div class="input-group">
+            <input
+              id="value"
+              type="text"
+              class="form-control"
+              placeholder="R$ 0.000,00"
+              name="value"
+              [ngModel]="value | currency: 'BRL':'symbol':'2.2'"
+              [ngModelOptions]="{ updateOn: 'blur' }"
+              (ngModelChange)="value = $event"
+              mask="separator.2"
+              thousandSeparator="."
+              prefix="R$ "
+            />
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <label for="note">Observação</label>
+          <div class="input-group">
+            <textarea
+              id="note"
+              type="text"
+              class="form-control"
+              placeholder="Insira aqui uma observação"
+              name="note"
+              [(ngModel)]="note"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="save()">
+    Salvar
+  </button>
+</div>

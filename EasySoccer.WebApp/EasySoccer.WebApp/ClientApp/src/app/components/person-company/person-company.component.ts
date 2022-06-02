@@ -58,6 +58,7 @@ export class PersonCompanyComponent implements OnInit {
     this.modalOption.backdrop = "static";
     this.modalOption.keyboard = false;
     this.modalOption.ariaLabelledBy = "modal-basic-title";
+    this.modalOption.size = "lg";
     const modalRef = this.modalService.open(
       PersonCompanyModalComponent,
       this.modalOption

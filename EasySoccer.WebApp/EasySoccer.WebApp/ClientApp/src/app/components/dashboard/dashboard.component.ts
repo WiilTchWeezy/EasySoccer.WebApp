@@ -17,6 +17,7 @@ import { isSameDay, isSameMonth } from "date-fns";
 import { ReservationModalComponent } from "../modal/reservation-modal/reservation-modal.component";
 import { SoccerpitchService } from "../../service/soccerpitch.service";
 import { IDropdownSettings } from "ng-multiselect-dropdown";
+import { ScheduleService } from "../../service/schedule.service";
 @Component({
   selector: "app-dashboard",
   templateUrl: "./dashboard.component.html",
@@ -46,13 +47,21 @@ export class DashboardComponent implements OnInit {
   monthsAlreadyGet: Array<any> = new Array<any>();
   refresh: Subject<any> = new Subject();
   soccerPitchs: any[] = [];
+  status: any[] = [];
+  selectedStatus: any[] = [
+    { key: 1, text: "Aguardando confirmação" },
+    { key: 3, text: "Confirmado" },
+    { key: 4, text: "Finalizado" },
+  ];
   soccerPitchsIds: any[] = [];
   dropdownSettings: IDropdownSettings = {};
+  dropdownSettingsStatus: IDropdownSettings = {};
   constructor(
     private modalService: NgbModal,
     private dashboardService: DashboardService,
     private tostService: ToastserviceService,
-    private soccerPitchService: SoccerpitchService
+    private soccerPitchService: SoccerpitchService,
+    public scheduleService: ScheduleService
   ) {
     let datesDescription = new Array<string>();
     this.calendarEvents = new Array<CalendarEvent>();
@@ -75,6 +84,16 @@ export class DashboardComponent implements OnInit {
       allowSearchFilter: true,
       searchPlaceholderText: "Pesquise",
     };
+    this.dropdownSettingsStatus = {
+      singleSelection: false,
+      idField: "key",
+      textField: "text",
+      selectAllText: "Todos",
+      unSelectAllText: "Remove todos",
+      itemsShowLimit: 3,
+      allowSearchFilter: true,
+      searchPlaceholderText: "Pesquise",
+    };
     this.dashboardService.getReservationChart().subscribe(
       (res) => {
         this.chartData = res;
@@ -88,6 +107,7 @@ export class DashboardComponent implements OnInit {
       }
     );
     this.getSoccerPitchs();
+    this.getStatus();
   }
   users: Array<User>;
   pendingUsers: Array<User>;
@@ -134,12 +154,14 @@ export class DashboardComponent implements OnInit {
 
   getReservationCalendar() {
     let soccerPitchesIds = this.soccerPitchsIds.map((x) => x.id).toString();
+    let status = this.selectedStatus.map((x) => x.key).toString();
     this.dashboardService
       .getReservationCalendar(
         this.viewDate.getFullYear(),
         this.viewDate.getMonth() + 1,
         0,
-        soccerPitchesIds
+        soccerPitchesIds,
+        status
       )
       .subscribe(
         (res) => {
@@ -212,6 +234,15 @@ export class DashboardComponent implements OnInit {
     this.soccerPitchService.getSoccerPitchs(1, 99).subscribe(
       (response) => {
         this.soccerPitchs = response.data;
+      },
+      (error) => {}
+    );
+  }
+
+  getStatus() {
+    this.scheduleService.getReservationStatus().subscribe(
+      (response) => {
+        this.status = response;
       },
       (error) => {}
     );
